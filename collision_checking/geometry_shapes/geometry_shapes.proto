@@ -1,0 +1,62 @@
+
+syntax = "proto2";
+
+package collision_checking.geometry_shapes.proto;
+
+import "experimental/users/buschmann/collision_checking/geometry_shapes/eigen.proto";
+
+option java_outer_classname = "GeometryShapesProtos";
+option go_api_flag = "OPEN_TO_OPAQUE_HYBRID";  // See http://go/go-api-flag.
+
+message RGBA {
+  optional double r = 1;
+  optional double g = 2;
+  optional double b = 3;
+  optional double a = 4;
+}
+
+message Box {
+  optional collision_checking.proto.Vector3dProto size = 1;
+}
+
+message Sphere {
+  optional double radius = 1;
+}
+
+message Capsule {
+  optional double length = 1;
+  optional double radius = 2;
+}
+
+message MovedShape {
+  optional ShapePrimitive shape = 1;
+  optional collision_checking.proto.Pose3dProto pose = 2;
+}
+
+message ShapePrimitive {
+  optional Box box = 1;
+  optional Sphere sphere = 2;
+  optional Capsule capsule = 3;
+  repeated MovedShape sub_shapes = 4;
+}
+
+message Marker {
+  optional collision_checking.proto.Pose3dProto pose = 4;
+  optional RGBA color = 2;
+  optional ShapePrimitive shape = 3;
+}
+
+message CompositeMarker {
+  optional string name = 1;
+  optional double timeout = 2;
+  optional collision_checking.proto.Pose3dProto pose = 5;
+  repeated Marker markers = 4;
+}
+
+// message CompositeMarkerArray {
+//   option deprecated = true;
+
+//   repeated CompositeMarker composite_markers = 2;
+
+//   reserved 1;
+// }

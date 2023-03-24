@@ -1,0 +1,21 @@
+#ifndef EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_INLINING_H_
+#define EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_INLINING_H_
+
+
+// Macros to help share code between regular C++ and CUDA.
+
+#ifdef __CUDACC__
+#define CC_INTERNAL_INLINE __forceinline__
+#else
+#define CC_INTERNAL_INLINE inline
+#endif
+
+#ifdef __CUDACC__
+#define CC_INLINE CC_INTERNAL_INLINE __device__ __host__
+#define CC_DEVICE_INLINE CC_INTERNAL_INLINE __device__
+#else
+#define CC_INLINE CC_INTERNAL_INLINE
+#define CC_DEVICE_INLINE CC_INTERNAL_INLINE
+#endif
+
+#endif  // EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_INLINING_H_

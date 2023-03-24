@@ -1,0 +1,123 @@
+// Messages for specifying a kinematic assembly (see
+// google3/experimental/users/buschmann/collision_checking/assembly/assembly.h).
+// The structure roughly follows the URDF format
+// (https://wiki.ros.org/urdf/XML/).
+
+syntax = "proto3";
+
+package collision_checking.proto;
+
+import "experimental/users/buschmann/collision_checking/geometry_shapes/eigen.proto";
+import "experimental/users/buschmann/collision_checking/geometry_shapes/geometry_shapes.proto";
+
+option go_api_flag = "OPEN_TO_OPAQUE_HYBRID";  // See http://go/go-api-flag.
+
+// Inertia properties for a rigid body/link.
+message Inertial {
+  // Position and orientation of the reference frame for the inertia tensor
+  // `inertia`, located at the link's center of mass.
+  collision_checking.proto.Pose3dProto link_t_inertial = 4;
+  // The link's inertia tensor w.r.t. the frame defined above (in SI units).
+  // This follows the 'negative product of inertia' convention (see
+  // https://wiki.ros.org/urdf/XML/link for details).
+  Matrix3dProto inertia = 5;
+  // This is the mass of the link defined in kilograms.
+  double mass = 3;
+}
+
+message ShapeInfo {
+  oneof shape {
+    collision_checking.geometry_shapes.proto.ShapePrimitive primitive = 1;
+  }
+
+  // This is a transform relative to the link it is a part of.
+  collision_checking.proto.Pose3dProto link_t_shape = 4;
+}
+
+// Definition of a robot link / rigid body.
+message Link {
+  // A name for the link, which must be unique across all of the link names.
+  string name = 1;
+  // Shape definitions used for collision checking.
+  repeated ShapeInfo collision_shapes = 2;
+  // Shape definitions used for visualization.
+  repeated ShapeInfo visual_shapes = 3;
+  // Inertial properties of the link.
+  Inertial inertial = 4;
+}
+
+// Definition of a robot joint.
+message Joint {
+  // The type of joint.
+  enum Type {
+    // Invalid default value.
+    INVALID = 0;
+    // A one degree of freedom revolute joint with a minimum and maximum angle
+    // of rotation.
+    REVOLUTE = 1;
+    // Same as REVOLUTE, but without a minimum or maximum angle.
+    CONTINUOUS = 2;
+    // A one degree of freedom translational joint.
+    PRISMATIC = 3;
+    // A joint with no degrees of freedom. Useful for defining rigid bodies
+    // as composites of multiple Links.
+    FIXED = 4;
+  }
+
+  // Limits imposed on the Joint.
+  message Limits {
+    // Upper position limit.
+    double lower = 1;
+    // Lower position limit.
+    double upper = 2;
+    // Maximum absolute velocity value.
+    double velocity = 3;
+    // Maximum absolute acceleration value.
+    double acceleration = 4;
+    // Maximum absolute jerk value.
+    double jerk = 5;
+    // Maximum absolute value for 'effort'. This is usually the joint torque or
+    // joint force (depending on the type of joint).
+    double effort = 6;
+  }
+
+  message Dynamics {
+    double friction = 1;
+    double damping = 2;
+  }
+
+  message Calibration {
+    double rising = 1;
+    double falling = 3;
+    double home = 4;
+  }
+
+  // The name must be unique across all of the joint names.
+  string name = 1;
+  // Name of the parent link.
+  string parent_link_name = 2;
+  // Name of the child link.
+  string child_link_name = 3;
+
+  // Transform from parent link to joint frame.
+  collision_checking.proto.Pose3dProto parent_t_joint = 10;
+
+  // The joint axis specified in the joint frame. This is the axis of rotation
+  // for revolute joints, the axis of translation for prismatic joints, and the
+  // surface normal for planar joints. The axis is specified in the joint frame
+  // of reference. Fixed and floating joints do not use the axis field.
+  collision_checking.proto.Vector3dProto axis = 11;
+
+  // Motion limits for the joint.
+  Limits limits = 6;
+  Dynamics dynamics = 7;
+  Calibration calibration = 8;
+  // The type of joint.
+  Type type = 9;
+}
+
+message Assembly {
+  string name = 1;
+  repeated Joint joints = 2;
+  repeated Link links = 3;
+}

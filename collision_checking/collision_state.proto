@@ -1,0 +1,58 @@
+syntax = "proto3";
+
+package collision_checking;
+
+import "experimental/users/buschmann/collision_checking/bounding_box.proto";
+import "experimental/users/buschmann/collision_checking/geometry_shapes/geometry_shapes.proto";
+
+// A snapshot of the collision checking state, for debugging & visualization.
+// NextId: 8
+message CollisionStateProto {
+  // Object identification and collision filtering information.
+  // NextId: 3
+  message ObjectIdInfo {
+    // Set of ObjectIds for this object.
+    // This has a popcount of one for almost all objects, but the environment
+    // map object may contain more bits.
+    uint64 id_set = 1;
+    // Bitset of ids that are included in collision checks with this object.
+    uint64 inclusion_set = 2;
+  }
+
+  // Regular (non environment map) collision object information.
+  // NextId: 7
+  message CollisionObjectInfo {
+    // Id and collision filter
+    ObjectIdInfo id_info = 1;
+    geometry_shapes.proto.CompositeMarker marker = 2;
+    bool colliding = 3;
+    AxisAlignedBoundingBox3dProto bounding_box = 4;
+  }
+
+  // Environment (VoxelMap or HifiMap) info.
+  // NextId: 4
+  message EnvironmentMapObjectInfo {
+    ObjectIdInfo id_info = 1;
+    // The obstacle geometry as a set of spheres.
+    geometry_shapes.proto.CompositeMarker spheres = 2;
+    // Per-sphere ids (if semantics are enabled).
+    repeated uint64 sphere_ids = 3;
+  }
+
+  // Human-readable name to object id mapping.
+  // NextId: 3
+  message ObjectNameInfo {
+    uint64 id_set = 1;
+    string name = 2;
+  }
+
+  // Geometry and collision state of CollisionObjects.
+  repeated CollisionObjectInfo collision_objects = 4;
+  // Bounding box around all CollisionObjects (will not include links that
+  // aren't checked against the EnvironmentMapObject).
+  AxisAlignedBoundingBox3dProto collision_objects_bounding_box = 5;
+  EnvironmentMapObjectInfo environment_map_object_info = 6;
+  repeated ObjectNameInfo object_names = 7;
+
+  reserved 1, 2, 3;
+}

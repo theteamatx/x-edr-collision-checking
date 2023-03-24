@@ -1,0 +1,41 @@
+
+syntax = "proto2";
+
+package collision_checking.proto;
+
+option java_outer_classname = "GeometryShapesProtos";
+option go_api_flag = "OPEN_TO_OPAQUE_HYBRID";  // See http://go/go-api-flag.
+
+message Vector3dProto {
+  repeated double vec = 1 [packed = true];
+}
+
+message Pose3dProto {
+  // Translation vector
+  optional double tx = 1;
+  optional double ty = 2;
+  optional double tz = 3;
+
+  // Rotation quaternion.
+  optional double rx = 4;
+  optional double ry = 5;
+  optional double rz = 6;
+  optional double rw = 7;
+}
+message Matrix3dProto {
+  repeated double mat = 1 [packed = true];
+}
+
+message RGBA {
+  optional double r = 1;
+  optional double g = 2;
+  optional double b = 3;
+  optional double a = 4;
+}
+
+// message QuaterniondProto {
+//   optional double x = 1;
+//   optional double y = 2;
+//   optional double z = 3;
+//   optional double w = 4;
+// }

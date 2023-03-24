@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package collision_checking;
+
+import "experimental/users/buschmann/collision_checking/geometry_shapes/eigen.proto";
+
+option java_outer_classname = "BoundingBoxProtos";
+option go_api_flag = "OPEN_TO_OPAQUE_HYBRID";  // See http://go/go-api-flag.
+
+// A 3D axis-aligned bounding box, which is defined by the intervals
+// x in [min_corner.x, max_corner.x]
+// y in [min_corner.y, max_corner.y]
+// z in [min_corner.z, max_corner.z]
+// Next ID: 3
+message AxisAlignedBoundingBox3dProto {
+  collision_checking.proto.Vector3dProto min_corner = 1;
+  proto.Vector3dProto max_corner = 2;
+}
