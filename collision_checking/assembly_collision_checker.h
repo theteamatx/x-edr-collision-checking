@@ -7,26 +7,26 @@
 #include <string>
 #include <vector>
 
-#include "experimental/users/buschmann/collision_checking/assembly/assembly.h"
-#include "experimental/users/buschmann/collision_checking/assembly/assembly_connectivity.h"
-#include "experimental/users/buschmann/collision_checking/assembly_coordinates.h"
-#include "experimental/users/buschmann/collision_checking/assembly_id.h"
-#include "experimental/users/buschmann/collision_checking/assembly_kinematics.h"
-#include "experimental/users/buschmann/collision_checking/collision_checking_scratch.h"
-#include "experimental/users/buschmann/collision_checking/compute_collisions.h"
-#include "experimental/users/buschmann/collision_checking/eigenmath.h"
-#include "experimental/users/buschmann/collision_checking/geometry.h"
-#include "experimental/users/buschmann/collision_checking/geometry_shape_conversion.h"
-#include "experimental/users/buschmann/collision_checking/id_assigner.h"
-#include "experimental/users/buschmann/collision_checking/inlining.h"
-#include "experimental/users/buschmann/collision_checking/model_interface.h"
-#include "experimental/users/buschmann/collision_checking/model_options.h"
-#include "experimental/users/buschmann/collision_checking/object_id.h"
-#include "experimental/users/buschmann/collision_checking/options.h"
-#include "experimental/users/buschmann/collision_checking/proto_utils.h"
-#include "experimental/users/buschmann/collision_checking/status.h"
-#include "experimental/users/buschmann/collision_checking/vector.h"
-#include "experimental/users/buschmann/collision_checking/voxel_map_object_name.h"
+#include "collision_checking/assembly/assembly.h"
+#include "collision_checking/assembly/assembly_connectivity.h"
+#include "collision_checking/assembly_coordinates.h"
+#include "collision_checking/assembly_id.h"
+#include "collision_checking/assembly_kinematics.h"
+#include "collision_checking/collision_checking_scratch.h"
+#include "collision_checking/compute_collisions.h"
+#include "collision_checking/eigenmath.h"
+#include "collision_checking/geometry.h"
+#include "collision_checking/geometry_shape_conversion.h"
+#include "collision_checking/id_assigner.h"
+#include "collision_checking/inlining.h"
+#include "collision_checking/model_interface.h"
+#include "collision_checking/model_options.h"
+#include "collision_checking/object_id.h"
+#include "collision_checking/options.h"
+#include "collision_checking/proto_utils.h"
+#include "collision_checking/status.h"
+#include "collision_checking/vector.h"
+#include "collision_checking/voxel_map_object_name.h"
 #include "third_party/absl/algorithm/container.h"
 #include "third_party/absl/container/btree_map.h"
 #include "third_party/absl/functional/bind_front.h"
@@ -162,7 +162,7 @@ class AssemblyCollisionChecker : virtual public ModelInterface<Scalar>,
 
   // Compute forward kinematics, using the cached assembly geometry.
   // See
-  // google3/experimental/users/buschmann/collision_checking/assembly_kinematics.h
+  // google3/collision_checking/assembly_kinematics.h
   // For details on the layout for coordinates.
   CC_INLINE
   void ComputePoses(AssemblyCoordinateView<const Scalar> coordinates,

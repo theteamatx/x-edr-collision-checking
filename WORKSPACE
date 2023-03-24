@@ -38,6 +38,13 @@ http_archive(
     urls = ["https://github.com/google/benchmark/archive/d2a8a4ee41b923876c034afb939c4fc03598e622.zip"],
 )
 
+http_archive(
+    name = "com_google_osqp_cpp",
+    sha256 = "160b69498883eb5527d3e85030f1be3bcf1cf2ea6c55e88f670eae707a7bf525",
+    strip_prefix = "osqp-cpp-fecfcde99ce82a7a046a13417387bf4e9bee013b",
+    urls = ["https://github.com/google/osqp-cpp/archive/fecfcde99ce82a7a046a13417387bf4e9bee013b.zip"],
+)
+
 local_repository(
     name = "eigenmath",
     path = "third_party/eigenmath",
@@ -56,4 +63,4 @@ http_archive(
 )
 
 load("@com_google_protobuf//:protobuf_deps.bzl", "protobuf_deps")
-
+protobuf_deps()

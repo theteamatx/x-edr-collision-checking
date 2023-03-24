@@ -25,10 +25,9 @@ proto_library(
     srcs = [
         "assembly.proto",
     ],
-    cc_api_version = 2,
     deps = [
-        "//experimental/users/buschmann/collision_checking/geometry_shapes:eigen_proto",
-        "//experimental/users/buschmann/collision_checking/geometry_shapes:proto",
+        "//collision_checking/geometry_shapes:eigen_proto",
+        "//collision_checking/geometry_shapes:proto",
     ],
 )
 
@@ -49,8 +48,8 @@ cc_library(
     deps = [
         ":assembly",
         ":cc_proto",
-        "//experimental/users/buschmann/collision_checking/geometry_shapes:eigen_proto_utils",
-        "//experimental/users/buschmann/collision_checking/geometry_shapes:utils",
+        "//collision_checking/geometry_shapes:eigen_proto_utils",
+        "//collision_checking/geometry_shapes:utils",
         "//third_party/absl/status",
         "//third_party/absl/status:statusor",
         "//third_party/absl/strings",
@@ -72,9 +71,9 @@ cc_library(
         "link.h",
     ],
     deps = [
-        "//experimental/users/buschmann/collision_checking:eigenmath",
-        "//experimental/users/buschmann/collision_checking/geometry_shapes",
-        "//experimental/users/buschmann/collision_checking/geometry_shapes:geometry_shape",
+        "//collision_checking:eigenmath",
+        "//collision_checking/geometry_shapes",
+        "//collision_checking/geometry_shapes:geometry_shape",
         "//googlex/proxy/iterators",
         "//third_party/absl/status",
         "//third_party/absl/status:statusor",
@@ -92,11 +91,10 @@ cc_test(
         ":assembly",
         ":cc_proto",
         ":proto_utils",
-        "//experimental/users/buschmann/collision_checking:test_utils",
-        "//experimental/users/buschmann/collision_checking/geometry_shapes",
+        "//collision_checking:test_utils",
+        "//collision_checking/geometry_shapes",
         "//third_party/absl/status",
-        "//third_party/googletest:gtest_main_no_google3",
-        "//third_party/googletest:gtest_no_google3",
+        "@com_google_googletest//:gtest_main",
     ],
 )
 
@@ -120,9 +118,8 @@ cc_test(
         ":assembly",
         ":assembly_connectivity",
         ":proto_utils",
-        "//experimental/users/buschmann/collision_checking:test_utils",
-        "//third_party/googletest:gtest_main_no_google3",
-        "//third_party/googletest:gtest_no_google3",
+        "//collision_checking:test_utils",
+        "@com_google_googletest//:gtest_main",
     ],
 )
 
@@ -132,7 +129,7 @@ cc_test(
     deps = [
         ":cc_proto",
         ":proto_utils",
-        "//experimental/users/buschmann/collision_checking:test_utils",
-        "//third_party/googletest:gtest_main_no_google3",  # build_cleaner: keep
+        "//collision_checking:test_utils",
+       "@com_google_googletest//:gtest_main",
     ],
 )

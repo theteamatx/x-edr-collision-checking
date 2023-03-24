@@ -4,7 +4,7 @@
 #include <cstddef>
 #include <cstdlib>
 
-#include "experimental/users/buschmann/collision_checking/inlining.h"
+#include "collision_checking/inlining.h"
 
 // A simple vector implementation suitable for CPU and GPU code.
 namespace collision_checking {

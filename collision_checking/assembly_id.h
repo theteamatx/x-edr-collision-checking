@@ -3,7 +3,7 @@
 
 #include <cstdint>
 
-#include "experimental/users/buschmann/collision_checking/typed_id_int.h"
+#include "collision_checking/typed_id_int.h"
 
 namespace collision_checking {
 

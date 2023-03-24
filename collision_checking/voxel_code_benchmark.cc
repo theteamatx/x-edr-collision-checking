@@ -1,4 +1,4 @@
-#include "experimental/users/buschmann/collision_checking/voxel_code.h"
+#include "collision_checking/voxel_code.h"
 
 #include "third_party/benchmark/include/benchmark/benchmark.h"
 

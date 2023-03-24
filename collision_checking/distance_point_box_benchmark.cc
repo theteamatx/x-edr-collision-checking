@@ -1,4 +1,4 @@
-#include "experimental/users/buschmann/collision_checking/distance_point_box.h"
+#include "collision_checking/distance_point_box.h"
 
 #include "googlex/proxy/eigenmath/rotation_utils.h"
 #include "third_party/benchmark/include/benchmark/benchmark.h"

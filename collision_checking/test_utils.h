@@ -7,7 +7,7 @@
 #include "third_party/absl/log/absl_check.h"
 #include "third_party/absl/status/status.h"
 #include "third_party/eigen3/Eigen/Core"
-#include "third_party/googletest/googlemock/include/gmock/gmock.h"
+#include "gmock/gmock.h"
 #include "third_party/protobuf/text_format.h"
 #include "third_party/protobuf/util/message_differencer.h"
 
@@ -71,7 +71,6 @@ bool GenericIsApprox(ArgType&& arg, ExpectedType&& expected,
     // This is, because isApprox() compares (arg - expected) to the minimum
     // norm of arg and expected, which is 0 in case of a zero vector/matrix.
     // See, for example,
-    // https://cs.corp.google.com/piper///depot/google3/third_party/eigen3/Eigen/src/Core/Fuzzy.h?l=93
     if ((arg - expected).cwiseAbs().maxCoeff() < first_tolerance) return true;
     return expected.isApprox(arg, first_tolerance);
   } else {

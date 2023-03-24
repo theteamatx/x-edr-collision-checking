@@ -2,10 +2,10 @@ syntax = "proto3";
 
 package collision_checking;
 
-import "experimental/users/buschmann/collision_checking/geometry_shapes/eigen.proto";
+import "collision_checking/geometry_shapes/eigen.proto";
 
 option java_outer_classname = "BoundingBoxProtos";
-option go_api_flag = "OPEN_TO_OPAQUE_HYBRID";  // See http://go/go-api-flag.
+option go_api_flag = "OPEN_TO_OPAQUE_HYBRID";
 
 // A 3D axis-aligned bounding box, which is defined by the intervals
 // x in [min_corner.x, max_corner.x]

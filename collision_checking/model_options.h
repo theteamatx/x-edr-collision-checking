@@ -1,12 +1,12 @@
 #ifndef EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_MODEL_OPTIONS_H_
 #define EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_MODEL_OPTIONS_H_
 
-#include "experimental/users/buschmann/collision_checking/inlining.h"
+#include "collision_checking/inlining.h"
 
 namespace collision_checking {
 
 // Policies for disabling certain collision pairs.
-// Keep in sync with //experimental/users/buschmann/collisions_config.proto.
+// Keep in sync with //collisions_config.proto.
 enum class CollisionMaskingPolicy {
   // Invalid default value.
   kUnknown,

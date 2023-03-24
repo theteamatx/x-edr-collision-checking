@@ -1,15 +1,15 @@
-#include "experimental/users/buschmann/collision_checking/assembly_kinematics.h"
+#include "collision_checking/assembly_kinematics.h"
 
 #include <string>
 #include <vector>
 
-#include "experimental/users/buschmann/collision_checking/assembly/assembly.h"
-#include "experimental/users/buschmann/collision_checking/assembly/assembly.proto.h"
-#include "experimental/users/buschmann/collision_checking/assembly/proto_utils.h"
-#include "experimental/users/buschmann/collision_checking/assembly_coordinates.h"
-#include "experimental/users/buschmann/collision_checking/eigenmath.h"
-#include "experimental/users/buschmann/collision_checking/test_utils.h"
-#include "third_party/googletest/googletest/include/gtest/gtest.h"
+#include "collision_checking/assembly/assembly.h"
+#include "collision_checking/assembly/assembly.proto.h"
+#include "collision_checking/assembly/proto_utils.h"
+#include "collision_checking/assembly_coordinates.h"
+#include "collision_checking/eigenmath.h"
+#include "collision_checking/test_utils.h"
+#include "gtest/gtest.h"
 
 namespace collision_checking {
 namespace {

@@ -2,7 +2,7 @@
 #define EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_ASSEMBLY_COORDINATE_VIEW_H_
 #include <type_traits>
 
-#include "experimental/users/buschmann/collision_checking/inlining.h"
+#include "collision_checking/inlining.h"
 #include "third_party/eigen3/Eigen/Core"
 
 namespace collision_checking {

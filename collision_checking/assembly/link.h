@@ -5,7 +5,7 @@
 #include <string>
 #include <vector>
 
-#include "experimental/users/buschmann/collision_checking/eigenmath.h"
+#include "collision_checking/eigenmath.h"
 #include "googlex/proxy/iterators/transform_iterator.h"
 #include "third_party/absl/strings/string_view.h"
 

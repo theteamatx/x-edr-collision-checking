@@ -1,8 +1,8 @@
-#include "experimental/users/buschmann/collision_checking/distance_point_point.h"
+#include "collision_checking/distance_point_point.h"
 
-#include "experimental/users/buschmann/collision_checking/test_utils.h"
-#include "experimental/users/buschmann/collision_checking/eigenmath.h"
-#include "third_party/googletest/googletest/include/gtest/gtest.h"
+#include "collision_checking/test_utils.h"
+#include "collision_checking/eigenmath.h"
+#include "gtest/gtest.h"
 
 namespace collision_checking {
 namespace {

@@ -1,16 +1,16 @@
-#include "experimental/users/buschmann/collision_checking/assembly/assembly.h"
+#include "collision_checking/assembly/assembly.h"
 
 #include <string>
 
-#include "experimental/users/buschmann/collision_checking/assembly/assembly.proto.h"
-#include "experimental/users/buschmann/collision_checking/assembly/geometry.h"
-#include "experimental/users/buschmann/collision_checking/assembly/joint.h"
-#include "experimental/users/buschmann/collision_checking/assembly/link.h"
-#include "experimental/users/buschmann/collision_checking/assembly/proto_utils.h"
-#include "experimental/users/buschmann/collision_checking/geometry_shapes/box.h"
-#include "experimental/users/buschmann/collision_checking/test_utils.h"
+#include "collision_checking/assembly/assembly.proto.h"
+#include "collision_checking/assembly/geometry.h"
+#include "collision_checking/assembly/joint.h"
+#include "collision_checking/assembly/link.h"
+#include "collision_checking/assembly/proto_utils.h"
+#include "collision_checking/geometry_shapes/box.h"
+#include "collision_checking/test_utils.h"
 #include "third_party/absl/status/status.h"
-#include "third_party/googletest/googletest/include/gtest/gtest.h"
+#include "gtest/gtest.h"
 
 namespace collision_checking {
 namespace {

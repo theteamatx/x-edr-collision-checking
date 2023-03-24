@@ -1,9 +1,9 @@
 #ifndef EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_GEOMETRY_SHAPES_EIGEN_PROTO_UTILS_H_
 #define EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_GEOMETRY_SHAPES_EIGEN_PROTO_UTILS_H_
 
-#include "experimental/users/buschmann/collision_checking/eigenmath.h"
-#include "experimental/users/buschmann/collision_checking/geometry_shapes/eigen.proto.h"
-#include "experimental/users/buschmann/collision_checking/logging.h"
+#include "collision_checking/eigenmath.h"
+#include "collision_checking/geometry_shapes/eigen.proto.h"
+#include "collision_checking/logging.h"
 
 namespace collision_checking {
 

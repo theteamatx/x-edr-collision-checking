@@ -5,11 +5,11 @@
 #include <cstddef>
 #include <cstdint>
 
-#include "experimental/users/buschmann/collision_checking/geometry.h"
-#include "experimental/users/buschmann/collision_checking/object_id.h"
-#include "experimental/users/buschmann/collision_checking/voxel_code.h"
-#include "experimental/users/buschmann/collision_checking/voxel_indexer.h"
-#include "experimental/users/buschmann/collision_checking/eigenmath.h"
+#include "collision_checking/geometry.h"
+#include "collision_checking/object_id.h"
+#include "collision_checking/voxel_code.h"
+#include "collision_checking/voxel_indexer.h"
+#include "collision_checking/eigenmath.h"
 #include "third_party/absl/algorithm/container.h"
 
 namespace collision_checking {
@@ -122,11 +122,7 @@ class VoxelMapObject {
     // If the call to UpdateQueryStructures() is in the critical path,
     // this might not be worthwhile, but should help if it is not.
     bool use_voxel_code = true;
-    // Upper bound for voxel radii. The default here is chosen so it is
-    // sufficiently large for the values used in
-    // google3/experimental/users/buschmann/behavior_planning_module/.
-    // TODO(b/230058322) We should be setting the value from the
-    // BehaviorPlanningModule.
+    // Upper bound for voxel radii.
     Scalar max_sphere_radius = Scalar{0.2};
   };
 

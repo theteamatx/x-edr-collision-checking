@@ -5,16 +5,16 @@
 #define EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_GEOMETRY_SHAPE_CONVERSION_H_
 #include <type_traits>
 
-#include "experimental/users/buschmann/collision_checking/composite_object.h"
-#include "experimental/users/buschmann/collision_checking/eigenmath.h"
-#include "experimental/users/buschmann/collision_checking/geometry.h"
-#include "experimental/users/buschmann/collision_checking/geometry_shapes/box.h"
-#include "experimental/users/buschmann/collision_checking/geometry_shapes/capsule.h"
-#include "experimental/users/buschmann/collision_checking/geometry_shapes/composite_shape.h"
-#include "experimental/users/buschmann/collision_checking/geometry_shapes/shape_base.h"
-#include "experimental/users/buschmann/collision_checking/geometry_shapes/sphere.h"
-#include "experimental/users/buschmann/collision_checking/geometry_shapes/spheres.h"
-#include "experimental/users/buschmann/collision_checking/voxel_map_object.h"
+#include "collision_checking/composite_object.h"
+#include "collision_checking/eigenmath.h"
+#include "collision_checking/geometry.h"
+#include "collision_checking/geometry_shapes/box.h"
+#include "collision_checking/geometry_shapes/capsule.h"
+#include "collision_checking/geometry_shapes/composite_shape.h"
+#include "collision_checking/geometry_shapes/shape_base.h"
+#include "collision_checking/geometry_shapes/sphere.h"
+#include "collision_checking/geometry_shapes/spheres.h"
+#include "collision_checking/voxel_map_object.h"
 #include "third_party/absl/status/status.h"
 
 namespace collision_checking {

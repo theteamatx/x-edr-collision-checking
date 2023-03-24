@@ -1,18 +1,18 @@
-#include "experimental/users/buschmann/collision_checking/distance_point_box.h"
+#include "collision_checking/distance_point_box.h"
 
 #include <iterator>
 #include <limits>
 
-#include "experimental/users/buschmann/collision_checking/debug_options.h"
-#include "experimental/users/buschmann/collision_checking/test_utils.h"
+#include "collision_checking/debug_options.h"
+#include "collision_checking/test_utils.h"
 #include "googlex/proxy/eigenmath/distribution.h"
 #include "googlex/proxy/eigenmath/interpolation.h"
 #include "googlex/proxy/eigenmath/rotation_utils.h"
 #include "googlex/proxy/eigenmath/sampling.h"
-#include "experimental/users/buschmann/collision_checking/eigenmath.h"
+#include "collision_checking/eigenmath.h"
 #include "third_party/absl/flags/flag.h"
-#include "third_party/googletest/googlemock/include/gmock/gmock.h"
-#include "third_party/googletest/googletest/include/gtest/gtest.h"
+#include "gmock/gmock.h"
+#include "gtest/gtest.h"
 #include "third_party/osqp_cpp/include/osqp++.h"
 
 ABSL_FLAG(bool, verbose, false, "Turn on verbose text logging.");

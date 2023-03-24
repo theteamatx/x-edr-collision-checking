@@ -1,9 +1,9 @@
-#include "experimental/users/buschmann/collision_checking/assembly/proto_utils.h"
+#include "collision_checking/assembly/proto_utils.h"
 
 #include <memory>
-#include "experimental/users/buschmann/collision_checking/assembly/assembly.proto.h"
-#include "experimental/users/buschmann/collision_checking/assembly/link.h"
-#include "experimental/users/buschmann/collision_checking/assembly/utils_impl.h"
+#include "collision_checking/assembly/assembly.proto.h"
+#include "collision_checking/assembly/link.h"
+#include "collision_checking/assembly/utils_impl.h"
 #include "third_party/absl/status/status.h"
 #include "third_party/absl/status/statusor.h"
 

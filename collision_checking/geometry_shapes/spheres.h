@@ -4,9 +4,9 @@
 #include <memory>
 #include <vector>
 
-#include "experimental/users/buschmann/collision_checking/eigenmath.h"
-#include "experimental/users/buschmann/collision_checking/geometry_shapes/shape_base.h"
-#include "experimental/users/buschmann/collision_checking/geometry_shapes/sphere.h"
+#include "collision_checking/eigenmath.h"
+#include "collision_checking/geometry_shapes/shape_base.h"
+#include "collision_checking/geometry_shapes/sphere.h"
 
 namespace collision_checking {
 namespace geometry_shapes {

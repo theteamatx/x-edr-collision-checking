@@ -4,7 +4,7 @@ syntax = "proto2";
 package collision_checking.proto;
 
 option java_outer_classname = "GeometryShapesProtos";
-option go_api_flag = "OPEN_TO_OPAQUE_HYBRID";  // See http://go/go-api-flag.
+option go_api_flag = "OPEN_TO_OPAQUE_HYBRID";
 
 message Vector3dProto {
   repeated double vec = 1 [packed = true];

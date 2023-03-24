@@ -1,5 +1,5 @@
 // Messages for specifying a kinematic assembly (see
-// google3/experimental/users/buschmann/collision_checking/assembly/assembly.h).
+// google3/collision_checking/assembly/assembly.h).
 // The structure roughly follows the URDF format
 // (https://wiki.ros.org/urdf/XML/).
 
@@ -7,10 +7,10 @@ syntax = "proto3";
 
 package collision_checking.proto;
 
-import "experimental/users/buschmann/collision_checking/geometry_shapes/eigen.proto";
-import "experimental/users/buschmann/collision_checking/geometry_shapes/geometry_shapes.proto";
+import "collision_checking/geometry_shapes/eigen.proto";
+import "collision_checking/geometry_shapes/geometry_shapes.proto";
 
-option go_api_flag = "OPEN_TO_OPAQUE_HYBRID";  // See http://go/go-api-flag.
+option go_api_flag = "OPEN_TO_OPAQUE_HYBRID";
 
 // Inertia properties for a rigid body/link.
 message Inertial {

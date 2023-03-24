@@ -1,12 +1,12 @@
 #ifndef EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_COMPUTE_COLLISIONS_H_
 #define EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_COMPUTE_COLLISIONS_H_
 
-#include "experimental/users/buschmann/collision_checking/collision_result.h"
-#include "experimental/users/buschmann/collision_checking/composite_object.h"
-#include "experimental/users/buschmann/collision_checking/normalize_and_maybe_log.h"
-#include "experimental/users/buschmann/collision_checking/options.h"
-#include "experimental/users/buschmann/collision_checking/status.h"
-#include "experimental/users/buschmann/collision_checking/voxel_map_object.h"
+#include "collision_checking/collision_result.h"
+#include "collision_checking/composite_object.h"
+#include "collision_checking/normalize_and_maybe_log.h"
+#include "collision_checking/options.h"
+#include "collision_checking/status.h"
+#include "collision_checking/voxel_map_object.h"
 
 // This file contains a template for performing collision queries.
 

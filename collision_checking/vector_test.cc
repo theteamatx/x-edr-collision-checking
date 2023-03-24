@@ -1,9 +1,9 @@
-#include "experimental/users/buschmann/collision_checking/vector.h"
+#include "collision_checking/vector.h"
 
 #include <memory>
 
-#include "third_party/googletest/googlemock/include/gmock/gmock.h"
-#include "third_party/googletest/googletest/include/gtest/gtest.h"
+#include "gmock/gmock.h"
+#include "gtest/gtest.h"
 
 namespace collision_checking {
 namespace {

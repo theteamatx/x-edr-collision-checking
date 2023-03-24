@@ -2,8 +2,8 @@ syntax = "proto3";
 
 package collision_checking;
 
-import "experimental/users/buschmann/collision_checking/bounding_box.proto";
-import "experimental/users/buschmann/collision_checking/geometry_shapes/geometry_shapes.proto";
+import "collision_checking/bounding_box.proto";
+import "collision_checking/geometry_shapes/geometry_shapes.proto";
 
 // A snapshot of the collision checking state, for debugging & visualization.
 // NextId: 8

@@ -1,7 +1,7 @@
-#include "experimental/users/buschmann/collision_checking/assembly/proto_utils.h"
+#include "collision_checking/assembly/proto_utils.h"
 
-#include "experimental/users/buschmann/collision_checking/assembly/assembly.proto.h"
-#include "experimental/users/buschmann/collision_checking/test_utils.h"
+#include "collision_checking/assembly/assembly.proto.h"
+#include "collision_checking/test_utils.h"
 
 namespace collision_checking {
 namespace {

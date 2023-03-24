@@ -1,8 +1,8 @@
-#include "experimental/users/buschmann/collision_checking/options.h"
+#include "collision_checking/options.h"
 
 #include <string>
 
-#include "experimental/users/buschmann/collision_checking/logging.h"
+#include "collision_checking/logging.h"
 #include "third_party/absl/strings/str_format.h"
 
 namespace collision_checking {

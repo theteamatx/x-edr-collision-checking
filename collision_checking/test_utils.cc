@@ -1,4 +1,4 @@
-#include "experimental/users/buschmann/collision_checking/test_utils.h"
+#include "collision_checking/test_utils.h"
 
 #include "third_party/absl/base/call_once.h"
 #include "third_party/absl/base/internal/malloc_hook.h"

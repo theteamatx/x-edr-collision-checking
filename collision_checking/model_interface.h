@@ -3,11 +3,11 @@
 #include <string>
 #include <vector>
 
-#include "experimental/users/buschmann/collision_checking/assembly/assembly.h"
-#include "experimental/users/buschmann/collision_checking/assembly_id.h"
-#include "experimental/users/buschmann/collision_checking/model_options.h"
-#include "experimental/users/buschmann/collision_checking/object_id.h"
-#include "experimental/users/buschmann/collision_checking/status.h"
+#include "collision_checking/assembly/assembly.h"
+#include "collision_checking/assembly_id.h"
+#include "collision_checking/model_options.h"
+#include "collision_checking/object_id.h"
+#include "collision_checking/status.h"
 #include "third_party/absl/status/statusor.h"
 
 namespace collision_checking {

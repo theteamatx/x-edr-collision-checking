@@ -7,12 +7,12 @@
 #include <string>
 #include <type_traits>
 
-#include "experimental/users/buschmann/collision_checking/assembly_coordinate_view.h"
-#include "experimental/users/buschmann/collision_checking/inlining.h"
-#include "experimental/users/buschmann/collision_checking/object_id.h"
-#include "experimental/users/buschmann/collision_checking/vector.h"
-#include "experimental/users/buschmann/collision_checking/assembly/assembly.h"
-#include "experimental/users/buschmann/collision_checking/eigenmath.h"
+#include "collision_checking/assembly_coordinate_view.h"
+#include "collision_checking/inlining.h"
+#include "collision_checking/object_id.h"
+#include "collision_checking/vector.h"
+#include "collision_checking/assembly/assembly.h"
+#include "collision_checking/eigenmath.h"
 #include "third_party/absl/status/status.h"
 #include "third_party/absl/status/statusor.h"
 #include "third_party/absl/strings/substitute.h"

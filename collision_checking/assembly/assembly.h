@@ -6,10 +6,10 @@
 #include <string>
 #include <vector>
 
-#include "experimental/users/buschmann/collision_checking/assembly/geometry.h"
-#include "experimental/users/buschmann/collision_checking/assembly/joint.h"
-#include "experimental/users/buschmann/collision_checking/assembly/link.h"
-#include "experimental/users/buschmann/collision_checking/geometry_shapes/shape_base.h"
+#include "collision_checking/assembly/geometry.h"
+#include "collision_checking/assembly/joint.h"
+#include "collision_checking/assembly/link.h"
+#include "collision_checking/geometry_shapes/shape_base.h"
 #include "third_party/absl/status/status.h"
 #include "third_party/absl/status/statusor.h"
 #include "third_party/absl/strings/string_view.h"

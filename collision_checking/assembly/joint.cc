@@ -1,9 +1,9 @@
-#include "experimental/users/buschmann/collision_checking/assembly/joint.h"
+#include "collision_checking/assembly/joint.h"
 
 #include <algorithm>
 
-#include "experimental/users/buschmann/collision_checking/assembly/assembly.h"
-#include "experimental/users/buschmann/collision_checking/assembly/link.h"
+#include "collision_checking/assembly/assembly.h"
+#include "collision_checking/assembly/link.h"
 
 namespace collision_checking {
 

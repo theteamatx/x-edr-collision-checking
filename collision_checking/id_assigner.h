@@ -1,9 +1,9 @@
 #ifndef EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_ID_ASSIGNER_H_
 #define EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_ID_ASSIGNER_H_
 
-#include "experimental/users/buschmann/collision_checking/assembly_id.h"
-#include "experimental/users/buschmann/collision_checking/logging.h"
-#include "experimental/users/buschmann/collision_checking/object_id.h"
+#include "collision_checking/assembly_id.h"
+#include "collision_checking/logging.h"
+#include "collision_checking/object_id.h"
 #include "third_party/absl/container/flat_hash_set.h"
 
 namespace collision_checking {

@@ -1,4 +1,4 @@
-#include "experimental/users/buschmann/collision_checking/voxel_map_object.h"
+#include "collision_checking/voxel_map_object.h"
 #include "googlex/proxy/eigenmath/distribution.h"
 #include "googlex/proxy/eigenmath/interpolation.h"
 #include "googlex/proxy/eigenmath/sampling.h"

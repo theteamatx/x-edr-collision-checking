@@ -1,12 +1,12 @@
-#include "experimental/users/buschmann/collision_checking/composite_object.h"
+#include "collision_checking/composite_object.h"
 
 #include <limits>
 #include <vector>
 
-#include "experimental/users/buschmann/collision_checking/options.h"
-#include "experimental/users/buschmann/collision_checking/eigenmath.h"
-#include "third_party/googletest/googletest/include/gtest/gtest.h"
-#include "experimental/users/buschmann/collision_checking/test_utils.h"
+#include "collision_checking/options.h"
+#include "collision_checking/eigenmath.h"
+#include "gtest/gtest.h"
+#include "collision_checking/test_utils.h"
 
 namespace collision_checking {
 namespace {

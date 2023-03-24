@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 
-#include "experimental/users/buschmann/collision_checking/assembly/assembly.h"
+#include "collision_checking/assembly/assembly.h"
 #include "third_party/absl/container/flat_hash_map.h"
 #include "third_party/absl/container/flat_hash_set.h"
 #include "third_party/absl/strings/string_view.h"

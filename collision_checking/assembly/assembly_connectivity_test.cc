@@ -1,12 +1,12 @@
-#include "experimental/users/buschmann/collision_checking/assembly/assembly_connectivity.h"
+#include "collision_checking/assembly/assembly_connectivity.h"
 
 #include <string>
 #include <vector>
 
-#include "experimental/users/buschmann/collision_checking/assembly/assembly.h"
-#include "experimental/users/buschmann/collision_checking/assembly/proto_utils.h"
-#include "experimental/users/buschmann/collision_checking/test_utils.h"
-#include "third_party/googletest/googletest/include/gtest/gtest.h"
+#include "collision_checking/assembly/assembly.h"
+#include "collision_checking/assembly/proto_utils.h"
+#include "collision_checking/test_utils.h"
+#include "gtest/gtest.h"
 
 namespace collision_checking {
 namespace {

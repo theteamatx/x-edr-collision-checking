@@ -1,7 +1,7 @@
-#include "experimental/users/buschmann/collision_checking/object_id.h"
+#include "collision_checking/object_id.h"
 
-#include "experimental/users/buschmann/collision_checking/test_utils.h"
-#include "third_party/googletest/googletest/include/gtest/gtest.h"
+#include "collision_checking/test_utils.h"
+#include "gtest/gtest.h"
 
 namespace collision_checking {
 namespace {

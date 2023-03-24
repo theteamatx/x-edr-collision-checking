@@ -1,7 +1,7 @@
 #ifndef EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_LOGGING_H_
 #define EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_LOGGING_H_
 
-#include "experimental/users/buschmann/collision_checking/inlining.h"
+#include "collision_checking/inlining.h"
 #include "third_party/absl/base/attributes.h"
 #include "third_party/absl/strings/str_format.h"
 

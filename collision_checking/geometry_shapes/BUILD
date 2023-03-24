@@ -25,7 +25,6 @@ proto_library(
     srcs = [
         "eigen.proto",
     ],
-    cc_api_version = 2,
 )
 
 cc_proto_library(
@@ -40,8 +39,8 @@ cc_library(
     ],
     deps = [
         ":eigen_cc_proto",
-        "//experimental/users/buschmann/collision_checking:eigenmath",
-        "//experimental/users/buschmann/collision_checking:logging",
+        "//collision_checking:eigenmath",
+        "//collision_checking:logging",
     ],
 )
 
@@ -50,7 +49,6 @@ proto_library(
     srcs = [
         "geometry_shapes.proto",
     ],
-    cc_api_version = 2,
     deps = [":eigen_proto"],
 )
 
@@ -74,7 +72,7 @@ cc_library(
         ":eigen_proto_utils",
         ":geometry_shape",
         ":geometry_shapes",
-        "//experimental/users/buschmann/collision_checking:eigenmath",
+        "//collision_checking:eigenmath",
         "//third_party/absl/status",
         "//third_party/absl/status:statusor",
         "//third_party/absl/strings",
@@ -87,8 +85,8 @@ cc_library(
         "shape_base.h",
     ],
     deps = [
-        "//experimental/users/buschmann/collision_checking:eigenmath",
-        "//experimental/users/buschmann/collision_checking:logging",
+        "//collision_checking:eigenmath",
+        "//collision_checking:logging",
     ],
 )
 
@@ -103,6 +101,6 @@ cc_library(
     ],
     deps = [
         ":geometry_shape",
-        "//experimental/users/buschmann/collision_checking:eigenmath",
+        "//collision_checking:eigenmath",
     ],
 )

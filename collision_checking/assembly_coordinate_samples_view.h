@@ -1,7 +1,7 @@
 #ifndef EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_ASSEMBLY_COORDINATE_SAMPLES_VIEW_H_
 #define EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_ASSEMBLY_COORDINATE_SAMPLES_VIEW_H_
 
-#include "experimental/users/buschmann/collision_checking/assembly_kinematics.h"
+#include "collision_checking/assembly_kinematics.h"
 #include "third_party/absl/types/span.h"
 
 namespace collision_checking {

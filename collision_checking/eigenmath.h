@@ -1,6 +1,6 @@
 #ifndef EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_EIGENMATH_H_
 #define EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_EIGENMATH_H_
-#include "experimental/users/buschmann/collision_checking/inlining.h"
+#include "collision_checking/inlining.h"
 #include "googlex/proxy/eigenmath/line_search.h"
 #include "googlex/proxy/eigenmath/pose3.h"
 #include "googlex/proxy/eigenmath/types.h"

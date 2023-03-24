@@ -13,7 +13,7 @@
 #include <cstdint>
 #include <limits>
 
-#include "experimental/users/buschmann/collision_checking/geometry.h"
+#include "collision_checking/geometry.h"
 
 namespace collision_checking {
 

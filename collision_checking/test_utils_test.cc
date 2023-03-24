@@ -1,9 +1,9 @@
-#include "experimental/users/buschmann/collision_checking/test_utils.h"
+#include "collision_checking/test_utils.h"
 
 
 #include "third_party/absl/log/absl_log.h"
 #include "third_party/benchmark/include/benchmark/benchmark.h"
-#include "third_party/googletest/googletest/include/gtest/gtest.h"
+#include "gtest/gtest.h"
 
 namespace collision_checking {
 namespace testing {

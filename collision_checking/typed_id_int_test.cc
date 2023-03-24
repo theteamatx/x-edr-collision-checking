@@ -1,9 +1,9 @@
-#include "experimental/users/buschmann/collision_checking/typed_id_int.h"
+#include "collision_checking/typed_id_int.h"
 
 #include <cstdint>
 
 #include "third_party/absl/container/flat_hash_set.h"
-#include "third_party/googletest/googletest/include/gtest/gtest.h"
+#include "gtest/gtest.h"
 
 namespace collision_checking {
 namespace {

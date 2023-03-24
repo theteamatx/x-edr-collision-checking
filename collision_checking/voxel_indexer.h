@@ -3,9 +3,9 @@
 
 #include <limits>
 
-#include "experimental/users/buschmann/collision_checking/geometry.h"
-#include "experimental/users/buschmann/collision_checking/logging.h"
-#include "experimental/users/buschmann/collision_checking/eigenmath.h"
+#include "collision_checking/geometry.h"
+#include "collision_checking/logging.h"
+#include "collision_checking/eigenmath.h"
 #include "third_party/eigen3/Eigen/Core"
 
 namespace collision_checking {

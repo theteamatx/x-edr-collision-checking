@@ -1,14 +1,14 @@
-#include "experimental/users/buschmann/collision_checking/geometry.h"
+#include "collision_checking/geometry.h"
 
 #include <cmath>
 #include <limits>
 
-#include "experimental/users/buschmann/collision_checking/object_id.h"
+#include "collision_checking/object_id.h"
 #include "googlex/proxy/eigenmath/rotation_utils.h"
-#include "experimental/users/buschmann/collision_checking/eigenmath.h"
-#include "experimental/users/buschmann/collision_checking/test_utils.h"
-#include "third_party/googletest/googlemock/include/gmock/gmock.h"
-#include "third_party/googletest/googletest/include/gtest/gtest.h"
+#include "collision_checking/eigenmath.h"
+#include "collision_checking/test_utils.h"
+#include "gmock/gmock.h"
+#include "gtest/gtest.h"
 
 namespace collision_checking {
 namespace {

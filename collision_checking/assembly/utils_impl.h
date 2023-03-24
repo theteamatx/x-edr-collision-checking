@@ -4,10 +4,10 @@
 #include <memory>
 #include <utility>
 
-#include "experimental/users/buschmann/collision_checking/assembly/assembly.h"
-#include "experimental/users/buschmann/collision_checking/assembly/assembly.proto.h"
-#include "experimental/users/buschmann/collision_checking/geometry_shapes/eigen_proto_utils.h"
-#include "experimental/users/buschmann/collision_checking/geometry_shapes/utils_impl.h"
+#include "collision_checking/assembly/assembly.h"
+#include "collision_checking/assembly/assembly.proto.h"
+#include "collision_checking/geometry_shapes/eigen_proto_utils.h"
+#include "collision_checking/geometry_shapes/utils_impl.h"
 #include "third_party/absl/status/status.h"
 #include "third_party/absl/status/statusor.h"
 #include "third_party/absl/strings/str_cat.h"

@@ -1,4 +1,4 @@
-#include "experimental/users/buschmann/collision_checking/assembly/assembly.h"
+#include "collision_checking/assembly/assembly.h"
 
 #include <algorithm>
 #include <deque>
@@ -7,7 +7,7 @@
 #include <utility>
 #include <vector>
 
-#include "experimental/users/buschmann/collision_checking/geometry_shapes/composite_shape.h"
+#include "collision_checking/geometry_shapes/composite_shape.h"
 #include "third_party/absl/status/status.h"
 #include "third_party/absl/strings/str_cat.h"
 

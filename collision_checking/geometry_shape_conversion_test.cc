@@ -1,17 +1,17 @@
-#include "experimental/users/buschmann/collision_checking/geometry_shape_conversion.h"
+#include "collision_checking/geometry_shape_conversion.h"
 
 #include <limits>
 #include <memory>
 #include <utility>
 #include <vector>
 
-#include "experimental/users/buschmann/collision_checking/composite_object.h"
-#include "experimental/users/buschmann/collision_checking/eigenmath.h"
-#include "experimental/users/buschmann/collision_checking/geometry.h"
-#include "experimental/users/buschmann/collision_checking/geometry_shapes/capsule.h"
-#include "experimental/users/buschmann/collision_checking/test_utils.h"
+#include "collision_checking/composite_object.h"
+#include "collision_checking/eigenmath.h"
+#include "collision_checking/geometry.h"
+#include "collision_checking/geometry_shapes/capsule.h"
+#include "collision_checking/test_utils.h"
 #include "third_party/absl/status/status.h"
-#include "third_party/googletest/googletest/include/gtest/gtest.h"
+#include "gtest/gtest.h"
 
 namespace collision_checking {
 namespace {

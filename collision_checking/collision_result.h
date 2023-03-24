@@ -3,10 +3,10 @@
 
 #include <limits>
 
-#include "experimental/users/buschmann/collision_checking/eigenmath.h"
-#include "experimental/users/buschmann/collision_checking/logging.h"
-#include "experimental/users/buschmann/collision_checking/options.h"
-#include "experimental/users/buschmann/collision_checking/vector.h"
+#include "collision_checking/eigenmath.h"
+#include "collision_checking/logging.h"
+#include "collision_checking/options.h"
+#include "collision_checking/vector.h"
 
 // Basic classes and functions for performing collision checking between
 // a set of composite geometric shapes and a static environment.

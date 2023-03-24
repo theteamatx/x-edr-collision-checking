@@ -3,8 +3,8 @@
 
 #include <memory>
 
-#include "experimental/users/buschmann/collision_checking/eigenmath.h"
-#include "experimental/users/buschmann/collision_checking/logging.h"
+#include "collision_checking/eigenmath.h"
+#include "collision_checking/logging.h"
 
 namespace collision_checking {
 namespace geometry_shapes {

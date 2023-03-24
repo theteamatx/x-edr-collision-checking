@@ -1,6 +1,6 @@
-#include "experimental/users/buschmann/collision_checking/id_assigner.h"
+#include "collision_checking/id_assigner.h"
 
-#include "third_party/googletest/googletest/include/gtest/gtest.h"
+#include "gtest/gtest.h"
 
 namespace collision_checking {
 namespace {

@@ -3,9 +3,9 @@
 
 #include <memory>
 
-#include "experimental/users/buschmann/collision_checking/eigenmath.h"
-#include "experimental/users/buschmann/collision_checking/geometry_shapes/geometry_shapes.proto.h"
-#include "experimental/users/buschmann/collision_checking/geometry_shapes/shape_base.h"
+#include "collision_checking/eigenmath.h"
+#include "collision_checking/geometry_shapes/geometry_shapes.proto.h"
+#include "collision_checking/geometry_shapes/shape_base.h"
 #include "third_party/absl/status/status.h"
 #include "third_party/absl/status/statusor.h"
 

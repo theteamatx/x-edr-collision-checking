@@ -1,7 +1,7 @@
-
+	
 bazel-bin
-bazel-mobility-collision
+bazel-x-edr-collision-checking
 bazel-out
 bazel-testlogs
-
+*~
 

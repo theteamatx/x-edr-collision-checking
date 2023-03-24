@@ -8,11 +8,11 @@
 #include <string>
 #include <type_traits>
 
-#include "experimental/users/buschmann/collision_checking/debug_options.h"
-#include "experimental/users/buschmann/collision_checking/geometry.h"
-#include "experimental/users/buschmann/collision_checking/inlining.h"
-#include "experimental/users/buschmann/collision_checking/logging.h"
-#include "experimental/users/buschmann/collision_checking/eigenmath.h"
+#include "collision_checking/debug_options.h"
+#include "collision_checking/geometry.h"
+#include "collision_checking/inlining.h"
+#include "collision_checking/logging.h"
+#include "collision_checking/eigenmath.h"
 #include "third_party/absl/strings/str_format.h"
 
 namespace collision_checking {

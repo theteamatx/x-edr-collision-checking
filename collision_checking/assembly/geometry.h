@@ -4,7 +4,7 @@
 #include <memory>
 #include <string>
 
-#include "experimental/users/buschmann/collision_checking/geometry_shapes/shape_base.h"
+#include "collision_checking/geometry_shapes/shape_base.h"
 #include "third_party/absl/strings/string_view.h"
 
 namespace collision_checking {

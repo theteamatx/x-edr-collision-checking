@@ -1,11 +1,11 @@
-#include "experimental/users/buschmann/collision_checking/assembly/link.h"
+#include "collision_checking/assembly/link.h"
 
 #include <algorithm>
 #include <limits>
 
-#include "experimental/users/buschmann/collision_checking/assembly/assembly.h"
-#include "experimental/users/buschmann/collision_checking/assembly/geometry.h"
-#include "experimental/users/buschmann/collision_checking/assembly/joint.h"
+#include "collision_checking/assembly/assembly.h"
+#include "collision_checking/assembly/geometry.h"
+#include "collision_checking/assembly/joint.h"
 #include "third_party/absl/strings/str_format.h"
 
 namespace collision_checking {

@@ -1,11 +1,11 @@
-#include "experimental/users/buschmann/collision_checking/voxel_code.h"
+#include "collision_checking/voxel_code.h"
 
 #include <vector>
 
-#include "experimental/users/buschmann/collision_checking/eigenmath.h"
+#include "collision_checking/eigenmath.h"
 #include "third_party/absl/flags/flag.h"
-#include "third_party/googletest/googlemock/include/gmock/gmock.h"
-#include "third_party/googletest/googletest/include/gtest/gtest.h"
+#include "gmock/gmock.h"
+#include "gtest/gtest.h"
 
 // Set to true to run exhaustive tests, which are not run by default on TAP.
 ABSL_FLAG(bool, run_exhaustive_tests, false,

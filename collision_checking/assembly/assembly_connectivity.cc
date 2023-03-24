@@ -1,9 +1,9 @@
-#include "experimental/users/buschmann/collision_checking/assembly/assembly_connectivity.h"
+#include "collision_checking/assembly/assembly_connectivity.h"
 
 #include <string>
 #include <vector>
 
-#include "experimental/users/buschmann/collision_checking/assembly/assembly.h"
+#include "collision_checking/assembly/assembly.h"
 #include "third_party/absl/container/flat_hash_set.h"
 #include "third_party/absl/strings/string_view.h"
 #include "third_party/absl/types/span.h"

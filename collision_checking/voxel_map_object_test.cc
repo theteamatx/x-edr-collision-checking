@@ -1,13 +1,13 @@
-#include "experimental/users/buschmann/collision_checking/voxel_map_object.h"
+#include "collision_checking/voxel_map_object.h"
 
 #include <iostream>
 #include <vector>
 
-#include "experimental/users/buschmann/collision_checking/geometry.h"
-#include "experimental/users/buschmann/collision_checking/eigenmath.h"
+#include "collision_checking/geometry.h"
+#include "collision_checking/eigenmath.h"
 #include "third_party/absl/algorithm/container.h"
-#include "third_party/googletest/googlemock/include/gmock/gmock.h"
-#include "third_party/googletest/googletest/include/gtest/gtest.h"
+#include "gmock/gmock.h"
+#include "gtest/gtest.h"
 
 namespace collision_checking {
 namespace {

@@ -8,7 +8,7 @@
 #include <sstream>
 #include <string>
 
-#include "experimental/users/buschmann/collision_checking/typed_id_int.h"
+#include "collision_checking/typed_id_int.h"
 #include "third_party/absl/status/status.h"
 #include "third_party/absl/status/statusor.h"
 

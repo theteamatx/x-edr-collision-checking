@@ -1,19 +1,19 @@
 #ifndef EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_COMPOSITE_OBJECT_H_
 #define EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_COMPOSITE_OBJECT_H_
 
-#include "experimental/users/buschmann/collision_checking/distance_box_box.h"
-#include "experimental/users/buschmann/collision_checking/distance_point_box.h"
-#include "experimental/users/buschmann/collision_checking/distance_point_point.h"
-#include "experimental/users/buschmann/collision_checking/distance_point_segment.h"
-#include "experimental/users/buschmann/collision_checking/distance_segment_box.h"
-#include "experimental/users/buschmann/collision_checking/distance_segment_segment.h"
-#include "experimental/users/buschmann/collision_checking/geometry.h"
-#include "experimental/users/buschmann/collision_checking/inlining.h"
-#include "experimental/users/buschmann/collision_checking/normalize_and_maybe_log.h"
-#include "experimental/users/buschmann/collision_checking/object_id.h"
-#include "experimental/users/buschmann/collision_checking/options.h"
-#include "experimental/users/buschmann/collision_checking/vector.h"
-#include "experimental/users/buschmann/collision_checking/eigenmath.h"
+#include "collision_checking/distance_box_box.h"
+#include "collision_checking/distance_point_box.h"
+#include "collision_checking/distance_point_point.h"
+#include "collision_checking/distance_point_segment.h"
+#include "collision_checking/distance_segment_box.h"
+#include "collision_checking/distance_segment_segment.h"
+#include "collision_checking/geometry.h"
+#include "collision_checking/inlining.h"
+#include "collision_checking/normalize_and_maybe_log.h"
+#include "collision_checking/object_id.h"
+#include "collision_checking/options.h"
+#include "collision_checking/vector.h"
+#include "collision_checking/eigenmath.h"
 
 // This file contains classes and functions for collision models
 // containing groups of objects and objects composed of multiple

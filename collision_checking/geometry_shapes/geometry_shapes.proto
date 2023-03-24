@@ -3,10 +3,10 @@ syntax = "proto2";
 
 package collision_checking.geometry_shapes.proto;
 
-import "experimental/users/buschmann/collision_checking/geometry_shapes/eigen.proto";
+import "collision_checking/geometry_shapes/eigen.proto";
 
 option java_outer_classname = "GeometryShapesProtos";
-option go_api_flag = "OPEN_TO_OPAQUE_HYBRID";  // See http://go/go-api-flag.
+option go_api_flag = "OPEN_TO_OPAQUE_HYBRID";
 
 message RGBA {
   optional double r = 1;

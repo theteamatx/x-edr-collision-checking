@@ -9,10 +9,10 @@
 #include <limits>
 #include <string>
 
-#include "experimental/users/buschmann/collision_checking/inlining.h"
-#include "experimental/users/buschmann/collision_checking/logging.h"
+#include "collision_checking/inlining.h"
+#include "collision_checking/logging.h"
 #include "third_party/absl/strings/str_format.h"
-#include "experimental/users/buschmann/collision_checking/eigenmath.h"
+#include "collision_checking/eigenmath.h"
 
 namespace collision_checking {
 // A point struct that allows distance computation functions for different

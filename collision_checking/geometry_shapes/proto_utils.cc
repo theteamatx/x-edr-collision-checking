@@ -1,11 +1,11 @@
-#include "experimental/users/buschmann/collision_checking/geometry_shapes/proto_utils.h"
+#include "collision_checking/geometry_shapes/proto_utils.h"
 
 #include <memory>
 #include <string>
 #include <vector>
 
-#include "experimental/users/buschmann/collision_checking/geometry_shapes/geometry_shapes.proto.h"
-#include "experimental/users/buschmann/collision_checking/geometry_shapes/utils_impl.h"
+#include "collision_checking/geometry_shapes/geometry_shapes.proto.h"
+#include "collision_checking/geometry_shapes/utils_impl.h"
 #include "third_party/absl/status/statusor.h"
 
 namespace collision_checking {

@@ -1,10 +1,10 @@
 #ifndef EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_COLLISION_CHECKING_SCRATCH_H_
 #define EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_COLLISION_CHECKING_SCRATCH_H_
 
-#include "experimental/users/buschmann/collision_checking/assembly_kinematics.h"
-#include "experimental/users/buschmann/collision_checking/composite_object.h"
-#include "experimental/users/buschmann/collision_checking/inlining.h"
-#include "experimental/users/buschmann/collision_checking/vector.h"
+#include "collision_checking/assembly_kinematics.h"
+#include "collision_checking/composite_object.h"
+#include "collision_checking/inlining.h"
+#include "collision_checking/vector.h"
 
 namespace collision_checking {
 

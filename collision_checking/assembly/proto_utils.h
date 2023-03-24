@@ -3,8 +3,8 @@
 
 #include <memory>
 
-#include "experimental/users/buschmann/collision_checking/assembly/assembly.h"
-#include "experimental/users/buschmann/collision_checking/assembly/assembly.proto.h"
+#include "collision_checking/assembly/assembly.h"
+#include "collision_checking/assembly/assembly.proto.h"
 #include "third_party/absl/status/statusor.h"
 
 namespace collision_checking {

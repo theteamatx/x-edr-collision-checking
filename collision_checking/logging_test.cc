@@ -1,6 +1,6 @@
-#include "experimental/users/buschmann/collision_checking/logging.h"
+#include "collision_checking/logging.h"
 
-#include "third_party/googletest/googletest/include/gtest/gtest.h"
+#include "gtest/gtest.h"
 
 namespace collision_checking {
 namespace {

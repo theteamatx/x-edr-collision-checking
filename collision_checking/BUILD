@@ -33,8 +33,7 @@ cc_test(
     srcs = ["vector_test.cc"],
     deps = [
         ":vector",
-        "//third_party/googletest:gmock_no_google3",
-        "//third_party/googletest:gtest_main_no_google3",
+        "@com_google_googletest//:gtest_main",
     ],
 )
 
@@ -49,7 +48,7 @@ cc_test(
     srcs = ["id_assigner_test.cc"],
     deps = [
         ":id_assigner",
-        "//third_party/googletest:gtest_main_no_google3",
+        "@com_google_googletest//:gtest_main",
     ],
 )
 
@@ -74,7 +73,7 @@ cc_test(
         ":composite_object",
         ":eigenmath",
         ":test_utils",
-        "//third_party/googletest:gtest_main_no_google3",
+        "@com_google_googletest//:gtest_main",
     ],
 )
 
@@ -96,7 +95,7 @@ cc_test(
         ":collision_result",
         ":eigenmath",
         ":test_utils",
-        "//third_party/googletest:gtest_main_no_google3",
+        "@com_google_googletest//:gtest_main",
     ],
 )
 
@@ -110,8 +109,8 @@ cc_test(
     srcs = ["typed_id_int_test.cc"],
     deps = [
         ":typed_id_int",
-        "//third_party/absl/container:flat_hash_set",
-        "//third_party/googletest:gtest_main_no_google3",
+        "@com_google_absl//absl/container:flat_hash_set",
+        "@com_google_googletest//:gtest_main",
     ],
 )
 
@@ -125,8 +124,8 @@ cc_library(
     hdrs = ["logging.h"],
     deps = [
         ":inlining",
-        "//third_party/absl/base:core_headers",
-        "//third_party/absl/strings:str_format",
+        "@com_google_absl//absl/base:core_headers",
+        "@com_google_absl//absl/strings:str_format",
     ],
 )
 
@@ -135,7 +134,7 @@ cc_test(
     srcs = ["logging_test.cc"],
     deps = [
         ":logging",
-        "//third_party/googletest:gtest_main_no_google3",
+        "@com_google_googletest//:gtest_main",
     ],
 )
 
@@ -145,7 +144,7 @@ cc_library(
     deps = [
         ":eigenmath",
         ":inlining",
-        "//third_party/absl/log:absl_log",
+        "@com_google_absl//absl/log:absl_log",
     ],
 )
 
@@ -154,8 +153,8 @@ cc_library(
     hdrs = ["object_id.h"],
     deps = [
         ":typed_id_int",
-        "//third_party/absl/status",
-        "//third_party/absl/status:statusor",
+        "@com_google_absl//absl/status",
+        "@com_google_absl//absl/status:statusor",
     ],
 )
 
@@ -165,7 +164,7 @@ cc_test(
     deps = [
         ":object_id",
         ":test_utils",
-        "//third_party/googletest:gtest_main_no_google3",
+        "@com_google_googletest//:gtest_main",
     ],
 )
 
@@ -201,9 +200,8 @@ cc_library(
         ":inlining",
         ":logging",
         ":object_id",
-        "//googlex/proxy/eigenmath",
-        "//third_party/absl/strings",
-        "//third_party/absl/strings:str_format",
+        "@com_google_absl//absl/strings",
+        "@com_google_absl//absl/strings:str_format",
     ],
 )
 
@@ -212,7 +210,7 @@ cc_test(
     srcs = ["options_test.cc"],
     deps = [
         ":collision_checking_core",
-        "//third_party/googletest:gtest_main_no_google3",
+        "@com_google_googletest//:gtest_main",
     ],
 )
 
@@ -225,8 +223,8 @@ cc_test(
         ":object_id",
         ":test_utils",
         "//googlex/proxy/eigenmath",
-        "//third_party/googletest:gmock_no_google3",
-        "//third_party/googletest:gtest_main_no_google3",
+        "@com_google_googletest//:gmock",
+        "@com_google_googletest//:gtest_main",
     ],
 )
 
@@ -237,13 +235,13 @@ cc_library(
     hdrs = ["test_utils.h"],
     deps = [
         "//googlex/proxy/eigenmath",
-        "//third_party/absl/base",
-        "//third_party/absl/base:malloc_internal",
-        "//third_party/absl/log:absl_check",
-        "//third_party/absl/log:absl_log",
-        "//third_party/absl/status",
+        "@com_google_absl//absl/base",
+        "@com_google_absl//absl/base:malloc_internal",
+        "@com_google_absl//absl/log:absl_check",
+        "@com_google_absl//absl/log:absl_log",
+        "@com_google_absl//absl/status",
         "//third_party/eigen3",
-        "//third_party/googletest:gmock_no_google3",
+        "@com_google_googletest//:gmock",
         "//third_party/protobuf",
         "//third_party/protobuf/util:differencer",
     ],
@@ -254,9 +252,9 @@ cc_test(
     srcs = ["test_utils_test.cc"],
     deps = [
         ":test_utils",
-        "//third_party/absl/log:absl_log",
-        "//third_party/benchmark",
-        "//third_party/googletest:gtest_main_no_google3",
+        "@com_google_absl//absl/log:absl_log",
+        "@com_google_benchmark//:benchmark",
+        "@com_google_googletest//:gtest_main",
         "//third_party/googletest:gtest_no_google3",
     ],
 )
@@ -268,7 +266,7 @@ cc_test(
         ":collision_checking_core",
         ":eigenmath",
         ":test_utils",
-        "//third_party/googletest:gtest_main_no_google3",
+ 	"@com_google_googletest//:gtest_main",
     ],
 )
 
@@ -281,11 +279,10 @@ cc_test(
         ":test_utils",
         "//googlex/proxy/eigenmath",
         "//googlex/proxy/eigenmath:sampling",
-        "//third_party/absl/flags:flag",
-        "//third_party/benchmark",
-        "//third_party/googletest:gmock_no_google3",
-        "//third_party/googletest:gtest_main_no_google3",
-        "//third_party/googletest:gtest_no_google3",
+        "@com_google_absl//absl/flags:flag",
+        "@com_google_benchmark//:benchmark",
+        "@com_google_googletest//:gmock",
+        "@com_google_googletest//:gtest_main",
         "//third_party/osqp_cpp:osqp++",
     ],
 )
@@ -299,9 +296,9 @@ cc_test(
         ":test_utils",
         "//googlex/proxy/eigenmath",
         "//googlex/proxy/eigenmath:sampling",
-        "//third_party/absl/flags:flag",
-        "//third_party/benchmark",
-        "//third_party/googletest:gtest_main_no_google3",
+        "@com_google_absl//absl/flags:flag",
+        "@com_google_benchmark//:benchmark",
+        "@com_google_googletest//:gtest_main",
         "//third_party/osqp_cpp:osqp++",
     ],
 )
@@ -315,9 +312,9 @@ cc_test(
         ":test_utils",
         "//googlex/proxy/eigenmath",
         "//googlex/proxy/eigenmath:sampling",
-        "//third_party/absl/flags:flag",
-        "//third_party/googletest:gmock_no_google3",
-        "//third_party/googletest:gtest_main_no_google3",
+        "@com_google_absl//absl/flags:flag",
+        "@com_google_googletest//:gmock",
+        "@com_google_googletest//:gtest_main",
         "//third_party/osqp_cpp:osqp++",
     ],
 )
@@ -328,7 +325,7 @@ cc_test(
     deps = [
         ":collision_checking_core",
         "//googlex/proxy/eigenmath",
-        "//third_party/benchmark",
+        "@com_google_benchmark//:benchmark",
     ],
 )
 
@@ -341,9 +338,9 @@ cc_test(
         ":test_utils",
         "//googlex/proxy/eigenmath",
         "//googlex/proxy/eigenmath:sampling",
-        "//third_party/absl/flags:flag",
-        "//third_party/absl/strings:str_format",
-        "//third_party/googletest:gtest_main_no_google3",
+        "@com_google_absl//absl/flags:flag",
+        "@com_google_absl//absl/strings:str_format",
+        "@com_google_googletest//:gtest_main",
         "//third_party/googletest:gtest_no_google3",
         "//third_party/osqp_cpp:osqp++",
     ],
@@ -355,7 +352,7 @@ cc_binary(
     deps = [
         ":collision_checking_core",
         "//googlex/proxy/eigenmath",
-        "//third_party/benchmark",
+        "@com_google_benchmark//:benchmark",
     ],
 )
 
@@ -368,9 +365,9 @@ cc_test(
         ":test_utils",
         "//googlex/proxy/eigenmath",
         "//googlex/proxy/eigenmath:sampling",
-        "//third_party/absl/flags:flag",
-        "//third_party/googletest:gmock_no_google3",
-        "//third_party/googletest:gtest_main_no_google3",
+        "@com_google_absl//absl/flags:flag",
+        "@com_google_googletest//:gmock",
+        "@com_google_googletest//:gtest_main",
         "//third_party/googletest:gtest_no_google3",
         "//third_party/osqp_cpp:osqp++",
     ],
@@ -382,7 +379,7 @@ cc_binary(
     deps = [
         ":collision_checking_core",
         "//googlex/proxy/eigenmath",
-        "//third_party/benchmark",
+        "@com_google_benchmark//:benchmark",
     ],
 )
 
@@ -395,7 +392,7 @@ cc_library(
         ":assembly_id",
         ":logging",
         ":object_id",
-        "//third_party/absl/container:flat_hash_set",
+        "@com_google_absl//absl/container:flat_hash_set",
     ],
 )
 
@@ -411,9 +408,9 @@ cc_test(
     deps = [
         ":eigenmath",
         ":voxel_code",
-        "//third_party/absl/flags:flag",
-        "//third_party/googletest:gmock_no_google3",
-        "//third_party/googletest:gtest_main_no_google3",
+        "@com_google_absl//absl/flags:flag",
+        "@com_google_googletest//:gmock",
+        "@com_google_googletest//:gtest_main",
         "//third_party/googletest:gtest_no_google3",
     ],
 )
@@ -423,7 +420,7 @@ cc_binary(
     srcs = ["voxel_code_benchmark.cc"],
     deps = [
         ":voxel_code",
-        "//third_party/benchmark",
+        "@com_google_benchmark//:benchmark",
     ],
 )
 
@@ -446,9 +443,9 @@ cc_test(
         ":eigenmath",
         ":test_utils",
         ":voxel_indexer",
-        "//third_party/absl/flags:flag",
-        "//third_party/googletest:gmock_no_google3",
-        "//third_party/googletest:gtest_main_no_google3",
+        "@com_google_absl//absl/flags:flag",
+        "@com_google_googletest//:gmock",
+        "@com_google_googletest//:gtest_main",
     ],
 )
 
@@ -461,7 +458,7 @@ cc_library(
         ":object_id",
         ":voxel_code",
         ":voxel_indexer",
-        "//third_party/absl/algorithm:container",
+        "@com_google_absl//absl/algorithm:container",
     ],
 )
 
@@ -472,9 +469,9 @@ cc_test(
         ":collision_checking_core",
         ":eigenmath",
         ":voxel_map_object",
-        "//third_party/absl/algorithm:container",
-        "//third_party/googletest:gmock_no_google3",
-        "//third_party/googletest:gtest_main_no_google3",
+        "@com_google_absl//absl/algorithm:container",
+        "@com_google_googletest//:gmock",
+        "@com_google_googletest//:gtest_main",
     ],
 )
 
@@ -485,7 +482,7 @@ cc_binary(
         ":voxel_map_object",
         "//googlex/proxy/eigenmath",
         "//googlex/proxy/eigenmath:sampling",
-        "//third_party/benchmark",
+        "@com_google_benchmark//:benchmark",
     ],
 )
 
@@ -502,7 +499,7 @@ cc_library(
         ":inlining",
         ":normalize_and_maybe_log",
         ":voxel_map_object",
-        "//third_party/absl/status",
+        "@com_google_absl//absl/status",
     ],
 )
 
@@ -515,10 +512,10 @@ cc_test(
         ":eigenmath",
         ":object_id",
         ":test_utils",
-        "//third_party/absl/status",
-        "//third_party/absl/types:source_location",
-        "//third_party/googletest:gmock_no_google3",
-        "//third_party/googletest:gtest_main_no_google3",
+        "@com_google_absl//absl/status",
+        "@com_google_absl//absl/types:source_location",
+        "@com_google_googletest//:gmock",
+        "@com_google_googletest//:gtest_main",
     ],
 )
 
@@ -538,7 +535,7 @@ cc_library(
         ":assembly_coordinate_view",
         ":eigenmath",
         ":inlining",
-        "//third_party/absl/types:span",
+        "@com_google_absl//absl/types:span",
     ],
 )
 
@@ -553,11 +550,11 @@ cc_library(
         ":inlining",
         ":object_id",
         ":vector",
-        "//experimental/users/buschmann/collision_checking/assembly",
-        "//third_party/absl/status",
-        "//third_party/absl/status:statusor",
-        "//third_party/absl/strings",
-        "//third_party/absl/types:span",
+        "//collision_checking/assembly",
+        "@com_google_absl//absl/status",
+        "@com_google_absl//absl/status:statusor",
+        "@com_google_absl//absl/strings",
+        "@com_google_absl//absl/types:span",
     ],
 )
 
@@ -569,10 +566,10 @@ cc_test(
         ":assembly_kinematics",
         ":eigenmath",
         ":test_utils",
-        "//experimental/users/buschmann/collision_checking/assembly",
-        "//experimental/users/buschmann/collision_checking/assembly:cc_proto",
-        "//experimental/users/buschmann/collision_checking/assembly:proto_utils",
-        "//third_party/googletest:gtest_main_no_google3",
+        "//collision_checking/assembly",
+        "//collision_checking/assembly:cc_proto",
+        "//collision_checking/assembly:proto_utils",
+       "@com_google_googletest//:gtest_main",
     ],
 )
 
@@ -581,7 +578,7 @@ cc_library(
     hdrs = ["assembly_coordinate_samples_view.h"],
     deps = [
         ":assembly_kinematics",
-        "//third_party/absl/types:span",
+        "@com_google_absl//absl/types:span",
     ],
 )
 
@@ -593,15 +590,15 @@ cc_library(
         ":compute_collisions",
         ":model_options",
         ":object_id",
-        "//experimental/users/buschmann/collision_checking/assembly",
-        "//third_party/absl/status:statusor",
+        "//collision_checking/assembly",
+        "@com_google_absl//absl/status:statusor",
     ],
 )
 
 cc_library(
     name = "voxel_map_object_name",
     hdrs = [":voxel_map_object_name.h"],
-    deps = ["//third_party/absl/strings"],
+    deps = ["@com_google_absl//absl/strings"],
 )
 
 proto_library(
@@ -609,8 +606,7 @@ proto_library(
     srcs = [
         "bounding_box.proto",
     ],
-    cc_api_version = 2,
-    deps = ["//experimental/users/buschmann/collision_checking/geometry_shapes:eigen_proto"],
+    deps = ["//collision_checking/geometry_shapes:eigen_proto"],
 )
 
 cc_proto_library(
@@ -621,10 +617,9 @@ cc_proto_library(
 proto_library(
     name = "collision_state_proto",
     srcs = ["collision_state.proto"],
-    cc_api_version = 2,
     deps = [
         ":bounding_box_proto",
-        "//experimental/users/buschmann/collision_checking/geometry_shapes:proto",
+        "//collision_checking/geometry_shapes:proto",
     ],
 )
 
@@ -648,11 +643,11 @@ cc_library(
         ":object_id",
         ":voxel_map_object",
         ":voxel_map_object_name",
-        "//experimental/users/buschmann/collision_checking/geometry_shapes:cc_proto",
-        "//experimental/users/buschmann/collision_checking/geometry_shapes:eigen_proto_utils",
-        "//third_party/absl/functional:function_ref",
-        "//third_party/absl/status",
-        "//third_party/absl/status:statusor",
+        "//collision_checking/geometry_shapes:cc_proto",
+        "//collision_checking/geometry_shapes:eigen_proto_utils",
+        "@com_google_absl//absl/functional:function_ref",
+        "@com_google_absl//absl/status",
+        "@com_google_absl//absl/status:statusor",
     ],
 )
 
@@ -669,10 +664,10 @@ cc_library(
         ":composite_object",
         ":eigenmath",
         ":voxel_map_object",
-        "//experimental/users/buschmann/collision_checking/geometry_shapes",
-        "//experimental/users/buschmann/collision_checking/geometry_shapes:geometry_shape",
-        "//third_party/absl/status",
-        "//third_party/absl/strings",
+        "//collision_checking/geometry_shapes",
+        "//collision_checking/geometry_shapes:geometry_shape",
+        "@com_google_absl//absl/status",
+        "@com_google_absl//absl/strings",
     ],
 )
 
@@ -685,9 +680,9 @@ cc_test(
         ":eigenmath",
         ":geometry_shape_conversion",
         ":test_utils",
-        "//experimental/users/buschmann/collision_checking/geometry_shapes",
-        "//third_party/absl/status",
-        "//third_party/googletest:gtest_main_no_google3",
+        "//collision_checking/geometry_shapes",
+        "@com_google_absl//absl/status",
+        "@com_google_googletest//:gtest_main",
     ],
 )
 
@@ -726,15 +721,15 @@ cc_library(
         ":proto_utils",
         ":vector",
         ":voxel_map_object_name",
-        "//experimental/users/buschmann/collision_checking/assembly",
-        "//experimental/users/buschmann/collision_checking/assembly:assembly_connectivity",
-        "//third_party/absl/algorithm:container",
-        "//third_party/absl/container:btree",
-        "//third_party/absl/functional:bind_front",
-        "//third_party/absl/status",
-        "//third_party/absl/status:statusor",
-        "//third_party/absl/strings",
-        "//third_party/absl/strings:str_format",
+        "//collision_checking/assembly",
+        "//collision_checking/assembly:assembly_connectivity",
+        "@com_google_absl//absl/algorithm:container",
+        "@com_google_absl//absl/container:btree",
+        "@com_google_absl//absl/functional:bind_front",
+        "@com_google_absl//absl/status",
+        "@com_google_absl//absl/status:statusor",
+        "@com_google_absl//absl/strings",
+        "@com_google_absl//absl/strings:str_format",
     ],
 )
 
@@ -749,10 +744,10 @@ cc_test(
         ":object_id",
         ":test_utils",
         ":vector",
-        "//experimental/users/buschmann/collision_checking/assembly:proto_utils",
-        "//experimental/users/buschmann/collision_checking/geometry_shapes",
-        "//third_party/absl/status",
-        "//third_party/googletest:gtest_main_no_google3",
+        "//collision_checking/assembly:proto_utils",
+        "//collision_checking/geometry_shapes",
+        "@com_google_absl//absl/status",
+        "@com_google_googletest//:gtest_main",
     ],
 )
 
@@ -769,9 +764,9 @@ cc_test(
         ":proto_utils",
         ":test_utils",
         ":vector",
-        "//experimental/users/buschmann/collision_checking/assembly:cc_proto",
-        "//experimental/users/buschmann/collision_checking/assembly:proto_utils",
-        "//third_party/googletest:gtest_main_no_google3",
+        "//collision_checking/assembly:cc_proto",
+        "//collision_checking/assembly:proto_utils",
+        "@com_google_googletest//:gtest_main",
         "//third_party/googletest:gtest_no_google3",
     ],
 )

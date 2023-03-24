@@ -1,12 +1,12 @@
 #ifndef EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_ASSEMBLY_COLLISION_CHECKER_BUNDLE_H_
 #define EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_ASSEMBLY_COLLISION_CHECKER_BUNDLE_H_
 
-#include "experimental/users/buschmann/collision_checking/assembly_collision_checker.h"
-#include "experimental/users/buschmann/collisions_config.proto.h"
-#include "experimental/users/buschmann/collision_checking/assembly/assembly.h"
-#include "experimental/users/buschmann/collision_checking/assembly/kinematics_assembly.proto.h"
-#include "experimental/users/buschmann/collision_checking/assembly/parts_config.proto.h"
-#include "experimental/users/buschmann/collision_checking/assembly/proto_utils.h"
+#include "collision_checking/assembly_collision_checker.h"
+#include "collisions_config.proto.h"
+#include "collision_checking/assembly/assembly.h"
+#include "collision_checking/assembly/kinematics_assembly.proto.h"
+#include "collision_checking/assembly/parts_config.proto.h"
+#include "collision_checking/assembly/proto_utils.h"
 #include "googlex/proxy/kinematics/joint_mapping.h"
 #include "googlex/proxy/module_system/robot_config/robot_config.proto.h"
 #include "third_party/absl/status/status.h"

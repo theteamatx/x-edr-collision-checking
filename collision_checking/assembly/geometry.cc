@@ -1,4 +1,4 @@
-#include "experimental/users/buschmann/collision_checking/assembly/geometry.h"
+#include "collision_checking/assembly/geometry.h"
 
 #include "third_party/absl/strings/string_view.h"
 

@@ -1,6 +1,6 @@
 #ifndef EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_STATUS_H_
 #define EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_STATUS_H_
-#include "experimental/users/buschmann/collision_checking/inlining.h"
+#include "collision_checking/inlining.h"
 #include "third_party/absl/status/status.h"
 
 namespace collision_checking {

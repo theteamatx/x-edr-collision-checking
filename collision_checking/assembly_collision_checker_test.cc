@@ -1,21 +1,21 @@
-#include "experimental/users/buschmann/collision_checking/assembly_collision_checker.h"
+#include "collision_checking/assembly_collision_checker.h"
 
 #include <cmath>
 #include <limits>
 #include <string>
 #include <vector>
 
-#include "experimental/users/buschmann/collision_checking/assembly/proto_utils.h"
-#include "experimental/users/buschmann/collision_checking/eigenmath.h"
-#include "experimental/users/buschmann/collision_checking/geometry.h"
-#include "experimental/users/buschmann/collision_checking/geometry_shapes/box.h"
-#include "experimental/users/buschmann/collision_checking/id_assigner.h"
-#include "experimental/users/buschmann/collision_checking/object_id.h"
-#include "experimental/users/buschmann/collision_checking/options.h"
-#include "experimental/users/buschmann/collision_checking/test_utils.h"
-#include "experimental/users/buschmann/collision_checking/vector.h"
+#include "collision_checking/assembly/proto_utils.h"
+#include "collision_checking/eigenmath.h"
+#include "collision_checking/geometry.h"
+#include "collision_checking/geometry_shapes/box.h"
+#include "collision_checking/id_assigner.h"
+#include "collision_checking/object_id.h"
+#include "collision_checking/options.h"
+#include "collision_checking/test_utils.h"
+#include "collision_checking/vector.h"
 #include "third_party/absl/status/status.h"
-#include "third_party/googletest/googletest/include/gtest/gtest.h"
+#include "gtest/gtest.h"
 
 namespace collision_checking {
 

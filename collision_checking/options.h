@@ -3,8 +3,8 @@
 
 #include <string>
 
-#include "experimental/users/buschmann/collision_checking/inlining.h"
-#include "experimental/users/buschmann/collision_checking/object_id.h"
+#include "collision_checking/inlining.h"
+#include "collision_checking/object_id.h"
 #include "third_party/absl/strings/string_view.h"
 
 namespace collision_checking {
