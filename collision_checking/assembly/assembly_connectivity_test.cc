@@ -1,3 +1,17 @@
+// Copyright 2023 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     https://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 #include "collision_checking/assembly/assembly_connectivity.h"
 
 #include <string>
@@ -85,16 +99,15 @@ TEST(AssemblyConnectivityTest, FindsConnectedLinksForOnlyFixedLinks) {
   EXPECT_THAT(connectivity.GetConnectedLinkIndices(assembly.GetLinkCount() + 5),
               IsEmpty());
 
-  const int root_index =
-      ABSL_DIE_IF_NULL(assembly.FindLink("root"))->GetIndex();
-  const int a_index = ABSL_DIE_IF_NULL(assembly.FindLink("A"))->GetIndex();
-  const int b_index = ABSL_DIE_IF_NULL(assembly.FindLink("B"))->GetIndex();
-  const int c_index = ABSL_DIE_IF_NULL(assembly.FindLink("C"))->GetIndex();
-  const int d_index = ABSL_DIE_IF_NULL(assembly.FindLink("D"))->GetIndex();
-  const int e_index = ABSL_DIE_IF_NULL(assembly.FindLink("E"))->GetIndex();
-  const int f_index = ABSL_DIE_IF_NULL(assembly.FindLink("F"))->GetIndex();
-  const int g_index = ABSL_DIE_IF_NULL(assembly.FindLink("G"))->GetIndex();
-  const int h_index = ABSL_DIE_IF_NULL(assembly.FindLink("H"))->GetIndex();
+  const int root_index = assembly.FindLink("root")->GetIndex();
+  const int a_index = assembly.FindLink("A")->GetIndex();
+  const int b_index = assembly.FindLink("B")->GetIndex();
+  const int c_index = assembly.FindLink("C")->GetIndex();
+  const int d_index = assembly.FindLink("D")->GetIndex();
+  const int e_index = assembly.FindLink("E")->GetIndex();
+  const int f_index = assembly.FindLink("F")->GetIndex();
+  const int g_index = assembly.FindLink("G")->GetIndex();
+  const int h_index = assembly.FindLink("H")->GetIndex();
 
   EXPECT_THAT(connectivity.GetConnectedLinkIndices(root_index),
               UnorderedElementsAre(root_index, a_index, b_index, c_index));
@@ -124,16 +137,15 @@ TEST(AssemblyConnectivityTest, FindsConnectedLinksForOneMovableJoint) {
   AssemblyConnectivity connectivity(assembly, /*max_movable_joints=*/1);
 
   EXPECT_THAT(connectivity.GetConnectedLinkIndices(-1), IsEmpty());
-  const int root_index =
-      ABSL_DIE_IF_NULL(assembly.FindLink("root"))->GetIndex();
-  const int a_index = ABSL_DIE_IF_NULL(assembly.FindLink("A"))->GetIndex();
-  const int b_index = ABSL_DIE_IF_NULL(assembly.FindLink("B"))->GetIndex();
-  const int c_index = ABSL_DIE_IF_NULL(assembly.FindLink("C"))->GetIndex();
-  const int d_index = ABSL_DIE_IF_NULL(assembly.FindLink("D"))->GetIndex();
-  const int e_index = ABSL_DIE_IF_NULL(assembly.FindLink("E"))->GetIndex();
-  const int f_index = ABSL_DIE_IF_NULL(assembly.FindLink("F"))->GetIndex();
-  const int g_index = ABSL_DIE_IF_NULL(assembly.FindLink("G"))->GetIndex();
-  const int h_index = ABSL_DIE_IF_NULL(assembly.FindLink("H"))->GetIndex();
+  const int root_index = assembly.FindLink("root")->GetIndex();
+  const int a_index = assembly.FindLink("A")->GetIndex();
+  const int b_index = assembly.FindLink("B")->GetIndex();
+  const int c_index = assembly.FindLink("C")->GetIndex();
+  const int d_index = assembly.FindLink("D")->GetIndex();
+  const int e_index = assembly.FindLink("E")->GetIndex();
+  const int f_index = assembly.FindLink("F")->GetIndex();
+  const int g_index = assembly.FindLink("G")->GetIndex();
+  const int h_index = assembly.FindLink("H")->GetIndex();
 
   EXPECT_THAT(connectivity.GetConnectedLinkIndices(root_index),
               UnorderedElementsAre(root_index, a_index, b_index, c_index,

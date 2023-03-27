@@ -1,3 +1,17 @@
+// Copyright 2023 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     https://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 #ifndef EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_ASSEMBLY_LINK_H_
 #define EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_ASSEMBLY_LINK_H_
 
@@ -6,8 +20,8 @@
 #include <vector>
 
 #include "collision_checking/eigenmath.h"
-#include "googlex/proxy/iterators/transform_iterator.h"
-#include "third_party/absl/strings/string_view.h"
+#include "genit/transform_iterator.h"
+#include "absl/strings/string_view.h"
 
 namespace collision_checking {
 
@@ -151,11 +165,11 @@ class Link {
   const Joint* FindChildJoint(absl::string_view name) const;
 
   // Returns an iterable range of child Joint iterators.
-  auto GetChildJoints() { return ::blue::RangeWithDereference(child_joints_); }
+  auto GetChildJoints() { return genit::RangeWithDereference(child_joints_); }
 
   // Returns an iterable range of const child Joint iterators.
   auto GetChildJoints() const {
-    return ::blue::RangeWithDereference(child_joints_);
+    return genit::RangeWithDereference(child_joints_);
   }
 
   // VISUAL GEOMETRY.
@@ -172,12 +186,12 @@ class Link {
 
   // Returns an iterable range of visual Geometry iterators.
   auto GetVisualGeometries() {
-    return ::blue::RangeWithDereference(visual_geometries_);
+    return genit::RangeWithDereference(visual_geometries_);
   }
 
   // Returns an iterable range of const visual Geometry iterators.
   auto GetVisualGeometries() const {
-    return ::blue::RangeWithDereference(visual_geometries_);
+    return genit::RangeWithDereference(visual_geometries_);
   }
 
   // COLLISION GEOMETRY.
@@ -194,12 +208,12 @@ class Link {
 
   // Returns an iterable range of collision Geometry iterators.
   auto GetCollisionGeometries() {
-    return ::blue::RangeWithDereference(collision_geometries_);
+    return genit::RangeWithDereference(collision_geometries_);
   }
 
   // Returns an iterable range of const collision Geometry iterators.
   auto GetCollisionGeometries() const {
-    return ::blue::RangeWithDereference(collision_geometries_);
+    return genit::RangeWithDereference(collision_geometries_);
   }
 
   // INDEX.

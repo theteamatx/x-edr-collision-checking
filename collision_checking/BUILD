@@ -175,7 +175,7 @@ cc_library(
     ],
     deps = [
         ":inlining",
-        "//googlex/proxy/eigenmath",
+        "@eigenmath//eigenmath",
     ],
 )
 
@@ -222,9 +222,8 @@ cc_test(
         ":eigenmath",
         ":object_id",
         ":test_utils",
-        "//googlex/proxy/eigenmath",
-        "@com_google_googletest//:gmock",
         "@com_google_googletest//:gtest_main",
+        "@eigenmath//eigenmath",
     ],
 )
 
@@ -234,16 +233,16 @@ cc_library(
     srcs = ["test_utils.cc"],
     hdrs = ["test_utils.h"],
     deps = [
-        "//googlex/proxy/eigenmath",
+        ":logging",
         "@com_google_absl//absl/base",
-        "@com_google_absl//absl/base:malloc_internal",
         "@com_google_absl//absl/log:absl_check",
         "@com_google_absl//absl/log:absl_log",
         "@com_google_absl//absl/status",
-        "//third_party/eigen3",
-        "@com_google_googletest//:gmock",
-        "//third_party/protobuf",
-        "//third_party/protobuf/util:differencer",
+        "@com_google_googletest//:gtest",
+        "@com_google_protobuf//:protobuf",
+        "@eigen",
+        "@eigenmath//eigenmath",
+        "@eigenmath//eigenmath:matchers",
     ],
 )
 
@@ -255,7 +254,6 @@ cc_test(
         "@com_google_absl//absl/log:absl_log",
         "@com_google_benchmark//:benchmark",
         "@com_google_googletest//:gtest_main",
-        "//third_party/googletest:gtest_no_google3",
     ],
 )
 
@@ -266,120 +264,115 @@ cc_test(
         ":collision_checking_core",
         ":eigenmath",
         ":test_utils",
- 	"@com_google_googletest//:gtest_main",
+        "@com_google_googletest//:gtest_main",
     ],
 )
 
-cc_test(
-    name = "distance_point_segment_test",
-    srcs = ["distance_point_segment_test.cc"],
-    deps = [
-        ":collision_checking_core",
-        ":eigenmath",
-        ":test_utils",
-        "//googlex/proxy/eigenmath",
-        "//googlex/proxy/eigenmath:sampling",
-        "@com_google_absl//absl/flags:flag",
-        "@com_google_benchmark//:benchmark",
-        "@com_google_googletest//:gmock",
-        "@com_google_googletest//:gtest_main",
-        "//third_party/osqp_cpp:osqp++",
-    ],
-)
+#cc_test(
+#    name = "distance_point_segment_test",
+#    srcs = ["distance_point_segment_test.cc"],
+#    deps = [
+#        ":collision_checking_core",
+#        ":eigenmath",
+#        ":test_utils",
+#        "@com_google_absl//absl/flags:flag",
+#        "@com_google_benchmark//:benchmark",
+#        "@com_google_googletest//:gtest_main",
+#        "@com_google_osqp_cpp//:osqp++",
+#        "@eigenmath//eigenmath",
+#        "@eigenmath//eigenmath:sampling",
+#    ],
+#)
 
-cc_test(
-    name = "distance_segment_segment_test",
-    srcs = ["distance_segment_segment_test.cc"],
-    deps = [
-        ":collision_checking_core",
-        ":eigenmath",
-        ":test_utils",
-        "//googlex/proxy/eigenmath",
-        "//googlex/proxy/eigenmath:sampling",
-        "@com_google_absl//absl/flags:flag",
-        "@com_google_benchmark//:benchmark",
-        "@com_google_googletest//:gtest_main",
-        "//third_party/osqp_cpp:osqp++",
-    ],
-)
+# cc_test(
+#     name = "distance_segment_segment_test",
+#     srcs = ["distance_segment_segment_test.cc"],
+#     deps = [
+#         ":collision_checking_core",
+#         ":eigenmath",
+#         ":test_utils",
+#         "@com_google_absl//absl/flags:flag",
+#         "@com_google_benchmark//:benchmark",
+#         "@com_google_googletest//:gtest_main",
+#         "@com_google_osqp_cpp//:osqp++",
+#         "@eigenmath//eigenmath",
+#         "@eigenmath//eigenmath:sampling",
+#     ],
+# )
 
-cc_test(
-    name = "distance_point_box_test",
-    srcs = ["distance_point_box_test.cc"],
-    deps = [
-        ":collision_checking_core",
-        ":eigenmath",
-        ":test_utils",
-        "//googlex/proxy/eigenmath",
-        "//googlex/proxy/eigenmath:sampling",
-        "@com_google_absl//absl/flags:flag",
-        "@com_google_googletest//:gmock",
-        "@com_google_googletest//:gtest_main",
-        "//third_party/osqp_cpp:osqp++",
-    ],
-)
+# cc_test(
+#     name = "distance_point_box_test",
+#     srcs = ["distance_point_box_test.cc"],
+#     deps = [
+#         ":collision_checking_core",
+#         ":eigenmath",
+#         ":test_utils",
+#         "@com_google_absl//absl/flags:flag",
+#         "@com_google_googletest//:gtest_main",
+#         "@com_google_osqp_cpp//:osqp++",
+#         "@eigenmath//eigenmath",
+#         "@eigenmath//eigenmath:sampling",
+#     ],
+# )
 
 cc_test(
     name = "distance_point_box_benchmark",
     srcs = ["distance_point_box_benchmark.cc"],
     deps = [
         ":collision_checking_core",
-        "//googlex/proxy/eigenmath",
         "@com_google_benchmark//:benchmark",
+        "@eigenmath//eigenmath",
     ],
 )
 
-cc_test(
-    name = "distance_segment_box_test",
-    srcs = ["distance_segment_box_test.cc"],
-    deps = [
-        ":collision_checking_core",
-        ":eigenmath",
-        ":test_utils",
-        "//googlex/proxy/eigenmath",
-        "//googlex/proxy/eigenmath:sampling",
-        "@com_google_absl//absl/flags:flag",
-        "@com_google_absl//absl/strings:str_format",
-        "@com_google_googletest//:gtest_main",
-        "//third_party/googletest:gtest_no_google3",
-        "//third_party/osqp_cpp:osqp++",
-    ],
-)
+# cc_test(
+#     name = "distance_segment_box_test",
+#     srcs = ["distance_segment_box_test.cc"],
+#     deps = [
+#         ":collision_checking_core",
+#         ":eigenmath",
+#         ":test_utils",
+#         "@com_google_absl//absl/flags:flag",
+#         "@com_google_absl//absl/strings:str_format",
+#         "@com_google_googletest//:gtest_main",
+#         "@com_google_osqp_cpp//:osqp++",
+#         "@eigenmath//eigenmath",
+#         "@eigenmath//eigenmath:sampling",
+#     ],
+# )
 
 cc_binary(
     name = "distance_segment_box_benchmark",
     srcs = ["distance_segment_box_benchmark.cc"],
     deps = [
         ":collision_checking_core",
-        "//googlex/proxy/eigenmath",
         "@com_google_benchmark//:benchmark",
+        "@eigenmath//eigenmath",
     ],
 )
 
-cc_test(
-    name = "distance_box_box_test",
-    srcs = ["distance_box_box_test.cc"],
-    deps = [
-        ":collision_checking_core",
-        ":eigenmath",
-        ":test_utils",
-        "//googlex/proxy/eigenmath",
-        "//googlex/proxy/eigenmath:sampling",
-        "@com_google_absl//absl/flags:flag",
-        "@com_google_googletest//:gmock",
-        "@com_google_googletest//:gtest_main",
-        "//third_party/googletest:gtest_no_google3",
-        "//third_party/osqp_cpp:osqp++",
-    ],
-)
+# cc_test(
+#     name = "distance_box_box_test",
+#     srcs = ["distance_box_box_test.cc"],
+#     deps = [
+#         ":collision_checking_core",
+#         ":eigenmath",
+#         ":test_utils",
+#         "@com_google_absl//absl/flags:flag",
+#         "@com_google_googletest//:gtest_main",
+#         "@com_google_osqp_cpp//:osqp++",
+#         "@eigenmath//eigenmath",
+#         "@eigenmath//eigenmath:sampling",
+#     ],
+# )
 
 cc_binary(
     name = "distance_box_box_benchmark",
     srcs = ["distance_box_box_benchmark.cc"],
     deps = [
         ":collision_checking_core",
-        "//googlex/proxy/eigenmath",
         "@com_google_benchmark//:benchmark",
+        "@eigenmath//eigenmath",
     ],
 )
 
@@ -409,9 +402,7 @@ cc_test(
         ":eigenmath",
         ":voxel_code",
         "@com_google_absl//absl/flags:flag",
-        "@com_google_googletest//:gmock",
         "@com_google_googletest//:gtest_main",
-        "//third_party/googletest:gtest_no_google3",
     ],
 )
 
@@ -431,7 +422,7 @@ cc_library(
         ":collision_checking_core",
         ":eigenmath",
         ":logging",
-        "//third_party/eigen3",
+        "@eigen",
     ],
 )
 
@@ -444,7 +435,6 @@ cc_test(
         ":test_utils",
         ":voxel_indexer",
         "@com_google_absl//absl/flags:flag",
-        "@com_google_googletest//:gmock",
         "@com_google_googletest//:gtest_main",
     ],
 )
@@ -470,7 +460,6 @@ cc_test(
         ":eigenmath",
         ":voxel_map_object",
         "@com_google_absl//absl/algorithm:container",
-        "@com_google_googletest//:gmock",
         "@com_google_googletest//:gtest_main",
     ],
 )
@@ -480,9 +469,9 @@ cc_binary(
     srcs = ["voxel_map_object_benchmark.cc"],
     deps = [
         ":voxel_map_object",
-        "//googlex/proxy/eigenmath",
-        "//googlex/proxy/eigenmath:sampling",
         "@com_google_benchmark//:benchmark",
+        "@eigenmath//eigenmath",
+        "@eigenmath//eigenmath:sampling",
     ],
 )
 
@@ -513,8 +502,6 @@ cc_test(
         ":object_id",
         ":test_utils",
         "@com_google_absl//absl/status",
-        "@com_google_absl//absl/types:source_location",
-        "@com_google_googletest//:gmock",
         "@com_google_googletest//:gtest_main",
     ],
 )
@@ -524,7 +511,7 @@ cc_library(
     hdrs = ["assembly_coordinate_view.h"],
     deps = [
         ":inlining",
-        "//third_party/eigen3",
+        "@eigen",
     ],
 )
 
@@ -569,7 +556,7 @@ cc_test(
         "//collision_checking/assembly",
         "//collision_checking/assembly:cc_proto",
         "//collision_checking/assembly:proto_utils",
-       "@com_google_googletest//:gtest_main",
+        "@com_google_googletest//:gtest_main",
     ],
 )
 
@@ -767,7 +754,6 @@ cc_test(
         "//collision_checking/assembly:cc_proto",
         "//collision_checking/assembly:proto_utils",
         "@com_google_googletest//:gtest_main",
-        "//third_party/googletest:gtest_no_google3",
     ],
 )
 

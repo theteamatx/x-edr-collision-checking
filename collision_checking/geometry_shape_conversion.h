@@ -1,3 +1,17 @@
+// Copyright 2023 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     https://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 // Functions for converting from blue::geometry_shapes::XYZ to
 // structs from ./geometry.h.
 
@@ -15,7 +29,7 @@
 #include "collision_checking/geometry_shapes/sphere.h"
 #include "collision_checking/geometry_shapes/spheres.h"
 #include "collision_checking/voxel_map_object.h"
-#include "third_party/absl/status/status.h"
+#include "absl/status/status.h"
 
 namespace collision_checking {
 
@@ -70,7 +84,7 @@ template <typename Scalar>
 Sphere<Scalar> GeometryShapesSphereToSphere(
     const Pose3d& world_pose_shape,
     const geometry_shapes::ShapeBase& shape, const Scalar padding) {
-  BLUE_CHECK_EQ(shape.GetType(), geometry_shapes::ShapeType::SPHERE);
+  CC_CHECK_EQ(shape.GetType(), geometry_shapes::ShapeType::SPHERE);
   const auto& derived_shape = shape.Get<geometry_shapes::Sphere>();
   Sphere<Scalar> sphere;
   sphere.radius = derived_shape.GetRadius() + padding;
@@ -86,7 +100,7 @@ template <typename Scalar>
 Capsule<Scalar> GeometryShapesCapsuleToCapsule(
     const Pose3d& world_pose_shape,
     const geometry_shapes::ShapeBase& shape, const Scalar padding) {
-  BLUE_CHECK_EQ(shape.GetType(), geometry_shapes::ShapeType::CAPSULE);
+  CC_CHECK_EQ(shape.GetType(), geometry_shapes::ShapeType::CAPSULE);
   const auto& derived_shape = shape.Get<geometry_shapes::Capsule>();
   Capsule<Scalar> capsule;
   capsule.radius = derived_shape.GetRadius() + padding;
@@ -103,7 +117,7 @@ template <typename Scalar>
 Box<Scalar> GeometryShapesBoxToBox(const Pose3d& world_pose_shape,
                                    const geometry_shapes::ShapeBase& shape,
                                    Scalar padding) {
-  BLUE_CHECK_EQ(shape.GetType(), geometry_shapes::ShapeType::BOX);
+  CC_CHECK_EQ(shape.GetType(), geometry_shapes::ShapeType::BOX);
   const auto& derived_shape = shape.Get<geometry_shapes::Box>();
   Box<Scalar> box;
   const Pose3d world_pose_local =

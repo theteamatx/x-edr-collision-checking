@@ -1,3 +1,17 @@
+// Copyright 2023 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     https://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 #include "collision_checking/compute_collisions.h"
 
 #include <vector>
@@ -7,15 +21,16 @@
 #include "collision_checking/object_id.h"
 #include "collision_checking/options.h"
 #include "collision_checking/test_utils.h"
-#include "third_party/absl/status/status.h"
-#include "third_party/absl/types/source_location.h"
+#include "absl/status/status.h"
+#include "eigenmath/matchers.h"
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
+
 
 namespace collision_checking {
 namespace {
 
-using ::blue::eigenmath::testing::IsApprox;
+using ::eigenmath::testing::IsApprox;
 using testing::MinimumGeometryInfoIs;
 
 template <typename T>
@@ -65,12 +80,10 @@ TYPED_TEST_P(CollisionCheckerTest, ComputeCollisionsArgumentCheckingTest) {
 template <typename Scalar, typename Traits>
 void ExpectCollisionResultIsConsistent(
     CollisionResult<Scalar, Traits>& result,
-    const std::vector<ObjectIdSet> other_id_sets,
-    absl::SourceLocation loc = absl::SourceLocation::current()) {
+    const std::vector<ObjectIdSet> other_id_sets) {
   constexpr Scalar kExpectedPrecision =
       100 * std::numeric_limits<Scalar>::epsilon();
 
-  SCOPED_TRACE(absl::StrCat("Called from ", loc.file_name(), ":", loc.line()));
   ASSERT_EQ(result.GetObjectCount(), other_id_sets.size());
   ASSERT_TRUE(result.MemoryIsAllocatedFor(
       QueryOptions().SetType(QueryOptions::kComputeContactPoints)));

@@ -1,3 +1,17 @@
+// Copyright 2023 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     https://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 #ifndef EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_VOXEL_MAP_OBJECT_H_
 #define EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_VOXEL_MAP_OBJECT_H_
 
@@ -10,7 +24,7 @@
 #include "collision_checking/voxel_code.h"
 #include "collision_checking/voxel_indexer.h"
 #include "collision_checking/eigenmath.h"
-#include "third_party/absl/algorithm/container.h"
+#include "absl/algorithm/container.h"
 
 namespace collision_checking {
 
@@ -388,7 +402,7 @@ template <typename Scalar>
 void VoxelMapObject<Scalar>::AddSphere(const Vector3<Scalar>& center,
                                        const Scalar radius, int index,
                                        ObjectId id) {
-  BLUE_CHECK_LT(used_nodes_, nodes_.size(),
+  CC_CHECK_LT(used_nodes_, nodes_.size(),
                 "used_nodes_= %d, nodes_.size()= %zu", used_nodes_,
                 nodes_.size());
   nodes_[used_nodes_].sphere.center = center;
@@ -403,7 +417,7 @@ template <typename Scalar>
 void VoxelMapObject<Scalar>::AddSphere(absl::Span<const Scalar> center,
                                        const Scalar radius, int index,
                                        ObjectId id) {
-  BLUE_CHECK_LT(used_nodes_, nodes_.size());
+  CC_CHECK_LT(used_nodes_, nodes_.size());
   nodes_[used_nodes_].sphere.center[0] = center[0];
   nodes_[used_nodes_].sphere.center[1] = center[1];
   nodes_[used_nodes_].sphere.center[2] = center[2];

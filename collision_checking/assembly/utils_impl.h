@@ -1,3 +1,17 @@
+// Copyright 2023 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     https://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 #ifndef EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_ASSEMBLY_UTILS_IMPL_H_
 #define EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_ASSEMBLY_UTILS_IMPL_H_
 
@@ -5,12 +19,12 @@
 #include <utility>
 
 #include "collision_checking/assembly/assembly.h"
-#include "collision_checking/assembly/assembly.proto.h"
+#include "collision_checking/assembly/assembly.pb.h"
 #include "collision_checking/geometry_shapes/eigen_proto_utils.h"
 #include "collision_checking/geometry_shapes/utils_impl.h"
-#include "third_party/absl/status/status.h"
-#include "third_party/absl/status/statusor.h"
-#include "third_party/absl/strings/str_cat.h"
+#include "absl/status/status.h"
+#include "absl/status/statusor.h"
+#include "absl/strings/str_cat.h"
 
 namespace collision_checking {
 namespace utils_impl {
@@ -269,13 +283,7 @@ absl::Status ToProto(const Link& link, LinkProto* link_proto) {
                 link_proto->mutable_inertial()->mutable_link_t_inertial());
   const proto::Matrix3dProto inertia_proto =
       ProtoFromMatrix3d(link.GetParameters().inertia);
-  if constexpr (std::is_same_v<proto::Matrix3dProto,
-                               typeof(*link_proto->mutable_inertial()
-                                           ->mutable_inertia())>) {
     *link_proto->mutable_inertial()->mutable_inertia() = inertia_proto;
-  } else {
-    link_proto->mutable_inertial()->mutable_inertia()->FromProto(inertia_proto);
-  }
 
   link_proto->mutable_inertial()->set_mass(link.GetParameters().mass);
 

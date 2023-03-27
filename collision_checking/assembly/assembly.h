@@ -1,3 +1,17 @@
+// Copyright 2023 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     https://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 #ifndef EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_ASSEMBLY_ASSEMBLY_H_
 #define EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_ASSEMBLY_ASSEMBLY_H_
 
@@ -10,9 +24,11 @@
 #include "collision_checking/assembly/joint.h"
 #include "collision_checking/assembly/link.h"
 #include "collision_checking/geometry_shapes/shape_base.h"
-#include "third_party/absl/status/status.h"
-#include "third_party/absl/status/statusor.h"
-#include "third_party/absl/strings/string_view.h"
+#include "absl/status/status.h"
+#include "absl/status/statusor.h"
+#include "absl/strings/string_view.h"
+#include "absl/container/flat_hash_map.h"
+#include "genit/transform_iterator.h"
 
 namespace collision_checking {
 
@@ -60,20 +76,26 @@ class Assembly {
   const Link& GetLink(std::size_t index) const;
 
   // Returns an iterable range of Link iterators.
-  auto GetLinks() { return ::blue::RangeWithDereference(links_); }
+  auto GetLinks() { return genit::RangeWithDereference(links_); }
 
   // Returns an iterable range of const Link iterators.
-  auto GetLinks() const { return ::blue::RangeWithDereference(links_); }
+  auto GetLinks() const { return genit::RangeWithDereference(links_); }
 
   // Get the number of links in the assembly.
   // Returns the number of links.
   std::size_t GetLinkCount() const { return links_.size(); }
 
   // Returns a reference to the root link.
-  Link& GetRootLink() { return *ABSL_DIE_IF_NULL(root_link_); }
+  Link& GetRootLink() {
+    CC_CHECK_NE(root_link_, nullptr);
+    return *root_link_;
+  }
 
   // Returns a const reference to the root link.
-  const Link& GetRootLinks() const { return *ABSL_DIE_IF_NULL(root_link_); }
+  const Link& GetRootLink() const {
+    CC_CHECK_NE(root_link_, nullptr);
+    return *root_link_;
+  }
 
   // Create a joint explicitly.
   // name: the name of the new joint.
@@ -101,10 +123,10 @@ class Assembly {
   const Joint& GetJoint(std::size_t index) const { return *joints_[index]; }
 
   // Returns an iterable range of Joint iterators.
-  auto GetJoints() { return ::blue::RangeWithDereference(joints_); }
+  auto GetJoints() { return genit::RangeWithDereference(joints_); }
 
   // Returns an iterable range of const Joint iterators.
-  auto GetJoints() const { return ::blue::RangeWithDereference(joints_); }
+  auto GetJoints() const { return genit::RangeWithDereference(joints_); }
 
   // Get the number of joints in the assembly.
   // Returns the number of joints.
@@ -131,11 +153,11 @@ class Assembly {
   const Geometry* FindGeometry(absl::string_view name) const;
 
   // Returns an iterable range of Geometry iterators.
-  auto GetGeometries() { return ::blue::RangeWithDereference(geometries_); }
+  auto GetGeometries() { return genit::RangeWithDereference(geometries_); }
 
   // Returns an iterable range of const Geometry iterators
   auto GetGeometries() const {
-    return ::blue::RangeWithDereference(geometries_);
+    return genit::RangeWithDereference(geometries_);
   }
 
   // VISUAL GEOMETRIES.

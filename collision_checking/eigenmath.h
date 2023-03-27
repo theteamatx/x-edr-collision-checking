@@ -1,36 +1,50 @@
+// Copyright 2023 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     https://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 #ifndef EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_EIGENMATH_H_
 #define EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_EIGENMATH_H_
 #include "collision_checking/inlining.h"
-#include "googlex/proxy/eigenmath/line_search.h"
-#include "googlex/proxy/eigenmath/pose3.h"
-#include "googlex/proxy/eigenmath/types.h"
-#include "googlex/proxy/eigenmath/vector_utils.h"
+#include "eigenmath/line_search.h"
+#include "eigenmath/pose3.h"
+#include "eigenmath/types.h"
+#include "eigenmath/vector_utils.h"
 
 namespace collision_checking {
 
-constexpr inline auto kEigenDefaultOptions = ::blue::eigenmath::kDefaultOptions;
+constexpr inline auto kEigenDefaultOptions = ::eigenmath::kDefaultOptions;
 constexpr inline auto kMaxEigenVectorCapacity =
-    ::blue::eigenmath::kMaxEigenVectorCapacity;
+    ::eigenmath::kMaxEigenVectorCapacity;
 
 // Vector/Matrix types used in these libraries.
 template <typename Scalar>
-using Vector2 = ::blue::eigenmath::Vector2<Scalar>;
+using Vector2 = ::eigenmath::Vector2<Scalar>;
 template <typename Scalar>
-using Vector3 = ::blue::eigenmath::Vector3<Scalar>;
+using Vector3 = ::eigenmath::Vector3<Scalar>;
 template <typename Scalar>
-using Vector4 = ::blue::eigenmath::Vector4<Scalar>;
+using Vector4 = ::eigenmath::Vector4<Scalar>;
 template <typename Scalar>
-using VectorN = ::blue::eigenmath::VectorN<Scalar>;
+using VectorN = ::eigenmath::VectorN<Scalar>;
 template <typename Scalar>
-using VectorX = ::blue::eigenmath::VectorX<Scalar>;
+using VectorX = ::eigenmath::VectorX<Scalar>;
 template <typename Scalar>
-using Matrix3 = ::blue::eigenmath::Matrix3<Scalar>;
+using Matrix3 = ::eigenmath::Matrix3<Scalar>;
 template <typename Scalar>
-using Pose3 = ::blue::eigenmath::Pose3<Scalar>;
+using Pose3 = ::eigenmath::Pose3<Scalar>;
 template <typename Scalar>
-using Quaternion = ::blue::eigenmath::Quaternion<Scalar>;
+using Quaternion = ::eigenmath::Quaternion<Scalar>;
 template <typename Scalar>
-using SO3 = ::blue::eigenmath::SO3<Scalar>;
+using SO3 = ::eigenmath::SO3<Scalar>;
 
 using Vector2d = Vector2<double>;
 using Vector3d = Vector3<double>;
@@ -46,7 +60,7 @@ using Matrix3d = Matrix3<double>;
 template <typename Functor, typename Scalar>
 CC_INLINE std::pair<Scalar, Scalar> GoldenSectionSearchMinimize(
     Scalar left, Scalar right, Functor f, Scalar x_tolerance) {
-  return ::blue::eigenmath::GoldenSectionSearchMinimize(left, right, f,
+  return ::eigenmath::GoldenSectionSearchMinimize(left, right, f,
                                                         x_tolerance);
 }
 
@@ -58,7 +72,7 @@ inline constexpr T Saturate(const T& val, const T& min_max) {
 template <class Scalar>
 inline std::array<Vector3<Scalar>, 2> ExtendToOrthonormalBasis(
     const Vector3<Scalar>& u){
-  return ::blue::eigenmath::ExtendToOrthonormalBasis(u);
+  return ::eigenmath::ExtendToOrthonormalBasis(u);
     }
 
 }  // namespace collision_checking

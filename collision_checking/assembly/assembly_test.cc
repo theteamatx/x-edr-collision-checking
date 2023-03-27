@@ -1,21 +1,36 @@
+// Copyright 2023 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     https://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 #include "collision_checking/assembly/assembly.h"
 
 #include <string>
 
-#include "collision_checking/assembly/assembly.proto.h"
+#include "collision_checking/assembly/assembly.pb.h"
 #include "collision_checking/assembly/geometry.h"
 #include "collision_checking/assembly/joint.h"
 #include "collision_checking/assembly/link.h"
 #include "collision_checking/assembly/proto_utils.h"
 #include "collision_checking/geometry_shapes/box.h"
 #include "collision_checking/test_utils.h"
-#include "third_party/absl/status/status.h"
+#include "absl/status/status.h"
 #include "gtest/gtest.h"
+#include "eigenmath/matchers.h"
 
 namespace collision_checking {
 namespace {
 
-using ::blue::eigenmath::testing::IsApprox;
+using ::eigenmath::testing::IsApprox;
 using testing::ParseTextProtoOrDie;
 
 static const char kExampleLinkage[] =
@@ -439,4 +454,3 @@ TEST(CreateAssemblyDeathTest, DiesIfAxisIsZero) {
 
 }  // namespace
 }  // namespace collision_checking
-

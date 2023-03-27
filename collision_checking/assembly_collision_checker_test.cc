@@ -1,3 +1,17 @@
+// Copyright 2023 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     https://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 #include "collision_checking/assembly_collision_checker.h"
 
 #include <cmath>
@@ -14,13 +28,14 @@
 #include "collision_checking/options.h"
 #include "collision_checking/test_utils.h"
 #include "collision_checking/vector.h"
-#include "third_party/absl/status/status.h"
+#include "eigenmath/matchers.h"
+#include "absl/status/status.h"
 #include "gtest/gtest.h"
 
 namespace collision_checking {
 
 namespace {
-using ::blue::eigenmath::testing::IsApprox;
+using ::eigenmath::testing::IsApprox;
 using ::testing::Eq;
 using ::testing::ExplainMatchResult;
 using ::testing::HasSubstr;
@@ -178,7 +193,7 @@ TYPED_TEST_P(AssemblyCollisionCheckerTest, AddAssemblyChecksErrors) {
         links: { name: "link_2" }
       )pb");
 
-  Assembly assembly = FromProto(proto).ValueOrDie();
+  Assembly assembly = FromProto(proto).value();
   std::vector<std::string> joint_order;
   AssemblyCollisionCheckerCpu checker;
 
@@ -290,7 +305,7 @@ TYPED_TEST_P(AssemblyCollisionCheckerTest, CreateOK) {
       )pb");
   std::vector<std::string> joint_order({"joint_0"});
 
-  Assembly assembly = FromProto(proto).ValueOrDie();
+  Assembly assembly = FromProto(proto).value();
   AssemblyCollisionCheckerCpu collision;
   ASSERT_THAT(collision.AddAssembly(
       assembly, joint_order, AssemblyCollisionCheckerCpu::DefaultOptions()),
@@ -428,7 +443,7 @@ TYPED_TEST_P(AssemblyCollisionCheckerTest, Attachments) {
 
   std::vector<std::string> joint_order({"joint_0"});
 
-  Assembly assembly = FromProto(proto).ValueOrDie();
+  Assembly assembly = FromProto(proto).value();
   AssemblyCollisionCheckerCpu collision;
   ASSERT_THAT(
       collision.AddAssembly(assembly, joint_order,
@@ -472,7 +487,7 @@ TYPED_TEST_P(AssemblyCollisionCheckerTest, Attachments) {
           }
         }
       )pb");
-  Assembly attachment_assembly = FromProto(attachment_proto).ValueOrDie();
+  Assembly attachment_assembly = FromProto(attachment_proto).value();
   std::vector<const geometry_shapes::ShapeBase*> attachment_shapes;
   attachment_shapes.reserve(
       attachment_assembly.GetLink(0).GetCollisionGeometries().size());
@@ -574,7 +589,7 @@ TYPED_TEST_P(AssemblyCollisionCheckerTest, IndexIdNameUtilities) {
       )pb");
   std::vector<std::string> joint_order({"joint_0", "joint_1"});
 
-  Assembly assembly = FromProto(proto).ValueOrDie();
+  Assembly assembly = FromProto(proto).value();
   AssemblyCollisionCheckerCpu collision;
   CC_ASSERT_OK_AND_ASSIGN(
       AssemblyId assembly_id,
@@ -715,7 +730,7 @@ TYPED_TEST_P(AssemblyCollisionCheckerTest, AssemblyPadding) {
       )pb");
   std::vector<std::string> joint_order({"joint_0"});
 
-  Assembly assembly = FromProto(proto).ValueOrDie();
+  Assembly assembly = FromProto(proto).value();
   AssemblyCollisionCheckerCpu collision;
   ASSERT_THAT(
       collision.AddAssembly(
@@ -837,7 +852,7 @@ TYPED_TEST_P(AssemblyCollisionCheckerTest, ComputeCollisionsErrors) {
         links: { name: "link_0" }
         links: { name: "link_1" }
       )pb");
-  auto assembly = FromProto(proto).ValueOrDie();
+  auto assembly = FromProto(proto).value();
   AssemblyCollisionCheckerCpu collision;
   ASSERT_THAT(collision
                   .AddAssembly(assembly, {"joint_0"},
@@ -935,7 +950,7 @@ TYPED_TEST_P(AssemblyCollisionCheckerTest, ComputeCollisionsSphereSphere) {
           }
         }
       )pb");
-  auto assembly = FromProto(proto).ValueOrDie();
+  auto assembly = FromProto(proto).value();
   AssemblyCollisionCheckerCpu collision;
   ASSERT_THAT(
       collision.AddAssembly(
@@ -1115,7 +1130,7 @@ TYPED_TEST_P(AssemblyCollisionCheckerTest, ComputeCollisionsCapsuleSphere) {
 
   for (auto& d : test_data) {
     d.proto.MergeFrom(link0_proto);
-    auto assembly = FromProto(d.proto).ValueOrDie();
+    auto assembly = FromProto(d.proto).value();
 
     AssemblyCollisionCheckerCpu collision;
     ASSERT_THAT(
@@ -1581,7 +1596,7 @@ TYPED_TEST_P(AssemblyCollisionCheckerTest, ComputeCollisionsCapsuleCapsule) {
     SCOPED_TRACE(::testing::Message()
                  << "name= " << d.name
                  << "merged assembly_proto= " << d.proto.DebugString());
-    auto assembly = FromProto(d.proto).ValueOrDie();
+    auto assembly = FromProto(d.proto).value();
 
     AssemblyCollisionCheckerCpu collision;
     ASSERT_THAT(
@@ -1653,7 +1668,7 @@ TYPED_TEST_P(AssemblyCollisionCheckerTest, ComputeCollisionsBox) {
           }
         }
       )pb");
-  auto assembly = FromProto(proto).ValueOrDie();
+  auto assembly = FromProto(proto).value();
 
   AssemblyCollisionCheckerCpu collision;
   ASSERT_THAT(
@@ -1778,7 +1793,7 @@ TYPED_TEST_P(AssemblyCollisionCheckerTest, DisableConnectedLinks) {
           }
         }
       )pb");
-  auto assembly = FromProto(proto).ValueOrDie();
+  auto assembly = FromProto(proto).value();
 
   AssemblyCollisionCheckerCpu collision;
   ASSERT_THAT(
@@ -1869,7 +1884,7 @@ TYPED_TEST_P(AssemblyCollisionCheckerTest,
              }
            }
       )pb");
-  auto assembly = FromProto(proto).ValueOrDie();
+  auto assembly = FromProto(proto).value();
 
   AssemblyCollisionCheckerCpu collision;
   ASSERT_THAT(
@@ -2013,7 +2028,7 @@ TYPED_TEST_P(AssemblyCollisionCheckerTest, StaticObjectWorks) {
              }
            }
       )pb");
-  auto assembly = FromProto(proto).ValueOrDie();
+  auto assembly = FromProto(proto).value();
 
   AssemblyCollisionCheckerCpu collision;
   CC_ASSERT_OK_AND_ASSIGN(

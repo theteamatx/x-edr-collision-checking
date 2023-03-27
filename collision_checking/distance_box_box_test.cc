@@ -1,15 +1,29 @@
+// Copyright 2023 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     https://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 #include "collision_checking/distance_box_box.h"
 
 #include <iterator>
 
 #include "collision_checking/debug_options.h"
 #include "collision_checking/test_utils.h"
-#include "googlex/proxy/eigenmath/distribution.h"
-#include "googlex/proxy/eigenmath/interpolation.h"
-#include "googlex/proxy/eigenmath/rotation_utils.h"
-#include "googlex/proxy/eigenmath/sampling.h"
+#include "eigenmath/distribution.h"
+#include "eigenmath/interpolation.h"
+#include "eigenmath/rotation_utils.h"
+#include "eigenmath/sampling.h"
 #include "collision_checking/eigenmath.h"
-#include "third_party/absl/flags/flag.h"
+#include "absl/flags/flag.h"
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
 #include "third_party/osqp_cpp/include/osqp++.h"
@@ -41,7 +55,7 @@ TYPED_TEST_P(DistanceBoxBoxTest, CompareAgainstOQSP) {
   constexpr Scalar kDistanceSquaredTolerance = 1e-5;
   constexpr int kNumLoops = 10000;
 
-  ::blue::eigenmath::ProxyTestGenerator gen(
+  ::blue::eigenmath::TestGenerator gen(
       ::blue::eigenmath::kGeneratorTestSeed);
   ::blue::eigenmath::UniformDistributionVector<Scalar, 3> vector_dist;
   ::blue::eigenmath::UniformDistributionSO3<Scalar> rotation_dist;

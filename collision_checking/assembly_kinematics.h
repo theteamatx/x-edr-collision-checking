@@ -1,3 +1,17 @@
+// Copyright 2023 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     https://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 #ifndef EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_ASSEMBLY_KINEMATICS_H_
 #define EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_ASSEMBLY_KINEMATICS_H_
 
@@ -9,14 +23,15 @@
 
 #include "collision_checking/assembly_coordinate_view.h"
 #include "collision_checking/inlining.h"
+#include "collision_checking/logging.h"
 #include "collision_checking/object_id.h"
 #include "collision_checking/vector.h"
 #include "collision_checking/assembly/assembly.h"
 #include "collision_checking/eigenmath.h"
-#include "third_party/absl/status/status.h"
-#include "third_party/absl/status/statusor.h"
-#include "third_party/absl/strings/substitute.h"
-#include "third_party/absl/types/span.h"
+#include "absl/status/status.h"
+#include "absl/status/statusor.h"
+#include "absl/strings/substitute.h"
+#include "absl/types/span.h"
 
 namespace collision_checking {
 
@@ -180,9 +195,9 @@ AssemblyKinematics<Scalar, AllocatorTraits>::CreateForAssembly(
                            joint->GetDofCount()));
     }
     // If we get here, the index should be valid.
-    BLUE_CHECK(joint->GetDofIndex() >= 0, "joint(%s)->GetDofIndex() (%d.) < 0.",
+    CC_CHECK_GE(joint->GetDofIndex() , 0, "joint(%s)->GetDofIndex() (%d.) < 0.",
                joint->GetName(), joint->GetDofIndex());
-    BLUE_CHECK(joint->GetDofIndex() < assembly_index_to_joint_index.size(),
+    CC_CHECK_LT(joint->GetDofIndex() , assembly_index_to_joint_index.size(),
                "joint(%s)->GetDofIndex()= %d, but dof count= %zu.",
                joint->GetName(), joint->GetDofIndex(),
                assembly_index_to_joint_index.size());
@@ -191,7 +206,7 @@ AssemblyKinematics<Scalar, AllocatorTraits>::CreateForAssembly(
 
   auto& links = result.links;
   // Assembly link 0 always is the root.
-  BLUE_CHECK(assembly.GetLink(0).GetParentJoint() == nullptr,
+  CC_CHECK_EQ(assembly.GetLink(0).GetParentJoint() , nullptr,
              "Assembly link 0 is not a the root link.");
   links[0].parent_rotation_joint = Matrix3<Scalar>::Identity();
   links[0].parent_translation_joint.setZero();
@@ -199,10 +214,10 @@ AssemblyKinematics<Scalar, AllocatorTraits>::CreateForAssembly(
   for (size_t idx = 1; idx < assembly.GetLinkCount(); idx++) {
     const Link& link = assembly.GetLink(idx);
     // Non-root links must have a parent.
-    BLUE_CHECK_NE(link.GetParentJoint(), nullptr);
+    CC_CHECK_NE(link.GetParentJoint(), nullptr);
     const Joint& parent_joint = *link.GetParentJoint();
     // Check link ordering precondition for ComputePoses.
-    BLUE_CHECK_LT(parent_joint.GetParentLink().GetIndex(), idx);
+    CC_CHECK_LT(parent_joint.GetParentLink().GetIndex(), idx);
     links[idx].assembly_parent_link_index =
         parent_joint.GetParentLink().GetIndex();
     const int parent_dof_index = parent_joint.GetDofIndex();

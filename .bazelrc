@@ -1,5 +1,7 @@
 build --cxxopt='-std=c++17'
 build --cxxopt='-Wno-sign-compare'
+build --host_cxxopt='-std=c++17'
+build --host_cxxopt='-Wno-sign-compare'
 
 # Common flags for Clang
 build:clang --action_env=BAZEL_COMPILER=clang

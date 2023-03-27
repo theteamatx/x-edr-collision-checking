@@ -39,10 +39,19 @@ http_archive(
 )
 
 http_archive(
+    name = "osqp",
+    sha256 = "51c1c49719aa729edc3ee979c530446be269ae5f61a01211a8ae2c552751cea8",
+    strip_prefix = "osqp-e3e338ac26d7e5ff8c33fd95da275528ddca2e2a",
+    urls = ["https://github.com/osqp/osqp/archive/e3e338ac26d7e5ff8c33fd95da275528ddca2e2a.zip"],
+    build_file = "//third_party:osqp.BUILD",
+)
+
+http_archive(
     name = "com_google_osqp_cpp",
     sha256 = "160b69498883eb5527d3e85030f1be3bcf1cf2ea6c55e88f670eae707a7bf525",
     strip_prefix = "osqp-cpp-fecfcde99ce82a7a046a13417387bf4e9bee013b",
     urls = ["https://github.com/google/osqp-cpp/archive/fecfcde99ce82a7a046a13417387bf4e9bee013b.zip"],
+    build_file = "//third_party:osqp_cpp.BUILD",
 )
 
 local_repository(

@@ -1,56 +1,33 @@
+// Copyright 2023 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     https://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 #include "collision_checking/test_utils.h"
 
-#include "third_party/absl/base/call_once.h"
-#include "third_party/absl/base/internal/malloc_hook.h"
-#include "third_party/absl/log/absl_log.h"
+#include <dlfcn.h>  // for dlsym()
+
+//#include "absl/log/absl_log.h"
+#include "collision_checking/logging.h"
+
+namespace {
+std::atomic<size_t> g_allocs = 0;
+std::atomic<size_t> g_frees = 0;
+}  // namespace
 
 namespace collision_checking {
 namespace testing {
 
-namespace {
-
-#if __has_feature(address_sanitizer)
-#define ENABLE_MALLOC_COUNTER false
-#elif __has_feature(hwaddress_sanitizer)
-#define ENABLE_MALLOC_COUNTER false
-#elif __has_feature(memory_sanitizer)
-#define ENABLE_MALLOC_COUNTER false
-#elif __has_feature(thread_sanitizer)
-#define ENABLE_MALLOC_COUNTER false
-#else
-#define ENABLE_MALLOC_COUNTER true
-#endif
-
-constexpr bool kEnableMallocCounter = ENABLE_MALLOC_COUNTER;
-
-absl::once_flag g_once_flag;
-std::atomic<size_t> g_allocs = 0;
-std::atomic<size_t> g_frees = 0;
-
-void NewHook(const void *ptr, size_t size) { g_allocs++; }
-
-void DeleteHook(const void *ptr) {
-  if (ptr == nullptr) {
-    return;
-  }
-  g_frees++;
-}
-}  // namespace
-
 void MallocCounterInitAndClear() {
-  if constexpr (kEnableMallocCounter) {
-    // Install hooks on the first invocation.
-    absl::call_once(g_once_flag, []() {
-      absl::base_internal::MallocHook::AddNewHook(&NewHook);
-      absl::base_internal::MallocHook::AddDeleteHook(&DeleteHook);
-    });
-  } else {
-    absl::call_once(g_once_flag, []() {
-      ABSL_LOG(INFO) << "Malloc checker disabled in this mode.";
-    });
-  }
-
-  // Reset counters.
   g_allocs = 0;
   g_frees = 0;
 }
@@ -59,7 +36,126 @@ int MallocCounterGetAllocations() { return g_allocs; }
 
 int MallocCounterGetFrees() { return g_frees; }
 
-bool MallocCounterIsAvailable() { return kEnableMallocCounter; }
+bool MallocCounterIsAvailable() { return true; }
 
 }  // namespace testing
 }  // namespace collision_checking
+
+
+
+extern "C" {
+
+// Wrappers for malloc and friends.
+void* malloc(size_t size) {
+  typedef void*(MallocFunction)(size_t);
+  static MallocFunction* real_malloc =
+      (MallocFunction*)::dlsym(RTLD_NEXT, "malloc");
+  CC_CHECK_NE(real_malloc, nullptr, "Could not find symbol for malloc.");
+  ++g_allocs;
+  return real_malloc(size);
+}
+
+namespace {
+// This memory is for when dlsym calls calloc when setting up the interposer
+// for calloc. It appears to use 32 bytes of memory, which is increased here
+// in case that changes.
+std::array<char, 64> calloc_dlsym_init_mem = {};
+void* dlsym_bootstrap_calloc(size_t nmemb, size_t size) {
+  CC_CHECK_LT(nmemb * size , calloc_dlsym_init_mem.size(),
+             "Increase calloc_dlsym_init_mem size.");
+  return static_cast<void*>(calloc_dlsym_init_mem.data());
+}
+}  // namespace
+
+void* calloc(size_t nmemb, size_t size) {
+  typedef void*(CallocFunction)(size_t, size_t);
+  static CallocFunction* real_calloc = nullptr;
+  if (real_calloc == nullptr) {
+    // dlsym calls calloc, so on the first call, make calloc point to a
+    // something returning stack memory while we're in the first dlsym() call.
+    real_calloc = dlsym_bootstrap_calloc;
+    real_calloc = (CallocFunction*)::dlsym(RTLD_NEXT, "calloc");
+    // real_calloc now points to the libc implementation.
+  }
+
+  CC_CHECK_NE(real_calloc, nullptr, "Could not find symbol for calloc.");
+  ++g_allocs;
+  return real_calloc(nmemb, size);
+}
+
+void free(void* ptr) {
+  // The standard says that free(null) does nothing, so calling it even from a
+  // hard real-time context is OK and we can just return here.
+  if (ptr == nullptr) {
+    return;
+  }
+
+  // If this is the stack memory used for dlsym when setting up the interposeser
+  // for calloc, don't pass it to free.
+  if (ptr == calloc_dlsym_init_mem.data()) {
+    return;
+  }
+
+  typedef void*(FreeFunction)(void*);
+  static FreeFunction* real_free = (FreeFunction*)::dlsym(RTLD_NEXT, "free");
+  CC_CHECK_NE(real_free, nullptr, "Could not find symbol for free.");
+  ++g_frees;
+  real_free(ptr);
+}
+
+void* realloc(void* ptr, size_t size) {
+  typedef void*(ReallocFunction)(void*, size_t);
+  static ReallocFunction* real_realloc =
+      (ReallocFunction*)::dlsym(RTLD_NEXT, "realloc");
+  CC_CHECK_NE(real_realloc, nullptr, "Could not find symbol for realloc.");
+  ++g_allocs;
+  return real_realloc(ptr, size);
+}
+
+void* memalign(size_t boundary, size_t size) {
+  typedef void*(MemalignFunction)(size_t, size_t);
+  static MemalignFunction* real_memalign =
+      (MemalignFunction*)::dlsym(RTLD_NEXT, "memalign");
+  CC_CHECK_NE(real_memalign, nullptr, "Could not find symbol for memalign.");
+  ++g_allocs;
+  return real_memalign(boundary, size);
+}
+
+void* valloc(size_t size) {
+  typedef void*(VallocFunction)(size_t);
+  static VallocFunction* real_valloc =
+      (VallocFunction*)::dlsym(RTLD_NEXT, "valloc");
+  CC_CHECK_NE(real_valloc , nullptr, "Could not find symbol for valloc.");
+  ++g_allocs;
+  return real_valloc(size);
+}
+
+void* aligned_alloc(size_t alignment, size_t size) {
+  typedef void*(AlignedAllocFunction)(size_t, size_t);
+  static AlignedAllocFunction* real_aligned_alloc =
+      (AlignedAllocFunction*)::dlsym(RTLD_NEXT, "aligned_alloc");
+  CC_CHECK_NE(real_aligned_alloc , nullptr,
+             "Could not find symbol for aligned_alloc.");
+  ++g_allocs;
+  return real_aligned_alloc(alignment, size);
+}
+
+void* pvalloc(size_t size) {
+  typedef void*(PvallocFunction)(size_t);
+  static PvallocFunction* real_pvalloc =
+      (PvallocFunction*)::dlsym(RTLD_NEXT, "pvalloc");
+  CC_CHECK_NE(real_pvalloc , nullptr, "Could not find symbol for pvalloc.");
+  ++g_allocs;
+  return real_pvalloc(size);
+}
+
+int posix_memalign(void** memptr, size_t alignment, size_t size) {
+  typedef int(PosixMemalignFunction)(void**, size_t, size_t);
+  static PosixMemalignFunction* real_posix_memalign =
+      (PosixMemalignFunction*)::dlsym(RTLD_NEXT, "posix_memalign");
+  CC_CHECK_NE(real_posix_memalign , nullptr,
+             "Could not find symbol for posix_memalign.");
+  ++g_allocs;
+  return real_posix_memalign(memptr, alignment, size);
+}
+}  // extern "C"

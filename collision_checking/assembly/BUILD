@@ -50,9 +50,9 @@ cc_library(
         ":cc_proto",
         "//collision_checking/geometry_shapes:eigen_proto_utils",
         "//collision_checking/geometry_shapes:utils",
-        "//third_party/absl/status",
-        "//third_party/absl/status:statusor",
-        "//third_party/absl/strings",
+        "@com_google_absl//absl/status",
+        "@com_google_absl//absl/status:statusor",
+        "@com_google_absl//absl/strings",
     ],
 )
 
@@ -74,11 +74,12 @@ cc_library(
         "//collision_checking:eigenmath",
         "//collision_checking/geometry_shapes",
         "//collision_checking/geometry_shapes:geometry_shape",
-        "//googlex/proxy/iterators",
-        "//third_party/absl/status",
-        "//third_party/absl/status:statusor",
-        "//third_party/absl/strings",
-        "//third_party/absl/strings:str_format",
+        "@com_google_absl//absl/container:flat_hash_map",
+        "@com_google_absl//absl/status",
+        "@com_google_absl//absl/status:statusor",
+        "@com_google_absl//absl/strings",
+        "@com_google_absl//absl/strings:str_format",
+        "@genit//genit:iterators",
     ],
 )
 
@@ -93,8 +94,9 @@ cc_test(
         ":proto_utils",
         "//collision_checking:test_utils",
         "//collision_checking/geometry_shapes",
-        "//third_party/absl/status",
+        "@com_google_absl//absl/status",
         "@com_google_googletest//:gtest_main",
+        "@eigenmath//eigenmath:matchers",
     ],
 )
 
@@ -104,10 +106,10 @@ cc_library(
     hdrs = ["assembly_connectivity.h"],
     deps = [
         ":assembly",
-        "//third_party/absl/container:flat_hash_map",
-        "//third_party/absl/container:flat_hash_set",
-        "//third_party/absl/strings",
-        "//third_party/absl/types:span",
+        "@com_google_absl//absl/container:flat_hash_map",
+        "@com_google_absl//absl/container:flat_hash_set",
+        "@com_google_absl//absl/strings",
+        "@com_google_absl//absl/types:span",
     ],
 )
 
@@ -130,6 +132,7 @@ cc_test(
         ":cc_proto",
         ":proto_utils",
         "//collision_checking:test_utils",
-       "@com_google_googletest//:gtest_main",
+        "@com_google_googletest//:gtest_main",
+        "@eigenmath//eigenmath:matchers",
     ],
 )

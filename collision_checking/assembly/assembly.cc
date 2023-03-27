@@ -1,3 +1,17 @@
+// Copyright 2023 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     https://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 #include "collision_checking/assembly/assembly.h"
 
 #include <algorithm>
@@ -7,9 +21,10 @@
 #include <utility>
 #include <vector>
 
+#include "collision_checking/logging.h"
 #include "collision_checking/geometry_shapes/composite_shape.h"
-#include "third_party/absl/status/status.h"
-#include "third_party/absl/strings/str_cat.h"
+#include "absl/status/status.h"
+#include "absl/strings/str_cat.h"
 
 namespace collision_checking {
 
@@ -26,13 +41,14 @@ std::unique_ptr<Assembly> Assembly::Clone(bool auto_finalize) const {
 
   for (const auto& geometry : geometries_) {
     auto twin_link = twin->FindLink(geometry->GetLink().GetName());
-    BLUE_CHECK(twin_link != nullptr);
+    CC_CHECK_NE(twin_link, nullptr);
     twin->CreateGeometry(geometry->GetName(), geometry->GetType(),
                          geometry->GetShape(), twin_link);
   }
 
   if (auto_finalize && finalized_) {
-    BLUE_CHECK(twin->Finalize());
+    const auto status = twin->Finalize();
+    CC_CHECK(status.ok(), "Finalize failed: %s", status.ToString().c_str());
   }
   return twin;
 }
@@ -44,8 +60,8 @@ Link& Assembly::CreateLink(absl::string_view name,
                            const Link::Parameters& params) {
   // TODO(b/214347493) Return a status instead of asserting.
   // Can't create links in a finalized assembly.
-  BLUE_CHECK(!finalized_, "The assembly is already finalized.");
-  BLUE_CHECK(!link_map_.contains(name), "Link name '%s' is not unique.", name);
+  CC_CHECK(!finalized_, "The assembly is already finalized.");
+  CC_CHECK(!link_map_.contains(name), "Link name '%s' is not unique.", name);
 
   // Make, store, and return the link.
   auto link =
@@ -74,14 +90,14 @@ const Link* Assembly::FindLink(absl::string_view name) const {
 }
 
 Link& Assembly::GetLink(std::size_t index) {
-  BLUE_CHECK(index < links_.size());
-  BLUE_CHECK(links_[index].get() != nullptr);
+  CC_CHECK_LT(index, links_.size());
+  CC_CHECK_NE(links_[index].get(), nullptr);
   return *links_[index];
 }
 
 const Link& Assembly::GetLink(std::size_t index) const {
-  BLUE_CHECK(index < links_.size());
-  BLUE_CHECK(links_[index].get() != nullptr);
+  CC_CHECK_LT(index, links_.size());
+  CC_CHECK_NE(links_[index].get(), nullptr);
   return *links_[index];
 }
 
@@ -93,19 +109,19 @@ Joint& Assembly::CreateJoint(absl::string_view name,
                              absl::string_view child_link_name) {
   // TODO(b/214347493) Return a status instead of asserting.
   // Can't create joints in a finalized assembly.
-  BLUE_CHECK(!finalized_, "The assembly is already finalized.");
-  BLUE_CHECK(!joint_map_.contains(name), "Joint name '%s' is not unique.",
+  CC_CHECK(!finalized_, "The assembly is already finalized.");
+  CC_CHECK(!joint_map_.contains(name), "Joint name '%s' is not unique.",
              name);
 
   // Get parent link config node, use it to find parent link
   Link* parent_link = FindLink(parent_link_name);
-  BLUE_CHECK(parent_link != nullptr,
+  CC_CHECK_NE(parent_link, nullptr,
              "Parent link '%s' for joint '%s' does not exist.",
              parent_link_name, name);
 
   // Get child link config node, use it to find child link
   Link* child_link = FindLink(child_link_name);
-  BLUE_CHECK(child_link != nullptr,
+  CC_CHECK_NE(child_link, nullptr,
              "Child link '%s' for joint '%s' does not exist.", child_link_name,
              name);
 
@@ -118,7 +134,7 @@ Joint& Assembly::CreateJoint(absl::string_view name,
 
   // Wire us into the parent and child links
   parent_link->child_joints_.push_back(joint_ptr);
-  BLUE_CHECK(child_link->parent_joint_ == nullptr,
+  CC_CHECK_EQ(child_link->parent_joint_, nullptr,
              "Child link '%s' already has a parent joint.",
              child_link->GetName().c_str());
   child_link->parent_joint_ = joint_ptr;
@@ -151,13 +167,13 @@ Geometry& Assembly::CreateGeometry(absl::string_view name, Geometry::Type type,
                                    Link* link) {
   // TODO(b/214347493) Return a status instead of asserting.
   // Can't create geometries in a finalized assembly.
-  BLUE_CHECK(link != nullptr);
-  BLUE_CHECK(!finalized_, "The assembly is already finalized.");
+  CC_CHECK_NE(link, nullptr);
+  CC_CHECK(!finalized_, "The assembly is already finalized.");
 
   // Make and store the geometry.
   auto geometry = std::make_unique<Geometry>(Geometry::ConstructionKey{}, this,
                                              name, type, shape, link);
-  BLUE_CHECK(geometry != nullptr);
+  CC_CHECK_NE(geometry, nullptr);
 
   geometry_map_[geometry->GetName()] = geometry.get();
   geometries_.push_back(std::move(geometry));
@@ -360,7 +376,7 @@ absl::Status Assembly::TopologicallySortLinks() {
   for (auto& link : links_) {
     VisitLink(link.get(), &sorted_links);
   }
-  BLUE_CHECK(sorted_links.size() == links_.size(),
+  CC_CHECK_EQ(sorted_links.size(), links_.size(),
              "All links should have been visited and sorted.");
 
   // Use the sorted list to index the links.
@@ -381,13 +397,13 @@ absl::Status Assembly::TopologicallySortLinks() {
   root_link_ = nullptr;
   for (auto& link : links_) {
     if (link->parent_joint_ == nullptr) {
-      BLUE_CHECK(root_link_ == nullptr,
+      CC_CHECK_EQ(root_link_, nullptr,
                  "Assembly is not a tree, parentless links: '%s' and '%s'.",
                  root_link_->GetName().c_str(), link->GetName().c_str());
       root_link_ = link.get();
     }
   }
-  BLUE_CHECK(root_link_ != nullptr,
+  CC_CHECK_NE(root_link_ , nullptr,
              "There must be at least one root link in an acyclic assembly.");
 
   // The root links are already sorted by index, because they were inserted
@@ -397,13 +413,13 @@ absl::Status Assembly::TopologicallySortLinks() {
   // The invariant is that all upstream nodes have lower indices, and all
   // downstream nodes have higher indices.
   for (const auto& link : links_) {
-    BLUE_CHECK(link->index_ >= 0, "All links should be indexed.");
+    CC_CHECK_GE(link->index_, 0, "All links should be indexed.");
     if (link->parent_joint_ != nullptr) {
-      BLUE_CHECK(link->index_ > link->parent_joint_->parent_link_->index_,
+      CC_CHECK_GT(link->index_ , link->parent_joint_->parent_link_->index_,
                  "Parent links must have higher indices.");
     }
     for (const auto child_joint : link->child_joints_) {
-      BLUE_CHECK(link->index_ < child_joint->child_link_->index_,
+      CC_CHECK_LT(link->index_ , child_joint->child_link_->index_,
                  "Child links must have lower indices.");
     }
   }
@@ -413,7 +429,7 @@ absl::Status Assembly::TopologicallySortLinks() {
 
 void Assembly::VisitLink(Link* link, std::deque<Link*>* sorted_links) {
   // If link has a temporary mark, assembly is not acyclic
-  BLUE_CHECK(link->index_ != -2, "Kinematic cycles are unsupported.");
+  CC_CHECK_NE(link->index_ , -2, "Kinematic cycles are unsupported.");
 
   // If link is marked, but not temporarily, it has been visited already
   if (link->index_ >= 0) {

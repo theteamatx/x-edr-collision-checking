@@ -1,12 +1,27 @@
+// Copyright 2023 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     https://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 #include "collision_checking/assembly/link.h"
 
 #include <algorithm>
 #include <limits>
 
+#include "collision_checking/logging.h"
 #include "collision_checking/assembly/assembly.h"
 #include "collision_checking/assembly/geometry.h"
 #include "collision_checking/assembly/joint.h"
-#include "third_party/absl/strings/str_format.h"
+#include "absl/strings/str_format.h"
 
 namespace collision_checking {
 namespace {
@@ -27,7 +42,7 @@ void CheckValidInertiaMatrix(absl::string_view link_name,
 
   for (int i = 0; i < 3; i++) {
     // Diagonal must be positive (or zero within epsilon).
-    BLUE_CHECK(inertia(i, i) >= -kEpsilon,
+    CC_CHECK_GE(inertia(i, i), -kEpsilon,
                "Invalid inertia tensor, I(%d,%d) = %e < -%e\n  I = \n%s", i, i,
                inertia(i, i), kEpsilon, inertia_as_string().c_str());
 
@@ -35,7 +50,7 @@ void CheckValidInertiaMatrix(absl::string_view link_name,
     int b1 = i % 2 + 1;  // 1, 2, 1
     int b2 = i & 0x2;    // 0, 0, 2
     int b3 = 2 - i;      // 2, 1, 0
-    BLUE_CHECK(std::abs(inertia(b1, b2) - inertia(b2, b1)) <= kEpsilon,
+    CC_CHECK_LE(std::abs(inertia(b1, b2) - inertia(b2, b1)) , kEpsilon,
                "%s has invalid inertia tensor, |I(%d,%d) - I(%d,%d)| = %e > "
                "%e\n  I = \n%s",
                link_name, b1, b2, b2, b1,
@@ -43,8 +58,8 @@ void CheckValidInertiaMatrix(absl::string_view link_name,
                inertia_as_string().c_str());
 
     // Tensor diagonals must obey triangular inequality.
-    BLUE_CHECK(
-        inertia(b1, b1) + inertia(b2, b2) - inertia(b3, b3) >= -kEpsilon,
+    CC_CHECK_GE(
+        inertia(b1, b1) + inertia(b2, b2) - inertia(b3, b3) , -kEpsilon,
         "%s has invalid inertia tensor, I(%d,%d) + I(%d,%d) - I(%d,%d) = %e < "
         "-%e\n  I = \n%s",
         link_name, b1, b1, b2, b2, b3, b3,
@@ -58,10 +73,10 @@ void CheckValidInertiaMatrix(absl::string_view link_name,
   const double k2x2Epsilon = 64.0 * kEpsilon;
   const double k3x3Epsilon = 128.0 * kEpsilon;
   const double det2x2 = inertia.block<2, 2>(0, 0).determinant();
-  BLUE_CHECK(det2x2 >= -k2x2Epsilon,
+  CC_CHECK_GE(det2x2 , -k2x2Epsilon,
              "Invalid inertia tensor, |I(0:1,0:1)| = %e < -%e\n  I = \n%s",
              det2x2, k2x2Epsilon, inertia_as_string().c_str());
-  BLUE_CHECK(inertia.determinant() >= -k3x3Epsilon,
+  CC_CHECK_GE(inertia.determinant() , -k3x3Epsilon,
              "Invalid inertia tensor, |I| = %e < -%e\n  I = \n%s",
              inertia.determinant(), k3x3Epsilon, inertia_as_string().c_str());
 }

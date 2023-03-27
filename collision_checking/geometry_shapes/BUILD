@@ -73,9 +73,9 @@ cc_library(
         ":geometry_shape",
         ":geometry_shapes",
         "//collision_checking:eigenmath",
-        "//third_party/absl/status",
-        "//third_party/absl/status:statusor",
-        "//third_party/absl/strings",
+        "@com_google_absl//absl/status",
+        "@com_google_absl//absl/status:statusor",
+        "@com_google_absl//absl/strings",
     ],
 )
 

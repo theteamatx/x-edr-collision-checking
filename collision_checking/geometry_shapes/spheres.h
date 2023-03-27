@@ -1,3 +1,17 @@
+// Copyright 2023 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     https://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 #ifndef EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_GEOMETRY_SHAPES_SPHERES_H_
 #define EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_GEOMETRY_SHAPES_SPHERES_H_
 
@@ -5,6 +19,7 @@
 #include <vector>
 
 #include "collision_checking/eigenmath.h"
+#include "collision_checking/logging.h"
 #include "collision_checking/geometry_shapes/shape_base.h"
 #include "collision_checking/geometry_shapes/sphere.h"
 
@@ -23,7 +38,7 @@ class Spheres : public ShapeBase {
   Spheres(const std::vector<Vector3d>& centers,
           const std::vector<double>& radii)
       : ShapeBase(kType) {
-    BLUE_CHECK(centers.size() == radii.size(),
+    CC_CHECK_EQ(centers.size(), radii.size(),
                "Number of centers (%d) and radii (%d) do not match!",
                static_cast<int>(centers.size()),
                static_cast<int>(radii.size()));

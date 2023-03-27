@@ -1,8 +1,23 @@
+// Copyright 2023 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     https://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 #include "collision_checking/voxel_map_object.h"
-#include "googlex/proxy/eigenmath/distribution.h"
-#include "googlex/proxy/eigenmath/interpolation.h"
-#include "googlex/proxy/eigenmath/sampling.h"
-#include "third_party/benchmark/include/benchmark/benchmark.h"
+#include "eigenmath/distribution.h"
+#include "eigenmath/interpolation.h"
+#include "eigenmath/sampling.h"
+#include "eigenmath/distribution.h"
+#include "benchmark/benchmark.h"
 
 namespace collision_checking {
 namespace {
@@ -35,13 +50,12 @@ void BM_InBoxVoxelRange(benchmark::State& state) {
   VoxelMapObject<Scalar> object;
   object.ResizeBuffers(outside_count + inside_count);
   // Seed the generator so runs are deterministic.
-  ::blue::eigenmath::ProxyTestGenerator generator(
-      ::blue::eigenmath::kGeneratorTestSeed);
-  ::blue::eigenmath::UniformDistributionVector<Scalar, 3> center_dist;
+  eigenmath::TestGenerator generator(eigenmath::kGeneratorTestSeed);
+  eigenmath::UniformDistributionVector<Scalar, 3> center_dist;
   // Add elements inside the query box.
   for (int i = 0; i < inside_count; ++i) {
     object.AddSphere(
-        {{::blue::eigenmath::InterpolateLinearInBox(
+        {{eigenmath::InterpolateLinearInBox(
              center_dist(generator), query_box.low, query_box.high)},
          Scalar{0}},
         i);
@@ -51,7 +65,7 @@ void BM_InBoxVoxelRange(benchmark::State& state) {
   // Add elements outside the query box.
   for (int i = inside_count; i < object.size();) {
     const Sphere<Scalar> sphere{
-        {::blue::eigenmath::InterpolateLinearInBox(center_dist(generator),
+        {eigenmath::InterpolateLinearInBox(center_dist(generator),
                                                    map_box.low, map_box.high)},
         Scalar{0}};
 
