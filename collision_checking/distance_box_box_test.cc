@@ -16,14 +16,14 @@
 
 #include <iterator>
 
+#include "absl/flags/flag.h"
 #include "collision_checking/debug_options.h"
+#include "collision_checking/eigenmath.h"
 #include "collision_checking/test_utils.h"
 #include "eigenmath/distribution.h"
 #include "eigenmath/interpolation.h"
 #include "eigenmath/rotation_utils.h"
 #include "eigenmath/sampling.h"
-#include "collision_checking/eigenmath.h"
-#include "absl/flags/flag.h"
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
@@ -52,8 +52,7 @@ TYPED_TEST_P(DistanceBoxBoxTest, CompareAgainstOQSP) {
   constexpr Scalar kDistanceSquaredTolerance = 1e-5;
   constexpr int kNumLoops = 10000;
 
-  eigenmath::TestGenerator gen(
-      eigenmath::kGeneratorTestSeed);
+  eigenmath::TestGenerator gen(eigenmath::kGeneratorTestSeed);
   eigenmath::UniformDistributionVector<Scalar, 3> vector_dist;
   eigenmath::UniformDistributionSO3<Scalar> rotation_dist;
   constexpr double kMinHalfLength = 0.0;
@@ -99,83 +98,80 @@ TYPED_TEST_P(DistanceBoxBoxTest, CompareAgainstOQSP) {
     Vector3d delta_position = box_a.center.template cast<double>() -
                               box_b.center.template cast<double>();
     cost_matrix.setZero();
-    cost_matrix.block(0, 0, 3, 3) =
-        eigenmath::MatrixXd::Identity(3, 3) * 2.0;
+    cost_matrix.block(0, 0, 3, 3) = eigenmath::MatrixXd::Identity(3, 3) * 2.0;
     cost_matrix.block(0, 3, 3, 3) = -2.0 * RaRbT;
     cost_matrix.block(3, 0, 3, 3) = -2.0 * RbRaT;
-    cost_matrix.block(3, 3, 3, 3) =
-        eigenmath::MatrixXd::Identity(3, 3) * 2.0;
+    cost_matrix.block(3, 3, 3, 3) = eigenmath::MatrixXd::Identity(3, 3) * 2.0;
 
     cost_vector.head(3) =
-        2 * box_a.box_rotation_world.template cast<double>() *
-         delta_position;
+        2 * box_a.box_rotation_world.template cast<double>() * delta_position;
     cost_vector.tail(3) =
         -2 * box_b.box_rotation_world.template cast<double>() * delta_position;
 
     const auto qp_sol = testing::SolveBoxQPBruteForce(cost_matrix, cost_vector,
-                                                lower_bound, upper_bound);
+                                                      lower_bound, upper_bound);
 
     const Scalar qp_distance_squared =
         static_cast<Scalar>(qp_sol.minimum) + delta_position.squaredNorm();
 
     // Mathematica code for computing the minimum.
     if constexpr (false) {
-    ABSL_LOG(INFO) << absl::StrFormat(
-        "Minimize[{(%.10f+(%10f)*ux+(%10f)*uy+(%10f)*uz"
-        "-(%10f)*vx-(%10f)*vy-(%10f)*vz)^2"
-        "+(%.10f+(%10f)*ux+(%10f)*uy+(%10f)*uz"
-        "-(%10f)*vx-(%10f)*vy-(%10f)*vz)^2"
-        "+(%.10f+(%10f)*ux+(%10f)*uy+(%10f)*uz"
-        "-(%10f)*vx-(%10f)*vy-(%10f)*vz)^2,"
-        "ux >= %.10f, ux <= %.10f, "
-        "uy >= %.10f, uy <= %.10f, "
-        "uz >= %.10f, uz <= %.10f, "
-        "vx >= %.10f, vx <= %.10f, "
-        "vy >= %.10f, vy <= %.10f, "
-        "vz >= %.10f, vz <= %.10f},"
-        "{ux,uy,uz, vx,vy,vz}]",
-        box_a.center[0] - box_b.center[0], box_a.box_rotation_world(0, 0),
-        box_a.box_rotation_world(1, 0), box_a.box_rotation_world(2, 0),
-        box_b.box_rotation_world(0, 0), box_b.box_rotation_world(1, 0),
-        box_b.box_rotation_world(2, 0),
-        //
-        box_a.center[1] - box_b.center[1], box_a.box_rotation_world(0, 1),
-        box_a.box_rotation_world(1, 1), box_a.box_rotation_world(2, 1),
-        box_b.box_rotation_world(0, 1), box_b.box_rotation_world(1, 1),
-        box_b.box_rotation_world(2, 1),
-        //
-        box_a.center[2] - box_b.center[2], box_a.box_rotation_world(0, 2),
-        box_a.box_rotation_world(1, 2), box_a.box_rotation_world(2, 2),
-        box_b.box_rotation_world(0, 2), box_b.box_rotation_world(1, 2),
-        box_b.box_rotation_world(2, 2),
-        //
-        -box_a.half_lengths[0], box_a.half_lengths[0], -box_a.half_lengths[1],
-        box_a.half_lengths[1], -box_a.half_lengths[2], box_a.half_lengths[2],
-        -box_b.half_lengths[0], box_b.half_lengths[0], -box_b.half_lengths[1],
-        box_b.half_lengths[1], -box_b.half_lengths[2], box_b.half_lengths[2]);
-    // Mathematica code for the distance squared.
-    ABSL_LOG(INFO) << absl::StrFormat(
-        "g[ux_,uy_, uz_, vx_, vy_, "
-        "vz_]:=(%.10f+(%10f)*ux+(%10f)*uy+(%10f)*uz"
-        "-(%10f)*vx-(%10f)*vy-(%10f)*vz)^2"
-        "+(%.10f+(%10f)*ux+(%10f)*uy+(%10f)*uz"
-        "-(%10f)*vx-(%10f)*vy-(%10f)*vz)^2"
-        "+(%.10f+(%10f)*ux+(%10f)*uy+(%10f)*uz"
-        "-(%10f)*vx-(%10f)*vy-(%10f)*vz)^2",
-        box_a.center[0] - box_b.center[0], box_a.box_rotation_world(0, 0),
-        box_a.box_rotation_world(1, 0), box_a.box_rotation_world(2, 0),
-        box_b.box_rotation_world(0, 0), box_b.box_rotation_world(1, 0),
-        box_b.box_rotation_world(2, 0),
-        //
-        box_a.center[1] - box_b.center[1], box_a.box_rotation_world(0, 1),
-        box_a.box_rotation_world(1, 1), box_a.box_rotation_world(2, 1),
-        box_b.box_rotation_world(0, 1), box_b.box_rotation_world(1, 1),
-        box_b.box_rotation_world(2, 1),
-        //
-        box_a.center[2] - box_b.center[2], box_a.box_rotation_world(0, 2),
-        box_a.box_rotation_world(1, 2), box_a.box_rotation_world(2, 2),
-        box_b.box_rotation_world(0, 2), box_b.box_rotation_world(1, 2),
-        box_b.box_rotation_world(2, 2));
+      ABSL_LOG(INFO) << absl::StrFormat(
+          "Minimize[{(%.10f+(%10f)*ux+(%10f)*uy+(%10f)*uz"
+          "-(%10f)*vx-(%10f)*vy-(%10f)*vz)^2"
+          "+(%.10f+(%10f)*ux+(%10f)*uy+(%10f)*uz"
+          "-(%10f)*vx-(%10f)*vy-(%10f)*vz)^2"
+          "+(%.10f+(%10f)*ux+(%10f)*uy+(%10f)*uz"
+          "-(%10f)*vx-(%10f)*vy-(%10f)*vz)^2,"
+          "ux >= %.10f, ux <= %.10f, "
+          "uy >= %.10f, uy <= %.10f, "
+          "uz >= %.10f, uz <= %.10f, "
+          "vx >= %.10f, vx <= %.10f, "
+          "vy >= %.10f, vy <= %.10f, "
+          "vz >= %.10f, vz <= %.10f},"
+          "{ux,uy,uz, vx,vy,vz}]",
+          box_a.center[0] - box_b.center[0], box_a.box_rotation_world(0, 0),
+          box_a.box_rotation_world(1, 0), box_a.box_rotation_world(2, 0),
+          box_b.box_rotation_world(0, 0), box_b.box_rotation_world(1, 0),
+          box_b.box_rotation_world(2, 0),
+          //
+          box_a.center[1] - box_b.center[1], box_a.box_rotation_world(0, 1),
+          box_a.box_rotation_world(1, 1), box_a.box_rotation_world(2, 1),
+          box_b.box_rotation_world(0, 1), box_b.box_rotation_world(1, 1),
+          box_b.box_rotation_world(2, 1),
+          //
+          box_a.center[2] - box_b.center[2], box_a.box_rotation_world(0, 2),
+          box_a.box_rotation_world(1, 2), box_a.box_rotation_world(2, 2),
+          box_b.box_rotation_world(0, 2), box_b.box_rotation_world(1, 2),
+          box_b.box_rotation_world(2, 2),
+          //
+          -box_a.half_lengths[0], box_a.half_lengths[0], -box_a.half_lengths[1],
+          box_a.half_lengths[1], -box_a.half_lengths[2], box_a.half_lengths[2],
+          -box_b.half_lengths[0], box_b.half_lengths[0], -box_b.half_lengths[1],
+          box_b.half_lengths[1], -box_b.half_lengths[2], box_b.half_lengths[2]);
+      // Mathematica code for the distance squared.
+      ABSL_LOG(INFO) << absl::StrFormat(
+          "g[ux_,uy_, uz_, vx_, vy_, "
+          "vz_]:=(%.10f+(%10f)*ux+(%10f)*uy+(%10f)*uz"
+          "-(%10f)*vx-(%10f)*vy-(%10f)*vz)^2"
+          "+(%.10f+(%10f)*ux+(%10f)*uy+(%10f)*uz"
+          "-(%10f)*vx-(%10f)*vy-(%10f)*vz)^2"
+          "+(%.10f+(%10f)*ux+(%10f)*uy+(%10f)*uz"
+          "-(%10f)*vx-(%10f)*vy-(%10f)*vz)^2",
+          box_a.center[0] - box_b.center[0], box_a.box_rotation_world(0, 0),
+          box_a.box_rotation_world(1, 0), box_a.box_rotation_world(2, 0),
+          box_b.box_rotation_world(0, 0), box_b.box_rotation_world(1, 0),
+          box_b.box_rotation_world(2, 0),
+          //
+          box_a.center[1] - box_b.center[1], box_a.box_rotation_world(0, 1),
+          box_a.box_rotation_world(1, 1), box_a.box_rotation_world(2, 1),
+          box_b.box_rotation_world(0, 1), box_b.box_rotation_world(1, 1),
+          box_b.box_rotation_world(2, 1),
+          //
+          box_a.center[2] - box_b.center[2], box_a.box_rotation_world(0, 2),
+          box_a.box_rotation_world(1, 2), box_a.box_rotation_world(2, 2),
+          box_b.box_rotation_world(0, 2), box_b.box_rotation_world(1, 2),
+          box_b.box_rotation_world(2, 2));
     }
     EXPECT_NEAR(qp_distance_squared, distance_squared,
                 kDistanceSquaredTolerance)

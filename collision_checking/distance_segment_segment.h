@@ -22,12 +22,12 @@
 #include <string>
 #include <type_traits>
 
+#include "absl/strings/str_format.h"
 #include "collision_checking/debug_options.h"
+#include "collision_checking/eigenmath.h"
 #include "collision_checking/geometry.h"
 #include "collision_checking/inlining.h"
 #include "collision_checking/logging.h"
-#include "collision_checking/eigenmath.h"
-#include "absl/strings/str_format.h"
 
 namespace collision_checking {
 
@@ -61,10 +61,10 @@ CC_INLINE SegmentSegmentResult<Scalar> SegmentSegmentDistanceSquared(
   if constexpr (kDebugOptions &
                 DebugOptions::kDebugOptionsPerformExpensiveInputChecks) {
     CC_CHECK_LT(std::abs(segment_a.direction.squaredNorm() - Scalar{1}),
-                       std::numeric_limits<Scalar>::epsilon() * 10);
+                std::numeric_limits<Scalar>::epsilon() * 10);
     CC_CHECK_GE(segment_a.half_length, Scalar{0});
     CC_CHECK_LT(std::abs(segment_b.direction.squaredNorm() - Scalar{1}),
-                       std::numeric_limits<Scalar>::epsilon() * 10);
+                std::numeric_limits<Scalar>::epsilon() * 10);
     CC_CHECK_GE(segment_b.half_length, Scalar{0});
   }
 
@@ -126,12 +126,11 @@ CC_INLINE SegmentSegmentResult<Scalar> SegmentSegmentDistanceSquared(
     const Scalar w = Saturate(-dir.dot(diff), w_max);
     const Scalar distance_squared = (diff + w * dir).squaredNorm();
     // Minimum norm solution, projected onto valid v-set.
-    const Scalar v_minnorm =
-        Saturate(Scalar{0.5} * w, segment_b.half_length);
+    const Scalar v_minnorm = Saturate(Scalar{0.5} * w, segment_b.half_length);
     // U might be violated for this solution, so project onto valid set and
     // recompute v, which should yield a valid solution.
     const Scalar u = Saturate(w + v_minnorm, segment_a.half_length);
-    const Scalar v = u-w;
+    const Scalar v = u - w;
     return {.distance_squared = distance_squared,
             .segment_a_parameter = u,
             .segment_b_parameter = v};
@@ -159,8 +158,8 @@ CC_INLINE SegmentSegmentResult<Scalar> SegmentSegmentDistanceSquared(
         // Region 2: v is at the upper limit, u within limits.
         // Compute distance with v set to upper limit.
         const Scalar v = segment_b.half_length;
-        const Scalar u = Saturate(-dira_dot_diff + dira_dot_dirb * v,
-                                             segment_a.half_length);
+        const Scalar u =
+            Saturate(-dira_dot_diff + dira_dot_dirb * v, segment_a.half_length);
         const Scalar distance_squared =
             (diff + segment_a.direction * u - segment_b.direction * v)
                 .squaredNorm();
@@ -172,8 +171,8 @@ CC_INLINE SegmentSegmentResult<Scalar> SegmentSegmentDistanceSquared(
       // v is at the lower limit.
       // Compute distance with v set to lower limit.
       const Scalar v = -segment_b.half_length;
-      const Scalar u = Saturate(-dira_dot_diff + dira_dot_dirb * v,
-                                           segment_a.half_length);
+      const Scalar u =
+          Saturate(-dira_dot_diff + dira_dot_dirb * v, segment_a.half_length);
       const Scalar distance_squared =
           (diff + segment_a.direction * u - segment_b.direction * v)
               .squaredNorm();
@@ -187,8 +186,8 @@ CC_INLINE SegmentSegmentResult<Scalar> SegmentSegmentDistanceSquared(
         // Region 4: u above limit, v within limits.
         // Compute distance with u set to upper limit.
         const Scalar u = segment_a.half_length;
-        const Scalar v = Saturate(dirb_dot_diff + dira_dot_dirb * u,
-                                             segment_b.half_length);
+        const Scalar v =
+            Saturate(dirb_dot_diff + dira_dot_dirb * u, segment_b.half_length);
         const Scalar distance_squared =
             (diff + segment_a.direction * u - segment_b.direction * v)
                 .squaredNorm();
@@ -204,8 +203,7 @@ CC_INLINE SegmentSegmentResult<Scalar> SegmentSegmentDistanceSquared(
       // Use solution at vmax instead.
       if (v > segment_b.half_length) {
         v = segment_b.half_length;
-        u = Saturate(-dira_dot_diff + dira_dot_dirb * v,
-                                segment_a.half_length);
+        u = Saturate(-dira_dot_diff + dira_dot_dirb * v, segment_a.half_length);
       }
       const Scalar distance_squared =
           (diff + segment_a.direction * u - segment_b.direction * v)
@@ -222,8 +220,7 @@ CC_INLINE SegmentSegmentResult<Scalar> SegmentSegmentDistanceSquared(
     // Use solution at vmin instead.
     if (v < -segment_b.half_length) {
       v = -segment_b.half_length;
-      u = Saturate(-dira_dot_diff + dira_dot_dirb * v,
-                              segment_a.half_length);
+      u = Saturate(-dira_dot_diff + dira_dot_dirb * v, segment_a.half_length);
     }
     const Scalar distance_squared =
         (diff + segment_a.direction * u - segment_b.direction * v)
@@ -239,8 +236,8 @@ CC_INLINE SegmentSegmentResult<Scalar> SegmentSegmentDistanceSquared(
       // u is at the lower limit.
       // Compute distance with u set to lower limit.
       const Scalar u = -segment_a.half_length;
-      const Scalar v = Saturate(dirb_dot_diff + dira_dot_dirb * u,
-                                           segment_b.half_length);
+      const Scalar v =
+          Saturate(dirb_dot_diff + dira_dot_dirb * u, segment_b.half_length);
       const Scalar distance_squared =
           (diff + segment_a.direction * u - segment_b.direction * v)
               .squaredNorm();
@@ -256,8 +253,7 @@ CC_INLINE SegmentSegmentResult<Scalar> SegmentSegmentDistanceSquared(
     // Use solution at vmax instead.
     if (v > segment_b.half_length) {
       v = segment_b.half_length;
-      u = Saturate(-dira_dot_diff + dira_dot_dirb * v,
-                              segment_a.half_length);
+      u = Saturate(-dira_dot_diff + dira_dot_dirb * v, segment_a.half_length);
     }
     const Scalar distance_squared =
         (diff + segment_a.direction * u - segment_b.direction * v)
@@ -273,8 +269,7 @@ CC_INLINE SegmentSegmentResult<Scalar> SegmentSegmentDistanceSquared(
   // Use solution at vmin instead.
   if (v < -segment_b.half_length) {
     v = -segment_b.half_length;
-    u = Saturate(-dira_dot_diff + dira_dot_dirb * v,
-                            segment_a.half_length);
+    u = Saturate(-dira_dot_diff + dira_dot_dirb * v, segment_a.half_length);
   }
   const Scalar distance_squared =
       (diff + segment_a.direction * u - segment_b.direction * v).squaredNorm();

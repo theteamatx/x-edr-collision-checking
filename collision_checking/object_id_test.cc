@@ -82,7 +82,7 @@ TEST(ObjectIdSet, GetObjectIdFromSet) {
        ++i) {
     ObjectId id{i};
     ObjectIdSet set(id);
-     CC_ASSERT_OK_AND_ASSIGN(ObjectId roundtrip, GetObjectIdFromSet(set));
+    CC_ASSERT_OK_AND_ASSIGN(ObjectId roundtrip, GetObjectIdFromSet(set));
     EXPECT_EQ(id, roundtrip);
 
     roundtrip = ObjectId{0};

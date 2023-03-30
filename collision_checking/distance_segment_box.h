@@ -23,11 +23,11 @@
 
 #include "collision_checking/debug_options.h"
 #include "collision_checking/distance_point_box.h"
+#include "collision_checking/eigenmath.h"
 #include "collision_checking/geometry.h"
 #include "collision_checking/inlining.h"
 #include "collision_checking/logging.h"
 #include "eigenmath/scalar_utils.h"
-#include "collision_checking/eigenmath.h"
 
 namespace collision_checking {
 
@@ -76,8 +76,7 @@ CC_INLINE SegmentBoxResult<Scalar> AxisParallelLineBoxDistanceSquared(
 template <typename Scalar>
 CC_INLINE SegmentBoxResult<Scalar> FaceParallelLineBoxDistanceSquared(
     int plane_index, const Vector3<Scalar>& direction,
-    Vector3<Scalar> segment_center,
-    const Vector3<Scalar>& box_half_lengths) {
+    Vector3<Scalar> segment_center, const Vector3<Scalar>& box_half_lengths) {
   using Vector3 = Vector3<Scalar>;
   CC_CHECK_GE(plane_index, 0);
   CC_CHECK_LE(plane_index, 2);
@@ -156,8 +155,7 @@ CC_INLINE SegmentBoxResult<Scalar> FaceParallelLineBoxDistanceSquared(
 template <typename Scalar>
 CC_INLINE SegmentBoxResult<Scalar> LineFaceDistanceSquared(
     int plane_index, const Vector3<Scalar>& direction,
-    Vector3<Scalar> segment_center,
-    const Vector3<Scalar>& box_half_lengths) {
+    Vector3<Scalar> segment_center, const Vector3<Scalar>& box_half_lengths) {
   using Vector3 = Vector3<Scalar>;
   CC_CHECK_GE(plane_index, 0);
   CC_CHECK_LE(plane_index, 2);
@@ -240,8 +238,7 @@ CC_INLINE SegmentBoxResult<Scalar> LineFaceDistanceSquared(
 // This function assumes that all components in direction are positive.
 template <typename Scalar>
 CC_INLINE SegmentBoxResult<Scalar> LineBoxDistanceSquared(
-    const Vector3<Scalar>& direction,
-    const Vector3<Scalar>& segment_center,
+    const Vector3<Scalar>& direction, const Vector3<Scalar>& segment_center,
     const Vector3<Scalar>& box_half_lengths) {
   using Vector3 = Vector3<Scalar>;
   constexpr Scalar kParallelEpsilon =
@@ -316,14 +313,13 @@ CC_INLINE SegmentBoxResult<Scalar> DistanceSquared(
   if constexpr (kDebugOptions &
                 DebugOptions::kDebugOptionsPerformExpensiveInputChecks) {
     CC_CHECK_LT(std::abs(segment.direction.squaredNorm() - Scalar{1}),
-                       std::numeric_limits<Scalar>::epsilon() * 10);
+                std::numeric_limits<Scalar>::epsilon() * 10);
     CC_CHECK_GE(segment.half_length, Scalar{0});
     BLUE_CUDA_KERNEL_CHECK((box.half_lengths.array(), Scalar{0}).all());
-    CC_CHECK_LT(
-        (box.box_rotation_world * box.box_rotation_world.transpose() -
-         Matrix3<Scalar>::Identity())
-            .norm(),
-        std::numeric_limits<Scalar>::epsilon() * 10);
+    CC_CHECK_LT((box.box_rotation_world * box.box_rotation_world.transpose() -
+                 Matrix3<Scalar>::Identity())
+                    .norm(),
+                std::numeric_limits<Scalar>::epsilon() * 10);
   }
   // This solves the minimum distance problem:
   // (box.center+box.box_rotation_world^T*[u;v;w] -
@@ -338,10 +334,9 @@ CC_INLINE SegmentBoxResult<Scalar> DistanceSquared(
   // In box-centered coordinates, the problem is symmetric, so we can always
   // solve a problem where all segment direction components are positive.
   // This limits the number of geometric constellations that must be considered.
-  const Vector3<Scalar> signs(
-      direction[0] >= 0 ? Scalar{1} : Scalar{-1},
-      direction[1] >= 0 ? Scalar{1} : Scalar{-1},
-      direction[2] >= 0 ? Scalar{1} : Scalar{-1});
+  const Vector3<Scalar> signs(direction[0] >= 0 ? Scalar{1} : Scalar{-1},
+                              direction[1] >= 0 ? Scalar{1} : Scalar{-1},
+                              direction[2] >= 0 ? Scalar{1} : Scalar{-1});
   Vector3<Scalar> positive_direction = direction.cwiseAbs();
   Vector3<Scalar> positive_center = segment_center.cwiseProduct(signs);
 

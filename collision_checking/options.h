@@ -17,9 +17,9 @@
 
 #include <string>
 
+#include "absl/strings/string_view.h"
 #include "collision_checking/inlining.h"
 #include "collision_checking/object_id.h"
-#include "absl/strings/string_view.h"
 
 namespace collision_checking {
 

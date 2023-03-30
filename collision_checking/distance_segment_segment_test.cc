@@ -20,13 +20,13 @@
 #include <iterator>
 #include <string>
 
+#include "absl/flags/flag.h"
 #include "collision_checking/debug_options.h"
+#include "collision_checking/eigenmath.h"
 #include "collision_checking/test_utils.h"
 #include "eigenmath/distribution.h"
 #include "eigenmath/interpolation.h"
 #include "eigenmath/sampling.h"
-#include "collision_checking/eigenmath.h"
-#include "absl/flags/flag.h"
 #include "gtest/gtest.h"
 
 ABSL_FLAG(bool, verbose, false, "Turn on verbose text logging.");
@@ -64,8 +64,7 @@ TYPED_TEST_P(DistanceSegmentSegmentTest, CompareAgainstQP) {
   constexpr int kParallelLinesEvery = 30;
   // A constant controlling generation of not-quite parallel directions.
   constexpr Scalar kSmallDirectionComponent = 1e-4;
-  eigenmath::TestGenerator gen(
-      eigenmath::kGeneratorTestSeed);
+  eigenmath::TestGenerator gen(eigenmath::kGeneratorTestSeed);
   eigenmath::UniformDistributionVector<Scalar, 3> vector_dist;
   constexpr double kMinHalfLength = 0.0;
   constexpr double kMaxHalfLength = 0.5;
@@ -85,8 +84,8 @@ TYPED_TEST_P(DistanceSegmentSegmentTest, CompareAgainstQP) {
     SCOPED_TRACE(::testing::Message() << "At loop " << loop);
     ABSL_LOG(INFO) << "==== loop= " << loop;
     const Segment<Scalar> segment_a{
-        .center = eigenmath::InterpolateLinearInBox(
-            vector_dist(gen), kMinPointPos, kMaxPointPos),
+        .center = eigenmath::InterpolateLinearInBox(vector_dist(gen),
+                                                    kMinPointPos, kMaxPointPos),
         .direction = eigenmath::InterpolateLinearInBox(
                          vector_dist(gen), kMinPointPos, kMaxPointPos)
                          .normalized(),
@@ -138,23 +137,26 @@ TYPED_TEST_P(DistanceSegmentSegmentTest, CompareAgainstQP) {
         -2.0 * (cen_a - cen_b).dot(dir_b);
 
     ABSL_LOG(INFO) << std::scientific << std::setprecision(18)
-              << "segment_a.center= " << segment_a.center.transpose() << "\n"
-              << "segment_a.direction= " << segment_a.direction.transpose()
-              << "\n"
-              << "segment_a.half_length= " << segment_a.half_length << "\n"
-              << "segment_b.center= " << segment_b.center.transpose() << "\n"
-              << "segment_b.direction= " << segment_b.direction.transpose()
-              << "\n"
-              << "segment_b.half_length= " << segment_b.half_length << "\n";
+                   << "segment_a.center= " << segment_a.center.transpose()
+                   << "\n"
+                   << "segment_a.direction= " << segment_a.direction.transpose()
+                   << "\n"
+                   << "segment_a.half_length= " << segment_a.half_length << "\n"
+                   << "segment_b.center= " << segment_b.center.transpose()
+                   << "\n"
+                   << "segment_b.direction= " << segment_b.direction.transpose()
+                   << "\n"
+                   << "segment_b.half_length= " << segment_b.half_length
+                   << "\n";
     const auto qp_sol = testing::SolveBoxQPBruteForce(cost_matrix, cost_vector,
-                                                lower_bound, upper_bound);
+                                                      lower_bound, upper_bound);
     const double qp_distance_squared =
         qp_sol.minimum + (segment_a.center - segment_b.center).squaredNorm();
     ABSL_LOG(INFO) << std::scientific << std::setprecision(18)
-            << "QP: solution: " << qp_sol.solution.transpose() << "\n"
-            << "QP: minimum: " << qp_sol.minimum << "\n"
-            << "QP: distance squared: " << qp_distance_squared << "\n"
-            << "distance_squared: " << distance_squared << "\n";
+                   << "QP: solution: " << qp_sol.solution.transpose() << "\n"
+                   << "QP: minimum: " << qp_sol.minimum << "\n"
+                   << "QP: distance squared: " << qp_distance_squared << "\n"
+                   << "distance_squared: " << distance_squared << "\n";
 
     EXPECT_NEAR(qp_distance_squared, distance_squared,
                 kDistanceSquaredTolerance)
@@ -176,7 +178,7 @@ TYPED_TEST_P(DistanceSegmentSegmentTest, CompareAgainstQP) {
   }
 
   ABSL_LOG(INFO) << std::scientific << std::setprecision(18)
-          << "max_diff= " << max_diff;
+                 << "max_diff= " << max_diff;
 }
 
 REGISTER_TYPED_TEST_SUITE_P(DistanceSegmentSegmentTest, CompareAgainstQP);

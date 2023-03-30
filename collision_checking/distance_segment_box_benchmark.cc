@@ -12,10 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "collision_checking/distance_segment_box.h"
-
-#include "eigenmath/rotation_utils.h"
 #include "benchmark/benchmark.h"
+#include "collision_checking/distance_segment_box.h"
+#include "eigenmath/rotation_utils.h"
 
 namespace collision_checking {
 namespace {
@@ -24,8 +23,7 @@ void BM_DistanceSquaredTest(benchmark::State& state) {
   using Vector3 = Vector3<Scalar>;
   Box<Scalar> box;
   box.center << -1, -2, -3;
-  eigenmath::RotationFromRPY<Scalar>(0.1, 0.2, 0.3,
-                                             &box.box_rotation_world);
+  eigenmath::RotationFromRPY<Scalar>(0.1, 0.2, 0.3, &box.box_rotation_world);
   box.half_lengths << 2, 3, 4;
   Segment<Scalar> segment;
 

@@ -18,8 +18,8 @@
 #include <limits>
 #include <string>
 
-#include "collision_checking/eigenmath.h"
 #include "absl/strings/string_view.h"
+#include "collision_checking/eigenmath.h"
 
 namespace collision_checking {
 

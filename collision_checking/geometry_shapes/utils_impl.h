@@ -18,18 +18,18 @@
 #include <memory>
 #include <vector>
 
-#include "collision_checking/geometry_shapes/eigen_proto_utils.h"
-#include "collision_checking/eigenmath.h"
-#include "collision_checking/geometry_shapes/box.h"
-#include "collision_checking/geometry_shapes/capsule.h"
-#include "collision_checking/geometry_shapes/composite_shape.h"
-#include "collision_checking/geometry_shapes/geometry_shapes.pb.h"
-#include "collision_checking/geometry_shapes/shape_base.h"
-#include "collision_checking/geometry_shapes/sphere.h"
 #include "absl/status/status.h"
 #include "absl/status/statusor.h"
 #include "absl/strings/str_cat.h"
 #include "absl/strings/string_view.h"
+#include "collision_checking/eigenmath.h"
+#include "collision_checking/geometry_shapes/box.h"
+#include "collision_checking/geometry_shapes/capsule.h"
+#include "collision_checking/geometry_shapes/composite_shape.h"
+#include "collision_checking/geometry_shapes/eigen_proto_utils.h"
+#include "collision_checking/geometry_shapes/geometry_shapes.pb.h"
+#include "collision_checking/geometry_shapes/shape_base.h"
+#include "collision_checking/geometry_shapes/sphere.h"
 
 namespace collision_checking {
 namespace geometry_shapes {

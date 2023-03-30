@@ -60,8 +60,7 @@ using Matrix3d = Matrix3<double>;
 template <typename Functor, typename Scalar>
 CC_INLINE std::pair<Scalar, Scalar> GoldenSectionSearchMinimize(
     Scalar left, Scalar right, Functor f, Scalar x_tolerance) {
-  return ::eigenmath::GoldenSectionSearchMinimize(left, right, f,
-                                                        x_tolerance);
+  return ::eigenmath::GoldenSectionSearchMinimize(left, right, f, x_tolerance);
 }
 
 template <typename T>
@@ -71,9 +70,9 @@ inline constexpr T Saturate(const T& val, const T& min_max) {
 
 template <class Scalar>
 inline std::array<Vector3<Scalar>, 2> ExtendToOrthonormalBasis(
-    const Vector3<Scalar>& u){
+    const Vector3<Scalar>& u) {
   return ::eigenmath::ExtendToOrthonormalBasis(u);
-    }
+}
 
 }  // namespace collision_checking
 

@@ -16,16 +16,15 @@
 
 #include <vector>
 
+#include "absl/status/status.h"
 #include "collision_checking/eigenmath.h"
 #include "collision_checking/geometry.h"
 #include "collision_checking/object_id.h"
 #include "collision_checking/options.h"
 #include "collision_checking/test_utils.h"
-#include "absl/status/status.h"
 #include "eigenmath/matchers.h"
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
-
 
 namespace collision_checking {
 namespace {

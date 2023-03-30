@@ -16,6 +16,7 @@
 
 #include <string>
 
+#include "absl/status/status.h"
 #include "collision_checking/assembly/assembly.pb.h"
 #include "collision_checking/assembly/geometry.h"
 #include "collision_checking/assembly/joint.h"
@@ -23,9 +24,8 @@
 #include "collision_checking/assembly/proto_utils.h"
 #include "collision_checking/geometry_shapes/box.h"
 #include "collision_checking/test_utils.h"
-#include "absl/status/status.h"
-#include "gtest/gtest.h"
 #include "eigenmath/matchers.h"
+#include "gtest/gtest.h"
 
 namespace collision_checking {
 namespace {

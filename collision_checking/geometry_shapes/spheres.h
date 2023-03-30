@@ -19,9 +19,9 @@
 #include <vector>
 
 #include "collision_checking/eigenmath.h"
-#include "collision_checking/logging.h"
 #include "collision_checking/geometry_shapes/shape_base.h"
 #include "collision_checking/geometry_shapes/sphere.h"
+#include "collision_checking/logging.h"
 
 namespace collision_checking {
 namespace geometry_shapes {
@@ -39,9 +39,9 @@ class Spheres : public ShapeBase {
           const std::vector<double>& radii)
       : ShapeBase(kType) {
     CC_CHECK_EQ(centers.size(), radii.size(),
-               "Number of centers (%d) and radii (%d) do not match!",
-               static_cast<int>(centers.size()),
-               static_cast<int>(radii.size()));
+                "Number of centers (%d) and radii (%d) do not match!",
+                static_cast<int>(centers.size()),
+                static_cast<int>(radii.size()));
     for (int i = 0; i < centers.size(); ++i) {
       spheres_.emplace_back(radii[i]).SetLocalTransform(Pose3d(centers[i]));
     }
@@ -54,7 +54,7 @@ class Spheres : public ShapeBase {
     return result;
   }
 
-  const std::vector<Sphere> &GetSpheres() const { return spheres_; }
+  const std::vector<Sphere>& GetSpheres() const { return spheres_; }
 
  private:
   std::vector<Sphere> spheres_;

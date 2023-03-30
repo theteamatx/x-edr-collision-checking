@@ -15,9 +15,9 @@
 #ifndef EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_NORMALIZE_AND_MAYBE_LOG_H_
 #define EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_NORMALIZE_AND_MAYBE_LOG_H_
 
+#include "absl/log/absl_log.h"
 #include "collision_checking/eigenmath.h"
 #include "collision_checking/inlining.h"
-#include "absl/log/absl_log.h"
 
 namespace collision_checking {
 

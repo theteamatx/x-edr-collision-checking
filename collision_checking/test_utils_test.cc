@@ -14,7 +14,6 @@
 
 #include "collision_checking/test_utils.h"
 
-
 #include "absl/log/absl_log.h"
 #include "benchmark/benchmark.h"
 #include "gtest/gtest.h"

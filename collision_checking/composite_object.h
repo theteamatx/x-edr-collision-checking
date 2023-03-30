@@ -21,13 +21,13 @@
 #include "collision_checking/distance_point_segment.h"
 #include "collision_checking/distance_segment_box.h"
 #include "collision_checking/distance_segment_segment.h"
+#include "collision_checking/eigenmath.h"
 #include "collision_checking/geometry.h"
 #include "collision_checking/inlining.h"
 #include "collision_checking/normalize_and_maybe_log.h"
 #include "collision_checking/object_id.h"
 #include "collision_checking/options.h"
 #include "collision_checking/vector.h"
-#include "collision_checking/eigenmath.h"
 
 // This file contains classes and functions for collision models
 // containing groups of objects and objects composed of multiple
@@ -154,8 +154,7 @@ void CompositeObject<Scalar, AllocatorTraits>::ResizeBuffers(
 }
 
 template <typename Scalar, typename AllocatorTraits>
-CC_INLINE void
-CompositeObject<Scalar, AllocatorTraits>::AssignTransformedShape(
+CC_INLINE void CompositeObject<Scalar, AllocatorTraits>::AssignTransformedShape(
     const Vector3<Scalar>& world_translation_object,
     const Matrix3<Scalar>& world_rotation_object,
     const CompositeObject<Scalar, AllocatorTraits>& other) {
@@ -509,8 +508,7 @@ CC_INLINE CompositObjectDistanceResult<Scalar> CompositeObjectDistance(
           min_capsule_a->center + min_capsule_a->direction * min_param_a;
       const Vector3<Scalar> contact_b =
           min_capsule_b->center + min_capsule_b->direction * min_param_b;
-      const Vector3<Scalar> a_normal_b =
-          (contact_b - contact_a).normalized();
+      const Vector3<Scalar> a_normal_b = (contact_b - contact_a).normalized();
       return {.distance = min_distance,
               .contact_a = contact_a + a_normal_b * min_capsule_a->radius,
               .contact_b = contact_b - a_normal_b * min_capsule_b->radius,
@@ -524,8 +522,7 @@ CC_INLINE CompositObjectDistanceResult<Scalar> CompositeObjectDistance(
       const Vector3<Scalar> contact_b =
           min_box_b->box_rotation_world.transpose() * min_point_b +
           min_box_b->center;
-      const Vector3<Scalar> a_normal_b =
-          (contact_b - contact_a).normalized();
+      const Vector3<Scalar> a_normal_b = (contact_b - contact_a).normalized();
       return {.distance = min_distance,
               .contact_a = contact_a + a_normal_b * min_capsule_a->radius,
               .contact_b = contact_b,
@@ -556,8 +553,7 @@ CC_INLINE CompositObjectDistanceResult<Scalar> CompositeObjectDistance(
           min_box_a->center;
       const Vector3<Scalar> contact_b =
           min_capsule_b->center + min_capsule_b->direction * min_param_b;
-      const Vector3<Scalar> a_normal_b =
-          (contact_b - contact_a).normalized();
+      const Vector3<Scalar> a_normal_b = (contact_b - contact_a).normalized();
       return {.distance = min_distance,
               .contact_a = contact_a,
               .contact_b = contact_b - a_normal_b * min_capsule_b->radius,

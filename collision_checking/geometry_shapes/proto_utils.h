@@ -17,28 +17,27 @@
 
 #include <memory>
 
+#include "absl/status/status.h"
+#include "absl/status/statusor.h"
 #include "collision_checking/eigenmath.h"
 #include "collision_checking/geometry_shapes/geometry_shapes.pb.h"
 #include "collision_checking/geometry_shapes/shape_base.h"
-#include "absl/status/status.h"
-#include "absl/status/statusor.h"
 
 namespace collision_checking {
 namespace geometry_shapes {
 namespace proto {
 
-void MakeBox(const Pose3d& pose, const Vector4d& rgba,
-             const Vector3d& size, Marker* out);
+void MakeBox(const Pose3d& pose, const Vector4d& rgba, const Vector3d& size,
+             Marker* out);
 
-void MakeCylinder(const Pose3d& pose,
-                  const Vector4d& rgba, double length, double radius,
-                  Marker* out);
+void MakeCylinder(const Pose3d& pose, const Vector4d& rgba, double length,
+                  double radius, Marker* out);
 
-void MakeCapsule(const Pose3d& pose, const Vector4d& rgba,
-                 double length, double radius, Marker* out);
+void MakeCapsule(const Pose3d& pose, const Vector4d& rgba, double length,
+                 double radius, Marker* out);
 
-void MakeSphere(const Pose3d& pose, const Vector4d& rgba,
-                double radius, Marker* out);
+void MakeSphere(const Pose3d& pose, const Vector4d& rgba, double radius,
+                Marker* out);
 
 absl::Status MakeMarker(const geometry_shapes::ShapeBase& shape,
                         const Vector4d& rgba, Marker* out);

@@ -18,13 +18,13 @@
 #include <memory>
 #include <utility>
 
+#include "absl/status/status.h"
+#include "absl/status/statusor.h"
+#include "absl/strings/str_cat.h"
 #include "collision_checking/assembly/assembly.h"
 #include "collision_checking/assembly/assembly.pb.h"
 #include "collision_checking/geometry_shapes/eigen_proto_utils.h"
 #include "collision_checking/geometry_shapes/utils_impl.h"
-#include "absl/status/status.h"
-#include "absl/status/statusor.h"
-#include "absl/strings/str_cat.h"
 
 namespace collision_checking {
 namespace utils_impl {
@@ -283,7 +283,7 @@ absl::Status ToProto(const Link& link, LinkProto* link_proto) {
                 link_proto->mutable_inertial()->mutable_link_t_inertial());
   const proto::Matrix3dProto inertia_proto =
       ProtoFromMatrix3d(link.GetParameters().inertia);
-    *link_proto->mutable_inertial()->mutable_inertia() = inertia_proto;
+  *link_proto->mutable_inertial()->mutable_inertia() = inertia_proto;
 
   link_proto->mutable_inertial()->set_mass(link.GetParameters().mass);
 

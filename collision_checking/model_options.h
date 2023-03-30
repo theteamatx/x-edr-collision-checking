@@ -48,9 +48,7 @@ class ModelOptions {
     return *this;
   }
   // Returns the assembly padding.
-  CC_INLINE Scalar GetAssemblyPadding() const {
-    return assembly_padding_;
-  }
+  CC_INLINE Scalar GetAssemblyPadding() const { return assembly_padding_; }
   // Sets the padding [m] to apply to all collision gemetries in the assembly.
   ModelOptions& SetAssemblyPadding(Scalar padding) {
     assembly_padding_ = padding;

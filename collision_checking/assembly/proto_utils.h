@@ -17,9 +17,9 @@
 
 #include <memory>
 
+#include "absl/status/statusor.h"
 #include "collision_checking/assembly/assembly.h"
 #include "collision_checking/assembly/assembly.pb.h"
-#include "absl/status/statusor.h"
 
 namespace collision_checking {
 

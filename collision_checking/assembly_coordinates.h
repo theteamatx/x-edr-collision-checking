@@ -15,10 +15,10 @@
 #ifndef EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_ASSEMBLY_COORDINATES_H_
 #define EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_ASSEMBLY_COORDINATES_H_
 
-#include "collision_checking/assembly_coordinate_view.h"
-#include "collision_checking/inlining.h"
-#include "collision_checking/eigenmath.h"
 #include "absl/types/span.h"
+#include "collision_checking/assembly_coordinate_view.h"
+#include "collision_checking/eigenmath.h"
+#include "collision_checking/inlining.h"
 
 namespace collision_checking {
 // A utility class that holds the position state for forward kinematics.
@@ -83,8 +83,7 @@ CC_INLINE AssemblyCoordinates<Scalar>::AssemblyCoordinates()
     : AssemblyCoordinates(0) {}
 
 template <typename Scalar>
-CC_INLINE AssemblyCoordinates<Scalar>::AssemblyCoordinates(
-    int joint_count) {
+CC_INLINE AssemblyCoordinates<Scalar>::AssemblyCoordinates(int joint_count) {
   Resize(joint_count);
 }
 
@@ -114,8 +113,7 @@ CC_INLINE int AssemblyCoordinates<Scalar>::JointCount() const {
 }
 
 template <typename Scalar>
-CC_INLINE AssemblyCoordinateView<Scalar>
-AssemblyCoordinates<Scalar>::View() {
+CC_INLINE AssemblyCoordinateView<Scalar> AssemblyCoordinates<Scalar>::View() {
   return AssemblyCoordinateView<Scalar>(coordinates_.data(), joint_count_);
 }
 
@@ -132,8 +130,8 @@ CC_INLINE absl::Span<Scalar> AssemblyCoordinates<Scalar>::Span() {
 }
 
 template <typename Scalar>
-CC_INLINE absl::Span<const Scalar>
-AssemblyCoordinates<Scalar>::ConstSpan() const {
+CC_INLINE absl::Span<const Scalar> AssemblyCoordinates<Scalar>::ConstSpan()
+    const {
   return absl::MakeConstSpan(coordinates_.data(), coordinates_.size());
 }
 

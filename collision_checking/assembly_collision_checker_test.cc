@@ -19,6 +19,7 @@
 #include <string>
 #include <vector>
 
+#include "absl/status/status.h"
 #include "collision_checking/assembly/proto_utils.h"
 #include "collision_checking/eigenmath.h"
 #include "collision_checking/geometry.h"
@@ -29,7 +30,6 @@
 #include "collision_checking/test_utils.h"
 #include "collision_checking/vector.h"
 #include "eigenmath/matchers.h"
-#include "absl/status/status.h"
 #include "gtest/gtest.h"
 
 namespace collision_checking {
@@ -307,9 +307,10 @@ TYPED_TEST_P(AssemblyCollisionCheckerTest, CreateOK) {
 
   Assembly assembly = FromProto(proto).value();
   AssemblyCollisionCheckerCpu collision;
-  ASSERT_THAT(collision.AddAssembly(
-      assembly, joint_order, AssemblyCollisionCheckerCpu::DefaultOptions()),
-                  StatusCodeIs(absl::StatusCode::kOk));
+  ASSERT_THAT(
+      collision.AddAssembly(assembly, joint_order,
+                            AssemblyCollisionCheckerCpu::DefaultOptions()),
+      StatusCodeIs(absl::StatusCode::kOk));
 
   const auto& robot = collision.GetObjectsAtZeroConfiguration();
 
@@ -1923,7 +1924,7 @@ TYPED_TEST_P(AssemblyCollisionCheckerTest,
   // Verify that removing the object from the inclusion mask
   // removes the collision.
   CC_ASSERT_OK(collision.RemoveFromObjectInclusionSet(ObjectId{0}, ObjectId{1})
-                .ToAbslStatus());
+                   .ToAbslStatus());
   const auto modified_flags = collision.GetAllObjectFlags();
 
   EXPECT_EQ(
@@ -1943,7 +1944,7 @@ TYPED_TEST_P(AssemblyCollisionCheckerTest,
   // Verify that adding the object from the inclusion mask adds the collision
   // back again.
   CC_ASSERT_OK(collision.AddToObjectInclusionSet(ObjectId{0}, ObjectId{1})
-                .ToAbslStatus());
+                   .ToAbslStatus());
   EXPECT_EQ(
       collision
           .ComputeCollisions(VoxelMapObjectCpu(), Pose3<Scalar>::Identity(),

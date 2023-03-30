@@ -17,14 +17,14 @@
 #include <iterator>
 #include <limits>
 
+#include "absl/flags/flag.h"
+#include "benchmark/benchmark.h"
 #include "collision_checking/debug_options.h"
+#include "collision_checking/eigenmath.h"
 #include "collision_checking/test_utils.h"
 #include "eigenmath/distribution.h"
 #include "eigenmath/interpolation.h"
 #include "eigenmath/sampling.h"
-#include "collision_checking/eigenmath.h"
-#include "absl/flags/flag.h"
-#include "benchmark/benchmark.h"
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
@@ -53,8 +53,7 @@ TYPED_TEST_P(DistancePointSegmentTest, CompareAgainstQP) {
   constexpr Scalar kDistanceSquaredTolerance = 10 * kQPTolerance;
   constexpr int kNumLoops = 100;
 
-  eigenmath::TestGenerator gen(
-      eigenmath::kGeneratorTestSeed);
+  eigenmath::TestGenerator gen(eigenmath::kGeneratorTestSeed);
   eigenmath::UniformDistributionVector<Scalar, 3> vector_dist;
   constexpr Scalar kMinHalfLength = 0.0;
   constexpr Scalar kMaxHalfLength = 0.5;
@@ -73,8 +72,8 @@ TYPED_TEST_P(DistancePointSegmentTest, CompareAgainstQP) {
     ABSL_LOG(INFO) << "==== loop= " << loop;
 
     Segment<Scalar> segment = {
-        .center = eigenmath::InterpolateLinearInBox(
-            vector_dist(gen), kMinPointPos, kMaxPointPos),
+        .center = eigenmath::InterpolateLinearInBox(vector_dist(gen),
+                                                    kMinPointPos, kMaxPointPos),
         .direction = eigenmath::InterpolateLinearInBox(
                          vector_dist(gen), kMinPointPos, kMaxPointPos)
                          .normalized(),
@@ -83,8 +82,7 @@ TYPED_TEST_P(DistancePointSegmentTest, CompareAgainstQP) {
         vector_dist(gen), kMinPointPos, kMaxPointPos)};
 
     CC_MALLOC_COUNTER_INIT();
-    const auto [distance_squared, u] =
-        DistanceSquared(point, segment);
+    const auto [distance_squared, u] = DistanceSquared(point, segment);
     CC_MALLOC_COUNTER_EXPECT_NO_ALLOCATIONS();
 
     lower_bound[0] = -segment.half_length;
@@ -95,15 +93,15 @@ TYPED_TEST_P(DistancePointSegmentTest, CompareAgainstQP) {
         2.0 * (segment.center - point.center).dot(segment.direction);
 
     const auto qp_sol = testing::SolveBoxQPBruteForce(cost_matrix, cost_vector,
-                                                lower_bound, upper_bound);
+                                                      lower_bound, upper_bound);
     const Scalar qp_distance_squared =
         static_cast<Scalar>(qp_sol.minimum) +
         (segment.center - point.center).squaredNorm();
 
     ABSL_LOG(INFO) << "QP: solution: " << qp_sol.solution.transpose() << "\n"
-            << "QP: minimum: " << qp_sol.minimum << "\n"
-            << "QP: distance squared: " << qp_distance_squared << "\n"
-            << "distance_squared: " << distance_squared << "\n";
+                   << "QP: minimum: " << qp_sol.minimum << "\n"
+                   << "QP: distance squared: " << qp_distance_squared << "\n"
+                   << "distance_squared: " << distance_squared << "\n";
     ASSERT_NEAR(qp_distance_squared, distance_squared,
                 kDistanceSquaredTolerance);
   }

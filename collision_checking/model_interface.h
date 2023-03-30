@@ -17,12 +17,12 @@
 #include <string>
 #include <vector>
 
+#include "absl/status/statusor.h"
 #include "collision_checking/assembly/assembly.h"
 #include "collision_checking/assembly_id.h"
 #include "collision_checking/model_options.h"
 #include "collision_checking/object_id.h"
 #include "collision_checking/status.h"
-#include "absl/status/statusor.h"
 
 namespace collision_checking {
 

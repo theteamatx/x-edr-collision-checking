@@ -14,12 +14,12 @@
 
 #include "collision_checking/geometry_shape_conversion.h"
 
+#include "absl/status/status.h"
+#include "absl/strings/str_cat.h"
 #include "collision_checking/composite_object.h"
 #include "collision_checking/geometry_shapes/composite_shape.h"
 #include "collision_checking/geometry_shapes/shape_base.h"
 #include "collision_checking/geometry_shapes/spheres.h"
-#include "absl/status/status.h"
-#include "absl/strings/str_cat.h"
 
 namespace collision_checking {
 

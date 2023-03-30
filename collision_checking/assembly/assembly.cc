@@ -21,10 +21,10 @@
 #include <utility>
 #include <vector>
 
-#include "collision_checking/logging.h"
-#include "collision_checking/geometry_shapes/composite_shape.h"
 #include "absl/status/status.h"
 #include "absl/strings/str_cat.h"
+#include "collision_checking/geometry_shapes/composite_shape.h"
+#include "collision_checking/logging.h"
 
 namespace collision_checking {
 
@@ -110,20 +110,19 @@ Joint& Assembly::CreateJoint(absl::string_view name,
   // TODO(b/214347493) Return a status instead of asserting.
   // Can't create joints in a finalized assembly.
   CC_CHECK(!finalized_, "The assembly is already finalized.");
-  CC_CHECK(!joint_map_.contains(name), "Joint name '%s' is not unique.",
-             name);
+  CC_CHECK(!joint_map_.contains(name), "Joint name '%s' is not unique.", name);
 
   // Get parent link config node, use it to find parent link
   Link* parent_link = FindLink(parent_link_name);
   CC_CHECK_NE(parent_link, nullptr,
-             "Parent link '%s' for joint '%s' does not exist.",
-             parent_link_name, name);
+              "Parent link '%s' for joint '%s' does not exist.",
+              parent_link_name, name);
 
   // Get child link config node, use it to find child link
   Link* child_link = FindLink(child_link_name);
   CC_CHECK_NE(child_link, nullptr,
-             "Child link '%s' for joint '%s' does not exist.", child_link_name,
-             name);
+              "Child link '%s' for joint '%s' does not exist.", child_link_name,
+              name);
 
   // Make and store the joint.
   auto joint = std::make_unique<Joint>(Joint::ConstructionKey{}, this, name,
@@ -135,8 +134,8 @@ Joint& Assembly::CreateJoint(absl::string_view name,
   // Wire us into the parent and child links
   parent_link->child_joints_.push_back(joint_ptr);
   CC_CHECK_EQ(child_link->parent_joint_, nullptr,
-             "Child link '%s' already has a parent joint.",
-             child_link->GetName().c_str());
+              "Child link '%s' already has a parent joint.",
+              child_link->GetName().c_str());
   child_link->parent_joint_ = joint_ptr;
 
   return *joint_ptr;
@@ -377,7 +376,7 @@ absl::Status Assembly::TopologicallySortLinks() {
     VisitLink(link.get(), &sorted_links);
   }
   CC_CHECK_EQ(sorted_links.size(), links_.size(),
-             "All links should have been visited and sorted.");
+              "All links should have been visited and sorted.");
 
   // Use the sorted list to index the links.
   int index = 0;
@@ -398,13 +397,13 @@ absl::Status Assembly::TopologicallySortLinks() {
   for (auto& link : links_) {
     if (link->parent_joint_ == nullptr) {
       CC_CHECK_EQ(root_link_, nullptr,
-                 "Assembly is not a tree, parentless links: '%s' and '%s'.",
-                 root_link_->GetName().c_str(), link->GetName().c_str());
+                  "Assembly is not a tree, parentless links: '%s' and '%s'.",
+                  root_link_->GetName().c_str(), link->GetName().c_str());
       root_link_ = link.get();
     }
   }
-  CC_CHECK_NE(root_link_ , nullptr,
-             "There must be at least one root link in an acyclic assembly.");
+  CC_CHECK_NE(root_link_, nullptr,
+              "There must be at least one root link in an acyclic assembly.");
 
   // The root links are already sorted by index, because they were inserted
   // in the order of the regular links list, which is sorted by index.
@@ -415,12 +414,12 @@ absl::Status Assembly::TopologicallySortLinks() {
   for (const auto& link : links_) {
     CC_CHECK_GE(link->index_, 0, "All links should be indexed.");
     if (link->parent_joint_ != nullptr) {
-      CC_CHECK_GT(link->index_ , link->parent_joint_->parent_link_->index_,
-                 "Parent links must have higher indices.");
+      CC_CHECK_GT(link->index_, link->parent_joint_->parent_link_->index_,
+                  "Parent links must have higher indices.");
     }
     for (const auto child_joint : link->child_joints_) {
-      CC_CHECK_LT(link->index_ , child_joint->child_link_->index_,
-                 "Child links must have lower indices.");
+      CC_CHECK_LT(link->index_, child_joint->child_link_->index_,
+                  "Child links must have lower indices.");
     }
   }
 
@@ -429,7 +428,7 @@ absl::Status Assembly::TopologicallySortLinks() {
 
 void Assembly::VisitLink(Link* link, std::deque<Link*>* sorted_links) {
   // If link has a temporary mark, assembly is not acyclic
-  CC_CHECK_NE(link->index_ , -2, "Kinematic cycles are unsupported.");
+  CC_CHECK_NE(link->index_, -2, "Kinematic cycles are unsupported.");
 
   // If link is marked, but not temporarily, it has been visited already
   if (link->index_ >= 0) {

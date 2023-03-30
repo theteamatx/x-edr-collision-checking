@@ -20,9 +20,9 @@
 
 #include <type_traits>
 
+#include "collision_checking/eigenmath.h"
 #include "collision_checking/geometry.h"
 #include "collision_checking/inlining.h"
-#include "collision_checking/eigenmath.h"
 
 namespace collision_checking {
 

@@ -16,8 +16,8 @@
 
 #include <vector>
 
-#include "collision_checking/eigenmath.h"
 #include "absl/flags/flag.h"
+#include "collision_checking/eigenmath.h"
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
 

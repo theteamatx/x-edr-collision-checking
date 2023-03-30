@@ -19,12 +19,12 @@
 #include <cstddef>
 #include <cstdint>
 
+#include "absl/algorithm/container.h"
+#include "collision_checking/eigenmath.h"
 #include "collision_checking/geometry.h"
 #include "collision_checking/object_id.h"
 #include "collision_checking/voxel_code.h"
 #include "collision_checking/voxel_indexer.h"
-#include "collision_checking/eigenmath.h"
-#include "absl/algorithm/container.h"
 
 namespace collision_checking {
 
@@ -167,8 +167,8 @@ class VoxelMapObject {
 
   // Adds a sphere with `center` and `radius`.
   // Will assert if the capacity has been exceeded.
-  void AddSphere(const Vector3<Scalar>& center, Scalar radius,
-                 int index, ObjectId id = kDefaultVoxelMapId);
+  void AddSphere(const Vector3<Scalar>& center, Scalar radius, int index,
+                 ObjectId id = kDefaultVoxelMapId);
 
   // Adds a sphere with `center` and `radius`.
   // Will assert if the capacity has been exceeded.
@@ -205,8 +205,7 @@ class VoxelMapObject {
 
  private:
   void Reset();
-  VoxelCodeTraits::CodeType Encode(
-      const Vector3<Scalar>& point) const;
+  VoxelCodeTraits::CodeType Encode(const Vector3<Scalar>& point) const;
   Vector3<Scalar> Decode(VoxelCodeTraits::CodeType code) const;
 
   bool query_structures_are_valid_ = true;
@@ -402,9 +401,8 @@ template <typename Scalar>
 void VoxelMapObject<Scalar>::AddSphere(const Vector3<Scalar>& center,
                                        const Scalar radius, int index,
                                        ObjectId id) {
-  CC_CHECK_LT(used_nodes_, nodes_.size(),
-                "used_nodes_= %d, nodes_.size()= %zu", used_nodes_,
-                nodes_.size());
+  CC_CHECK_LT(used_nodes_, nodes_.size(), "used_nodes_= %d, nodes_.size()= %zu",
+              used_nodes_, nodes_.size());
   nodes_[used_nodes_].sphere.center = center;
   nodes_[used_nodes_].sphere.radius = radius;
   nodes_[used_nodes_].index = index;
@@ -430,8 +428,7 @@ void VoxelMapObject<Scalar>::AddSphere(absl::Span<const Scalar> center,
 
 template <typename Scalar>
 void VoxelMapObject<Scalar>::TransformSpheres(
-    const Vector3<Scalar>& translation,
-    const Matrix3<Scalar>& rotation) {
+    const Vector3<Scalar>& translation, const Matrix3<Scalar>& rotation) {
   for (auto& node : nodes_) {
     node.sphere.center = translation + rotation * node.sphere.center;
   }

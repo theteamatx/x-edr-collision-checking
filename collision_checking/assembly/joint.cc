@@ -16,9 +16,9 @@
 
 #include <algorithm>
 
-#include "collision_checking/logging.h"
 #include "collision_checking/assembly/assembly.h"
 #include "collision_checking/assembly/link.h"
+#include "collision_checking/logging.h"
 
 namespace collision_checking {
 
@@ -37,7 +37,7 @@ Joint::Joint(ConstructionKey, Assembly* assembly, absl::string_view name,
   if (params.type != FIXED) {
     // Check if axis vector is valid.
     CC_CHECK_GT(params.axis.lpNorm<Eigen::Infinity>(), 0,
-               "Joint '%s' is not fixed, but has zero axis.", name);
+                "Joint '%s' is not fixed, but has zero axis.", name);
     // Normalize axis vector. This should almost always be a no-op.
     parameters_.axis.normalize();
   }

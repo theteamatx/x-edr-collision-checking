@@ -20,14 +20,14 @@
 #include <string>
 #include <vector>
 
+#include "absl/container/flat_hash_map.h"
+#include "absl/status/status.h"
+#include "absl/status/statusor.h"
+#include "absl/strings/string_view.h"
 #include "collision_checking/assembly/geometry.h"
 #include "collision_checking/assembly/joint.h"
 #include "collision_checking/assembly/link.h"
 #include "collision_checking/geometry_shapes/shape_base.h"
-#include "absl/status/status.h"
-#include "absl/status/statusor.h"
-#include "absl/strings/string_view.h"
-#include "absl/container/flat_hash_map.h"
 #include "genit/transform_iterator.h"
 
 namespace collision_checking {
@@ -256,7 +256,6 @@ class Assembly {
 
   absl::StatusOr<std::unique_ptr<geometry_shapes::ShapeBase>> MakeFixedGeometry(
       bool visual_shapes) const;
-
 
   std::string name_;
 

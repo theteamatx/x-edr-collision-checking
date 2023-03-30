@@ -17,13 +17,13 @@
 #include <cmath>
 #include <limits>
 
-#include "collision_checking/object_id.h"
-#include "eigenmath/rotation_utils.h"
 #include "collision_checking/eigenmath.h"
+#include "collision_checking/object_id.h"
 #include "collision_checking/test_utils.h"
+#include "eigenmath/matchers.h"
+#include "eigenmath/rotation_utils.h"
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
-#include "eigenmath/matchers.h"
 
 namespace collision_checking {
 namespace {
@@ -48,8 +48,8 @@ TYPED_TEST_P(GeometryTest, AlignedBoxDoOverlap) {
     int index_1 = (v / values_count) % values_count;
     int index_2 = (v / values_count / values_count) % values_count;
     Vector3<Scalar> shift(relative_shift_values[index_0],
-                                     relative_shift_values[index_1],
-                                     relative_shift_values[index_2]);
+                          relative_shift_values[index_1],
+                          relative_shift_values[index_2]);
     const bool expect_overlap =
         shift.template lpNorm<Eigen::Infinity>() <= Scalar{1};
 
@@ -67,8 +67,7 @@ TYPED_TEST_P(GeometryTest, AlignedBoxDoOverlap) {
 
 TYPED_TEST_P(GeometryTest, AlignedBoxIsInside) {
   using Scalar = TypeParam;
-  AlignedBox<Scalar> box{Vector3<Scalar>(-1, -2, -3),
-                         Vector3<Scalar>(1, 2, 3)};
+  AlignedBox<Scalar> box{Vector3<Scalar>(-1, -2, -3), Vector3<Scalar>(1, 2, 3)};
   // Loop over all permutations of shifts of sphere relative to
   // box by multiples (or fractions) of the box's dimension.
   std::vector<Scalar> relative_shift_values({-2, -0.5, 0, 0.5, 2});
@@ -79,13 +78,13 @@ TYPED_TEST_P(GeometryTest, AlignedBoxIsInside) {
     int index_1 = (v / values_count) % values_count;
     int index_2 = (v / values_count / values_count) % values_count;
     Vector3<Scalar> shift(relative_shift_values[index_0],
-                                     relative_shift_values[index_1],
-                                     relative_shift_values[index_2]);
+                          relative_shift_values[index_1],
+                          relative_shift_values[index_2]);
     const bool expect_inside =
         shift.template lpNorm<Eigen::Infinity>() <= Scalar{1};
 
     Vector3<Scalar> point = Scalar{0.5} * (box.low + box.high) +
-                                       shift.cwiseProduct(box.high - box.low);
+                            shift.cwiseProduct(box.high - box.low);
 
     EXPECT_EQ(IsInside(box, point), expect_inside)
         << "\nbox.low= " << box.low.transpose()
@@ -96,8 +95,7 @@ TYPED_TEST_P(GeometryTest, AlignedBoxIsInside) {
 
 TYPED_TEST_P(GeometryTest, AlignedBoxSetEmptySize) {
   using Scalar = TypeParam;
-  AlignedBox<Scalar> box{Vector3<Scalar>(-1, -2, -3),
-                         Vector3<Scalar>(1, 2, 3)};
+  AlignedBox<Scalar> box{Vector3<Scalar>(-1, -2, -3), Vector3<Scalar>(1, 2, 3)};
   Vector3<Scalar> point(0, 0, 0);
   EXPECT_TRUE(IsInside(box, point));
   SetEmptySize(&box);
@@ -228,8 +226,7 @@ TYPED_TEST_P(GeometryTest, AlignedBoxGrowAlignedBoxAroundBox) {
 
 TYPED_TEST_P(GeometryTest, AlignedBoxSphereDoOverlap) {
   using Scalar = TypeParam;
-  AlignedBox<Scalar> box{Vector3<Scalar>(-1, -2, -3),
-                         Vector3<Scalar>(1, 2, 3)};
+  AlignedBox<Scalar> box{Vector3<Scalar>(-1, -2, -3), Vector3<Scalar>(1, 2, 3)};
   // Loop over all permutations of shifts of sphere relative to
   // box by multiples (or fractions) of the box's dimension.
   std::vector<Scalar> relative_shift_values({-2, -0.5, 0, 0.5, 2});
@@ -240,8 +237,8 @@ TYPED_TEST_P(GeometryTest, AlignedBoxSphereDoOverlap) {
     int index_1 = (v / values_count) % values_count;
     int index_2 = (v / values_count / values_count) % values_count;
     Vector3<Scalar> shift(relative_shift_values[index_0],
-                                     relative_shift_values[index_1],
-                                     relative_shift_values[index_2]);
+                          relative_shift_values[index_1],
+                          relative_shift_values[index_2]);
 
     Sphere<Scalar> sphere;
     sphere.center = Scalar{0.5} * (box.low + box.high) +
@@ -256,10 +253,8 @@ TYPED_TEST_P(GeometryTest, AlignedBoxSphereDoOverlap) {
 
     sphere.radius = 0.1;
     AlignedBox<Scalar> sphere_box;
-    sphere_box.low =
-        sphere.center - Vector3<Scalar>::Constant(sphere.radius);
-    sphere_box.high =
-        sphere.center + Vector3<Scalar>::Constant(sphere.radius);
+    sphere_box.low = sphere.center - Vector3<Scalar>::Constant(sphere.radius);
+    sphere_box.high = sphere.center + Vector3<Scalar>::Constant(sphere.radius);
 
     EXPECT_EQ(DoOverlap(box, sphere_box), DoOverlap(box, sphere))
         << "\nbox.low= " << box.low.transpose()

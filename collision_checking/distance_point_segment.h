@@ -57,7 +57,7 @@ CC_INLINE PointSegmentResult<Scalar> DistanceSquared(
   if constexpr (kDebugOptions &
                 DebugOptions::kDebugOptionsPerformExpensiveInputChecks) {
     CC_CHECK_LT(std::abs(segment.direction.squaredNorm() - Scalar{1}),
-                       std::numeric_limits<Scalar>::epsilon() * 10);
+                std::numeric_limits<Scalar>::epsilon() * 10);
     CC_CHECK_GE(segment.half_length, Scalar{0});
   }
 

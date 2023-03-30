@@ -23,10 +23,10 @@
 #include <limits>
 #include <string>
 
-#include "collision_checking/inlining.h"
-#include "collision_checking/logging.h"
 #include "absl/strings/str_format.h"
 #include "collision_checking/eigenmath.h"
+#include "collision_checking/inlining.h"
+#include "collision_checking/logging.h"
 
 namespace collision_checking {
 // A point struct that allows distance computation functions for different

@@ -22,10 +22,10 @@
 #include <type_traits>
 
 #include "collision_checking/debug_options.h"
+#include "collision_checking/eigenmath.h"
 #include "collision_checking/geometry.h"
 #include "collision_checking/inlining.h"
 #include "eigenmath/scalar_utils.h"
-#include "collision_checking/eigenmath.h"
 
 namespace collision_checking {
 
@@ -38,8 +38,8 @@ struct PointBoxResult {
 // Returns the squared distance between `point` and `box`, as well
 // as the parameters for the closest point on the box.
 template <typename Scalar, unsigned kDebugOptions = kDebugOptionsNone>
-CC_INLINE PointBoxResult<Scalar> DistanceSquared(
-    const Point<Scalar>& point, const Box<Scalar>& box);
+CC_INLINE PointBoxResult<Scalar> DistanceSquared(const Point<Scalar>& point,
+                                                 const Box<Scalar>& box);
 
 ////////////////////////////////////////////////////////////////////////////////
 // Implementation details only below here.
@@ -48,8 +48,7 @@ namespace internal {
 // Minimum distance squared and closest point to box in box coordinate frame.
 template <typename Scalar>
 CC_INLINE PointBoxResult<Scalar> PointBoxDistanceSquared(
-    const Vector3<Scalar>& point_box,
-    const Vector3<Scalar>& box_half_lengths) {
+    const Vector3<Scalar>& point_box, const Vector3<Scalar>& box_half_lengths) {
   // Projected solution (equivalent to closest point on box in box-local frame).
   // Note: could avoid a few ops by unrolling these operations explicitly.
   const Vector3<Scalar> point_box_proj = Vector3<Scalar>(
@@ -62,8 +61,8 @@ CC_INLINE PointBoxResult<Scalar> PointBoxDistanceSquared(
 }  // namespace internal
 
 template <typename Scalar, unsigned kDebugOptions>
-CC_INLINE PointBoxResult<Scalar> DistanceSquared(
-    const Point<Scalar>& point, const Box<Scalar>& box) {
+CC_INLINE PointBoxResult<Scalar> DistanceSquared(const Point<Scalar>& point,
+                                                 const Box<Scalar>& box) {
   static_assert(std::is_floating_point_v<Scalar>,
                 "Scalar must be a floating point type.");
 

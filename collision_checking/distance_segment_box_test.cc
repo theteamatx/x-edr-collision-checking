@@ -17,14 +17,14 @@
 #include <iterator>
 #include <limits>
 
+#include "absl/flags/flag.h"
+#include "absl/strings/str_format.h"
+#include "collision_checking/eigenmath.h"
 #include "collision_checking/test_utils.h"
 #include "eigenmath/distribution.h"
 #include "eigenmath/interpolation.h"
 #include "eigenmath/rotation_utils.h"
 #include "eigenmath/sampling.h"
-#include "collision_checking/eigenmath.h"
-#include "absl/flags/flag.h"
-#include "absl/strings/str_format.h"
 #include "gtest/gtest.h"
 
 ABSL_FLAG(bool, verbose, false, "Turn on verbose text logging.");
@@ -52,8 +52,7 @@ TYPED_TEST_P(DistanceSegmentBoxTest, CompareAgainstQP) {
   constexpr Scalar kDistanceSquaredTolerance =
       1000 * std::numeric_limits<Scalar>::epsilon();
   constexpr int kNumLoops = 5000;
-  eigenmath::TestGenerator gen(
-      eigenmath::kGeneratorTestSeed);
+  eigenmath::TestGenerator gen(eigenmath::kGeneratorTestSeed);
   eigenmath::UniformDistributionVector<Scalar, 3> vector_dist;
   eigenmath::UniformDistributionSO3<Scalar> rotation_dist;
   constexpr double kMinHalfLength = 0.0;
@@ -78,8 +77,8 @@ TYPED_TEST_P(DistanceSegmentBoxTest, CompareAgainstQP) {
     Segment<Scalar> segment;
     Box<Scalar> box;
     box.half_lengths = vector_dist(gen);
-    box.center = eigenmath::InterpolateLinearInBox(
-        vector_dist(gen), kMinPointPos, kMaxPointPos);
+    box.center = eigenmath::InterpolateLinearInBox(vector_dist(gen),
+                                                   kMinPointPos, kMaxPointPos);
 
     segment.half_length = length_dist(gen);
     segment.center = eigenmath::InterpolateLinearInBox(

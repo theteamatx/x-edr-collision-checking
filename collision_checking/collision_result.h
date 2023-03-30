@@ -124,9 +124,7 @@ class CollisionResult : public ParametrizedNewDelete<AllocatorTraits> {
   CC_INLINE bool GetHasCollisions() const { return has_collisions_; }
 
   // Sets has_collision to true.
-  CC_INLINE void SetHasCollisions(bool value) {
-    has_collisions_ = value;
-  }
+  CC_INLINE void SetHasCollisions(bool value) { has_collisions_ = value; }
 
   // Returns the bitmask of colliding objects for object_index.
   // The object at object_index corresponds to the one in MovingObjects

@@ -15,11 +15,12 @@
 #include "collision_checking/assembly/proto_utils.h"
 
 #include <memory>
+
+#include "absl/status/status.h"
+#include "absl/status/statusor.h"
 #include "collision_checking/assembly/assembly.pb.h"
 #include "collision_checking/assembly/link.h"
 #include "collision_checking/assembly/utils_impl.h"
-#include "absl/status/status.h"
-#include "absl/status/statusor.h"
 
 namespace collision_checking {
 

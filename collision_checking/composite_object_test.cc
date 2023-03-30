@@ -17,11 +17,11 @@
 #include <limits>
 #include <vector>
 
-#include "collision_checking/options.h"
 #include "collision_checking/eigenmath.h"
-#include "gtest/gtest.h"
+#include "collision_checking/options.h"
 #include "collision_checking/test_utils.h"
 #include "eigenmath/matchers.h"
+#include "gtest/gtest.h"
 
 namespace collision_checking {
 namespace {

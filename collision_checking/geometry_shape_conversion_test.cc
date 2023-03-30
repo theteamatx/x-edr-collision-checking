@@ -19,13 +19,13 @@
 #include <utility>
 #include <vector>
 
+#include "absl/status/status.h"
 #include "collision_checking/composite_object.h"
 #include "collision_checking/eigenmath.h"
 #include "collision_checking/geometry.h"
 #include "collision_checking/geometry_shapes/capsule.h"
 #include "collision_checking/test_utils.h"
 #include "eigenmath/matchers.h"
-#include "absl/status/status.h"
 #include "gtest/gtest.h"
 
 namespace collision_checking {

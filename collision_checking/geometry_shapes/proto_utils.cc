@@ -18,9 +18,9 @@
 #include <string>
 #include <vector>
 
+#include "absl/status/statusor.h"
 #include "collision_checking/geometry_shapes/geometry_shapes.pb.h"
 #include "collision_checking/geometry_shapes/utils_impl.h"
-#include "absl/status/statusor.h"
 
 namespace collision_checking {
 namespace geometry_shapes {

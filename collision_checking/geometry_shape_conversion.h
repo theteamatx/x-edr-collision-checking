@@ -19,6 +19,7 @@
 #define EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_GEOMETRY_SHAPE_CONVERSION_H_
 #include <type_traits>
 
+#include "absl/status/status.h"
 #include "collision_checking/composite_object.h"
 #include "collision_checking/eigenmath.h"
 #include "collision_checking/geometry.h"
@@ -29,7 +30,6 @@
 #include "collision_checking/geometry_shapes/sphere.h"
 #include "collision_checking/geometry_shapes/spheres.h"
 #include "collision_checking/voxel_map_object.h"
-#include "absl/status/status.h"
 
 namespace collision_checking {
 
@@ -38,16 +38,16 @@ namespace collision_checking {
 // Asserts that shape is the expected type.
 template <typename Scalar>
 Sphere<Scalar> GeometryShapesSphereToSphere(
-    const Pose3d& world_pose_shape,
-    const geometry_shapes::ShapeBase& shape, Scalar padding);
+    const Pose3d& world_pose_shape, const geometry_shapes::ShapeBase& shape,
+    Scalar padding);
 
 // Convert a geometry_shapes::Capsule to a collision::Capsule, with additional
 // `padding` applied.
 // Asserts that shape is the expected type.
 template <typename Scalar>
 Capsule<Scalar> GeometryShapesCapsuleToCapsule(
-    const Pose3d& world_pose_shape,
-    const geometry_shapes::ShapeBase& shape, Scalar padding);
+    const Pose3d& world_pose_shape, const geometry_shapes::ShapeBase& shape,
+    Scalar padding);
 
 // Convert a geometry_shapes::Box to a collision::Box.
 // Asserts that shape is the expected type.
@@ -70,9 +70,8 @@ absl::Status AddGeometryShapesToPrimitivesCount(
 // function.
 template <typename Scalar, typename CompositeObject>
 absl::Status AddGeometryShapesToCompositeObject(
-    const Pose3d& world_pose_shape,
-    const geometry_shapes::ShapeBase& shape, Scalar margin,
-    CompositeObject& objects, PrimitivesCount& indices);
+    const Pose3d& world_pose_shape, const geometry_shapes::ShapeBase& shape,
+    Scalar margin, CompositeObject& objects, PrimitivesCount& indices);
 
 ////////////////////////////////////////////////////////////////////////////////
 // Implementation details only below here.
@@ -82,14 +81,13 @@ absl::Status AddGeometryShapesToCompositeObject(
 // Asserts that shape is the expected type.
 template <typename Scalar>
 Sphere<Scalar> GeometryShapesSphereToSphere(
-    const Pose3d& world_pose_shape,
-    const geometry_shapes::ShapeBase& shape, const Scalar padding) {
+    const Pose3d& world_pose_shape, const geometry_shapes::ShapeBase& shape,
+    const Scalar padding) {
   CC_CHECK_EQ(shape.GetType(), geometry_shapes::ShapeType::SPHERE);
   const auto& derived_shape = shape.Get<geometry_shapes::Sphere>();
   Sphere<Scalar> sphere;
   sphere.radius = derived_shape.GetRadius() + padding;
-  const Pose3d world_pose_local =
-      world_pose_shape * shape.GetLocalTransform();
+  const Pose3d world_pose_local = world_pose_shape * shape.GetLocalTransform();
   sphere.center = world_pose_local.translation().cast<Scalar>();
   return sphere;
 }
@@ -98,14 +96,13 @@ Sphere<Scalar> GeometryShapesSphereToSphere(
 // Asserts that shape is the expected type.
 template <typename Scalar>
 Capsule<Scalar> GeometryShapesCapsuleToCapsule(
-    const Pose3d& world_pose_shape,
-    const geometry_shapes::ShapeBase& shape, const Scalar padding) {
+    const Pose3d& world_pose_shape, const geometry_shapes::ShapeBase& shape,
+    const Scalar padding) {
   CC_CHECK_EQ(shape.GetType(), geometry_shapes::ShapeType::CAPSULE);
   const auto& derived_shape = shape.Get<geometry_shapes::Capsule>();
   Capsule<Scalar> capsule;
   capsule.radius = derived_shape.GetRadius() + padding;
-  const Pose3d world_pose_local =
-      world_pose_shape * shape.GetLocalTransform();
+  const Pose3d world_pose_local = world_pose_shape * shape.GetLocalTransform();
   capsule.center = world_pose_local.translation().cast<Scalar>();
   capsule.direction =
       world_pose_local.quaternion().cast<Scalar>() * Vector3<Scalar>::UnitZ();
@@ -120,8 +117,7 @@ Box<Scalar> GeometryShapesBoxToBox(const Pose3d& world_pose_shape,
   CC_CHECK_EQ(shape.GetType(), geometry_shapes::ShapeType::BOX);
   const auto& derived_shape = shape.Get<geometry_shapes::Box>();
   Box<Scalar> box;
-  const Pose3d world_pose_local =
-      world_pose_shape * shape.GetLocalTransform();
+  const Pose3d world_pose_local = world_pose_shape * shape.GetLocalTransform();
   box.center = world_pose_local.translation().template cast<Scalar>();
   box.box_rotation_world =
       world_pose_local.rotationMatrix().transpose().template cast<Scalar>();
@@ -139,9 +135,8 @@ absl::Status AddToSphereCount(const geometry_shapes::ShapeBase& shape,
 
 template <typename Scalar, typename CompositeObject>
 absl::Status AddGeometryShapesToCompositeObject(
-    const Pose3d& world_pose_shape,
-    const geometry_shapes::ShapeBase& shape, Scalar margin,
-    CompositeObject& object, PrimitivesCount& indices) {
+    const Pose3d& world_pose_shape, const geometry_shapes::ShapeBase& shape,
+    Scalar margin, CompositeObject& object, PrimitivesCount& indices) {
   switch (shape.GetType()) {
     case geometry_shapes::ShapeType::SPHERE:
       object.spheres[indices.num_spheres++] =
@@ -192,8 +187,8 @@ absl::Status AddSpheresToVoxelMapObject(const geometry_shapes::ShapeBase& shape,
                                         VoxelMapObject<Scalar>& object) {
   switch (shape.GetType()) {
     case geometry_shapes::ShapeType::SPHERE:
-      object.AddSphere(GeometryShapesSphereToSphere<Scalar>(
-                           Pose3d::Identity(), shape, margin),
+      object.AddSphere(GeometryShapesSphereToSphere<Scalar>(Pose3d::Identity(),
+                                                            shape, margin),
                        -1);
       break;
     case geometry_shapes::ShapeType::SPHERES: {

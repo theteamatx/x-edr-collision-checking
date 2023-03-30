@@ -17,14 +17,14 @@
 #include <iterator>
 #include <limits>
 
+#include "absl/flags/flag.h"
 #include "collision_checking/debug_options.h"
+#include "collision_checking/eigenmath.h"
 #include "collision_checking/test_utils.h"
 #include "eigenmath/distribution.h"
 #include "eigenmath/interpolation.h"
 #include "eigenmath/rotation_utils.h"
 #include "eigenmath/sampling.h"
-#include "collision_checking/eigenmath.h"
-#include "absl/flags/flag.h"
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
@@ -53,8 +53,7 @@ TYPED_TEST_P(DistancePointBoxTest, CompareAgainstQP) {
   constexpr Scalar kDistanceSquaredTolerance = 10 * kQPTolerance;
   constexpr int kNumLoops = 100;
 
-  eigenmath::TestGenerator gen(
-      eigenmath::kGeneratorTestSeed);
+  eigenmath::TestGenerator gen(eigenmath::kGeneratorTestSeed);
   eigenmath::UniformDistributionVector<Scalar, 3> vector_dist;
   eigenmath::UniformDistributionSO3<Scalar> rotation_dist;
   const Vector3 kMinPointPos{-1.0, -1.0, -1.0};
@@ -72,14 +71,13 @@ TYPED_TEST_P(DistancePointBoxTest, CompareAgainstQP) {
         vector_dist(gen), kMinPointPos, kMaxPointPos)};
     Box<Scalar> box;
     box.half_lengths = vector_dist(gen);
-    box.center = eigenmath::InterpolateLinearInBox(
-        vector_dist(gen), kMinPointPos, kMaxPointPos);
+    box.center = eigenmath::InterpolateLinearInBox(vector_dist(gen),
+                                                   kMinPointPos, kMaxPointPos);
 
     box.box_rotation_world = rotation_dist(gen).matrix();
 
     CC_MALLOC_COUNTER_INIT();
-    const auto [distance_squared, closest_point] =
-        DistanceSquared(point, box);
+    const auto [distance_squared, closest_point] = DistanceSquared(point, box);
     CC_MALLOC_COUNTER_EXPECT_NO_ALLOCATIONS();
 
     lower_bound = -box.half_lengths.template cast<double>();
@@ -90,18 +88,20 @@ TYPED_TEST_P(DistancePointBoxTest, CompareAgainstQP) {
                       .template cast<double>();
 
     const auto qp_sol = testing::SolveBoxQPBruteForce(cost_matrix, cost_vector,
-                                                lower_bound, upper_bound);
+                                                      lower_bound, upper_bound);
     const Scalar qp_distance_squared =
         qp_sol.minimum + (box.center - point.center).squaredNorm();
     ABSL_LOG(INFO) << "point= " << point.center.transpose() << "\n"
-            << "box.center= " << box.center.transpose() << "\n"
-            << "box.half_lengths= " << box.half_lengths.transpose() << "\n"
-            << "box.box_rotation_world= " << box.box_rotation_world << "\n"
-            << "closest_point= " << closest_point.transpose() << "\n";
+                   << "box.center= " << box.center.transpose() << "\n"
+                   << "box.half_lengths= " << box.half_lengths.transpose()
+                   << "\n"
+                   << "box.box_rotation_world= " << box.box_rotation_world
+                   << "\n"
+                   << "closest_point= " << closest_point.transpose() << "\n";
     ABSL_LOG(INFO) << "OSQP: solution: " << qp_sol.solution.transpose() << "\n"
-            << "OSQP: minimum: " << qp_sol.minimum << "\n"
-            << "OSQP: distance squared: " << qp_distance_squared << "\n"
-            << "distance_squared: " << distance_squared;
+                   << "OSQP: minimum: " << qp_sol.minimum << "\n"
+                   << "OSQP: distance squared: " << qp_distance_squared << "\n"
+                   << "distance_squared: " << distance_squared;
     EXPECT_NEAR(qp_distance_squared, distance_squared,
                 kDistanceSquaredTolerance);
   }

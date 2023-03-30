@@ -22,9 +22,9 @@
 #include <sstream>
 #include <string>
 
-#include "collision_checking/typed_id_int.h"
 #include "absl/status/status.h"
 #include "absl/status/statusor.h"
+#include "collision_checking/typed_id_int.h"
 
 namespace collision_checking {
 

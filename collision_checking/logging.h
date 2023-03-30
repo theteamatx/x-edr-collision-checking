@@ -15,9 +15,9 @@
 #ifndef EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_LOGGING_H_
 #define EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_LOGGING_H_
 
-#include "collision_checking/inlining.h"
 #include "absl/base/attributes.h"
 #include "absl/strings/str_format.h"
+#include "collision_checking/inlining.h"
 
 // This file contains some simple log and panic macros and functions.
 // You'll most likely want to replace these with those with appropriate calls
@@ -39,26 +39,20 @@
   } while (0)
 
 // Panics if `lhs` != `rhs`.
-#define CC_CHECK_EQ(lhs, ...) \
-  CC_CHECK_COMPARE(lhs, ==, __VA_ARGS__)
+#define CC_CHECK_EQ(lhs, ...) CC_CHECK_COMPARE(lhs, ==, __VA_ARGS__)
 // Panics if `lhs` == `rhs`.
-#define CC_CHECK_NE(lhs, ...) \
-  CC_CHECK_COMPARE(lhs, !=, __VA_ARGS__)
+#define CC_CHECK_NE(lhs, ...) CC_CHECK_COMPARE(lhs, !=, __VA_ARGS__)
 // Panics if `lhs` <= `rhs`.
-#define CC_CHECK_LE(lhs, ...) \
-  CC_CHECK_COMPARE(lhs, <=, __VA_ARGS__)
+#define CC_CHECK_LE(lhs, ...) CC_CHECK_COMPARE(lhs, <=, __VA_ARGS__)
 // Panics if `lhs` < `rhs`.
-#define CC_CHECK_LT(lhs, ...) \
-  CC_CHECK_COMPARE(lhs, <, __VA_ARGS__)
+#define CC_CHECK_LT(lhs, ...) CC_CHECK_COMPARE(lhs, <, __VA_ARGS__)
 // Panics if `lhs` >= `rhs`.
-#define CC_CHECK_GE(lhs, ...) \
-  CC_CHECK_COMPARE(lhs, >=, __VA_ARGS__)
+#define CC_CHECK_GE(lhs, ...) CC_CHECK_COMPARE(lhs, >=, __VA_ARGS__)
 // Panics if `lhs` > `rhs`.
-#define CC_CHECK_GT(lhs, ...) \
-  CC_CHECK_COMPARE(lhs, >, __VA_ARGS__)
+#define CC_CHECK_GT(lhs, ...) CC_CHECK_COMPARE(lhs, >, __VA_ARGS__)
 
 // Implements CC_CHECK_<op>()
-#define CC_CHECK_COMPARE(lhs, op, rhs, ...)               \
+#define CC_CHECK_COMPARE(lhs, op, rhs, ...)                      \
   do {                                                           \
     const bool condition = (lhs)op(rhs);                         \
     if (ABSL_PREDICT_FALSE(!(condition))) {                      \
@@ -74,7 +68,7 @@
   } while (0)
 
 // Unconditionally panics.
-#define CC_PANIC(...)               \
+#define CC_PANIC(...)                      \
   ::collision_checking::Panic(             \
       {                                    \
           .file = __FILE__,                \
@@ -114,8 +108,7 @@ CC_INLINE ABSL_ATTRIBUTE_NORETURN void Panic(
   fflush(stderr);
   abort();
 }
-CC_INLINE ABSL_ATTRIBUTE_NORETURN void Panic(
-    const PanicParameters& params) {
+CC_INLINE ABSL_ATTRIBUTE_NORETURN void Panic(const PanicParameters& params) {
   absl::FPrintF(stderr, "PANIC at %s:%d", params.file, params.line);
   if (params.message != nullptr) {
     absl::FPrintF(stderr, ": %s", params.message);

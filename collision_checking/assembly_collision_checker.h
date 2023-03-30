@@ -21,6 +21,15 @@
 #include <string>
 #include <vector>
 
+#include "absl/algorithm/container.h"
+#include "absl/container/btree_map.h"
+#include "absl/functional/bind_front.h"
+#include "absl/status/status.h"
+#include "absl/status/statusor.h"
+#include "absl/strings/str_cat.h"
+#include "absl/strings/str_format.h"
+#include "absl/strings/string_view.h"
+#include "absl/strings/substitute.h"
 #include "collision_checking/assembly/assembly.h"
 #include "collision_checking/assembly/assembly_connectivity.h"
 #include "collision_checking/assembly_coordinates.h"
@@ -41,15 +50,6 @@
 #include "collision_checking/status.h"
 #include "collision_checking/vector.h"
 #include "collision_checking/voxel_map_object_name.h"
-#include "absl/algorithm/container.h"
-#include "absl/container/btree_map.h"
-#include "absl/functional/bind_front.h"
-#include "absl/status/status.h"
-#include "absl/status/statusor.h"
-#include "absl/strings/str_cat.h"
-#include "absl/strings/str_format.h"
-#include "absl/strings/string_view.h"
-#include "absl/strings/substitute.h"
 
 namespace collision_checking {
 
@@ -93,13 +93,13 @@ class AssemblyCollisionChecker : virtual public ModelInterface<Scalar>,
 
   absl::StatusOr<ObjectId> AddStaticObject(
       absl::string_view name, const Pose3<Scalar>& world_pose_object,
-      absl::Span<const geometry_shapes::ShapeBase*const> shapes,
+      absl::Span<const geometry_shapes::ShapeBase* const> shapes,
       Scalar padding) override;
 
   absl::StatusOr<ObjectId> AddRelativeObject(
       absl::string_view name, ObjectId reference_object_id,
       const Pose3<Scalar>& reference_pose_object,
-      absl::Span<const geometry_shapes::ShapeBase*const> shapes,
+      absl::Span<const geometry_shapes::ShapeBase* const> shapes,
       Scalar padding) override;
 
   absl::Status RemoveRelativeObject(ObjectId id) override;
@@ -472,7 +472,8 @@ template <typename Scalar, typename AllocatorTraits>
 absl::StatusOr<ObjectId>
 AssemblyCollisionChecker<Scalar, AllocatorTraits>::AddStaticObject(
     absl::string_view name, const Pose3<Scalar>& world_pose_object,
-    absl::Span<const geometry_shapes::ShapeBase*const> shapes, Scalar padding) {
+    absl::Span<const geometry_shapes::ShapeBase* const> shapes,
+    Scalar padding) {
   return AddRelativeObject(name, kInvalidObjectId, world_pose_object, shapes,
                            padding);
 }
@@ -482,7 +483,7 @@ absl::StatusOr<ObjectId>
 AssemblyCollisionChecker<Scalar, AllocatorTraits>::AddRelativeObject(
     absl::string_view name, const ObjectId reference_object_id,
     const Pose3<Scalar>& reference_pose_object,
-    absl::Span<const geometry_shapes::ShapeBase*const> shapes,
+    absl::Span<const geometry_shapes::ShapeBase* const> shapes,
     const Scalar padding) {
   if (object_ids_assigner_.NumFreeIds() == 0) {
     return absl::FailedPreconditionError("No more free object ids.");
@@ -953,8 +954,7 @@ Status AssemblyCollisionChecker<Scalar, AllocatorTraits>::ComputeCollisions(
 }
 
 template <typename Scalar, typename AllocatorTraits>
-CC_INLINE void
-AssemblyCollisionChecker<Scalar, AllocatorTraits>::ComputePoses(
+CC_INLINE void AssemblyCollisionChecker<Scalar, AllocatorTraits>::ComputePoses(
     AssemblyCoordinateView<const Scalar> coordinates,
     AssemblyPosesView<Scalar> poses) const {
   // Compute or copy poses for assembly links and relative objects.

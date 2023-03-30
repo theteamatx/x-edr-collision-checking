@@ -14,8 +14,8 @@
 
 #ifndef EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_STATUS_H_
 #define EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_STATUS_H_
-#include "collision_checking/inlining.h"
 #include "absl/status/status.h"
+#include "collision_checking/inlining.h"
 
 namespace collision_checking {
 // A simple status that will work for regular CPU C++ and CUDA kernel code.
@@ -39,9 +39,7 @@ class Status {
       : code_(code), message_enum_(message_enum) {}
 
   CC_INLINE absl::StatusCode code() const { return code_; }
-  CC_INLINE ErrorMessageEnum message_enum() const {
-    return message_enum_;
-  }
+  CC_INLINE ErrorMessageEnum message_enum() const { return message_enum_; }
 
   CC_INLINE bool ok() const { return code_ == absl::StatusCode::kOk; }
 

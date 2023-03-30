@@ -14,8 +14,8 @@
 
 #include "collision_checking/distance_point_point.h"
 
-#include "collision_checking/test_utils.h"
 #include "collision_checking/eigenmath.h"
+#include "collision_checking/test_utils.h"
 #include "gtest/gtest.h"
 
 namespace collision_checking {
@@ -46,4 +46,3 @@ INSTANTIATE_TYPED_TEST_SUITE_P(DistancePrimitiveTestSuite,
 
 }  // namespace
 }  // namespace collision_checking
-

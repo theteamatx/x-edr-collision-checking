@@ -16,8 +16,8 @@
 #define EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_ASSEMBLY_COORDINATE_VIEW_H_
 #include <type_traits>
 
-#include "collision_checking/inlining.h"
 #include "Eigen/Core"
+#include "collision_checking/inlining.h"
 
 namespace collision_checking {
 

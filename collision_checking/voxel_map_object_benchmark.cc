@@ -12,12 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "benchmark/benchmark.h"
 #include "collision_checking/voxel_map_object.h"
 #include "eigenmath/distribution.h"
 #include "eigenmath/interpolation.h"
 #include "eigenmath/sampling.h"
-#include "eigenmath/distribution.h"
-#include "benchmark/benchmark.h"
 
 namespace collision_checking {
 namespace {
@@ -55,8 +54,8 @@ void BM_InBoxVoxelRange(benchmark::State& state) {
   // Add elements inside the query box.
   for (int i = 0; i < inside_count; ++i) {
     object.AddSphere(
-        {{eigenmath::InterpolateLinearInBox(
-             center_dist(generator), query_box.low, query_box.high)},
+        {{eigenmath::InterpolateLinearInBox(center_dist(generator),
+                                            query_box.low, query_box.high)},
          Scalar{0}},
         i);
   }
@@ -65,8 +64,8 @@ void BM_InBoxVoxelRange(benchmark::State& state) {
   // Add elements outside the query box.
   for (int i = inside_count; i < object.size();) {
     const Sphere<Scalar> sphere{
-        {eigenmath::InterpolateLinearInBox(center_dist(generator),
-                                                   map_box.low, map_box.high)},
+        {eigenmath::InterpolateLinearInBox(center_dist(generator), map_box.low,
+                                           map_box.high)},
         Scalar{0}};
 
     // If the quasi-random sphere is outside the query box, keep it.

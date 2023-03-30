@@ -18,8 +18,8 @@
 #include <memory>
 #include <string>
 
-#include "collision_checking/geometry_shapes/shape_base.h"
 #include "absl/strings/string_view.h"
+#include "collision_checking/geometry_shapes/shape_base.h"
 
 namespace collision_checking {
 

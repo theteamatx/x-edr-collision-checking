@@ -21,17 +21,17 @@
 #include <string>
 #include <type_traits>
 
-#include "collision_checking/assembly_coordinate_view.h"
-#include "collision_checking/inlining.h"
-#include "collision_checking/logging.h"
-#include "collision_checking/object_id.h"
-#include "collision_checking/vector.h"
-#include "collision_checking/assembly/assembly.h"
-#include "collision_checking/eigenmath.h"
 #include "absl/status/status.h"
 #include "absl/status/statusor.h"
 #include "absl/strings/substitute.h"
 #include "absl/types/span.h"
+#include "collision_checking/assembly/assembly.h"
+#include "collision_checking/assembly_coordinate_view.h"
+#include "collision_checking/eigenmath.h"
+#include "collision_checking/inlining.h"
+#include "collision_checking/logging.h"
+#include "collision_checking/object_id.h"
+#include "collision_checking/vector.h"
 
 namespace collision_checking {
 
@@ -133,9 +133,7 @@ struct AssemblyPoses : public ParametrizedNewDelete<AllocatorTraits> {
   // Returns the number of poses, which is equal to the number of links in the
   // assembly (but can differ from the number of collision objects in
   // AssemblyCollisionChecker).
-  CC_INLINE int GetPoseCount() const {
-    return odom_translation_link.size();
-  }
+  CC_INLINE int GetPoseCount() const { return odom_translation_link.size(); }
 
   CC_INLINE AssemblyPosesView<Scalar> View() {
     return AssemblyPosesView<Scalar>{
@@ -195,19 +193,19 @@ AssemblyKinematics<Scalar, AllocatorTraits>::CreateForAssembly(
                            joint->GetDofCount()));
     }
     // If we get here, the index should be valid.
-    CC_CHECK_GE(joint->GetDofIndex() , 0, "joint(%s)->GetDofIndex() (%d.) < 0.",
-               joint->GetName(), joint->GetDofIndex());
-    CC_CHECK_LT(joint->GetDofIndex() , assembly_index_to_joint_index.size(),
-               "joint(%s)->GetDofIndex()= %d, but dof count= %zu.",
-               joint->GetName(), joint->GetDofIndex(),
-               assembly_index_to_joint_index.size());
+    CC_CHECK_GE(joint->GetDofIndex(), 0, "joint(%s)->GetDofIndex() (%d.) < 0.",
+                joint->GetName(), joint->GetDofIndex());
+    CC_CHECK_LT(joint->GetDofIndex(), assembly_index_to_joint_index.size(),
+                "joint(%s)->GetDofIndex()= %d, but dof count= %zu.",
+                joint->GetName(), joint->GetDofIndex(),
+                assembly_index_to_joint_index.size());
     assembly_index_to_joint_index[joint->GetDofIndex()] = idx;
   }
 
   auto& links = result.links;
   // Assembly link 0 always is the root.
-  CC_CHECK_EQ(assembly.GetLink(0).GetParentJoint() , nullptr,
-             "Assembly link 0 is not a the root link.");
+  CC_CHECK_EQ(assembly.GetLink(0).GetParentJoint(), nullptr,
+              "Assembly link 0 is not a the root link.");
   links[0].parent_rotation_joint = Matrix3<Scalar>::Identity();
   links[0].parent_translation_joint.setZero();
   links[0].parent_joint_axis.setZero();
@@ -254,7 +252,7 @@ CC_INLINE void ComputePoses(
   CC_CHECK_EQ(links.size(), poses.odom_rotation_link.size());
   CC_CHECK_EQ(links.size(), poses.odom_translation_link.size());
   CC_CHECK_EQ(coordinates.joint_positions.size(),
-                     assembly_kinematics.joint_count);
+              assembly_kinematics.joint_count);
 
   if (links.size() == 0) {
     return;

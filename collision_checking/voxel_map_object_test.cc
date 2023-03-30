@@ -17,9 +17,9 @@
 #include <iostream>
 #include <vector>
 
-#include "collision_checking/geometry.h"
-#include "collision_checking/eigenmath.h"
 #include "absl/algorithm/container.h"
+#include "collision_checking/eigenmath.h"
+#include "collision_checking/geometry.h"
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
 

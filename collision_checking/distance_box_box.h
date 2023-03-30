@@ -39,8 +39,8 @@ struct ObjectObjectResult {
 // as the closest points on box_a and box_b.
 template <typename Scalar,
           unsigned kDebugOptions = DebugOptions::kDebugOptionsNone>
-CC_INLINE ObjectObjectResult<Scalar> DistanceSquared(
-    const Box<Scalar>& box_a, const Box<Scalar>& box_b);
+CC_INLINE ObjectObjectResult<Scalar> DistanceSquared(const Box<Scalar>& box_a,
+                                                     const Box<Scalar>& box_b);
 
 ////////////////////////////////////////////////////////////////////////////////
 // Implementation details only below here.
@@ -60,8 +60,7 @@ CC_INLINE ObjectObjectResult<Scalar> BoxFaceBoxFaceDistanceSquared(
   // be used instead."
   struct CudaSafeTie {
     CC_INLINE CudaSafeTie(Scalar& f, Scalar& s) : first(f), second(s) {}
-    CC_INLINE CudaSafeTie& operator=(
-        const std::pair<Scalar, Scalar>& rhs) {
+    CC_INLINE CudaSafeTie& operator=(const std::pair<Scalar, Scalar>& rhs) {
       first = rhs.first;
       second = rhs.second;
       return *this;
@@ -316,8 +315,8 @@ CC_INLINE ObjectObjectResult<Scalar> BoxFaceBoxFaceDistanceSquared(
 }  // namespace internal
 
 template <typename Scalar, unsigned kDebugOptions>
-CC_INLINE ObjectObjectResult<Scalar> DistanceSquared(
-    const Box<Scalar>& box_a, const Box<Scalar>& box_b) {
+CC_INLINE ObjectObjectResult<Scalar> DistanceSquared(const Box<Scalar>& box_a,
+                                                     const Box<Scalar>& box_b) {
   static_assert(std::is_floating_point_v<Scalar>,
                 "Scalar must be a floating point type.");
   if constexpr (kDebugOptions &

@@ -16,8 +16,8 @@
 
 #include <string>
 
-#include "collision_checking/logging.h"
 #include "absl/strings/str_format.h"
+#include "collision_checking/logging.h"
 
 namespace collision_checking {
 

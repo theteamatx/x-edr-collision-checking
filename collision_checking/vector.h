@@ -83,17 +83,12 @@ class Vector : public ParametrizedNewDelete<AllocatorTraits> {
   CC_INLINE const ElementType* end() const { return data_ + size_; }
   CC_INLINE size_t size() const { return size_; }
   CC_INLINE bool empty() const { return size_ == 0; }
-  CC_INLINE const ElementType& operator[](int i) const {
-    return data_[i];
-  }
+  CC_INLINE const ElementType& operator[](int i) const { return data_[i]; }
   CC_INLINE ElementType& operator[](int i) { return data_[i]; }
 
  private:
-  CC_INLINE void DeallocateAndDestroy() {
-    DeallocateAndDestroy(data_, size_);
-  }
-  CC_INLINE void DeallocateAndDestroy(ElementType* data,
-                                             std::size_t size) {
+  CC_INLINE void DeallocateAndDestroy() { DeallocateAndDestroy(data_, size_); }
+  CC_INLINE void DeallocateAndDestroy(ElementType* data, std::size_t size) {
     if (data == nullptr) {
       return;
     }

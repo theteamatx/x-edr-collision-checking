@@ -20,6 +20,9 @@
 #include <array>
 #include <string>
 
+#include "absl/functional/function_ref.h"
+#include "absl/status/status.h"
+#include "absl/status/statusor.h"
 #include "collision_checking/bounding_box.pb.h"
 #include "collision_checking/collision_result.h"
 #include "collision_checking/collision_state.pb.h"
@@ -31,9 +34,6 @@
 #include "collision_checking/object_id.h"
 #include "collision_checking/voxel_map_object.h"
 #include "collision_checking/voxel_map_object_name.h"
-#include "absl/functional/function_ref.h"
-#include "absl/status/status.h"
-#include "absl/status/statusor.h"
 
 namespace collision_checking {
 

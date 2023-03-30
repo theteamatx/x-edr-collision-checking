@@ -14,8 +14,8 @@
 
 #include "collision_checking/collision_result.h"
 
-#include "collision_checking/test_utils.h"
 #include "collision_checking/eigenmath.h"
+#include "collision_checking/test_utils.h"
 #include "gtest/gtest.h"
 
 namespace collision_checking {

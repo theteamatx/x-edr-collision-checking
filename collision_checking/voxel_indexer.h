@@ -17,10 +17,10 @@
 
 #include <limits>
 
+#include "Eigen/Core"
+#include "collision_checking/eigenmath.h"
 #include "collision_checking/geometry.h"
 #include "collision_checking/logging.h"
-#include "collision_checking/eigenmath.h"
-#include "Eigen/Core"
 
 namespace collision_checking {
 
@@ -39,18 +39,15 @@ class VoxelIndexer {
   static FloatType MinCellWidth(const Vector3<FloatType>& box_width);
 
   // Returns the cell index for `point`.
-  Vector3<IntType> ToCell(
-      const Vector3<FloatType>& point) const;
+  Vector3<IntType> ToCell(const Vector3<FloatType>& point) const;
 
   // Returns the point for `index` with the lowest coordinate values in all
   // dimensions, where 'lowest' means closest to
   // std::numeric_limits<FloatType>::lowest().
-  Vector3<FloatType> ToPoint(
-      const Vector3<IntType>& cell) const;
+  Vector3<FloatType> ToPoint(const Vector3<IntType>& cell) const;
 
  private:
-  Eigen::Array3<FloatType> ToCellFloat(
-      const Vector3<FloatType>& point) const;
+  Eigen::Array3<FloatType> ToCellFloat(const Vector3<FloatType>& point) const;
   AlignedBox<FloatType> box_;
   FloatType cell_width_;
   FloatType cell_width_inverse_;
@@ -79,8 +76,8 @@ VoxelIndexer<FloatType, IntType>::VoxelIndexer(const AlignedBox<FloatType>& box,
   max_cell_ = (ToCellFloat(box_.high) - FloatType{0.5}).floor();
   const FloatType kMaxIndexAsFloat{max_cell_.maxCoeff()};
   CC_CHECK_LE(kMaxIndexAsFloat, std::numeric_limits<IntType>::max(),
-             "Too many cells for IntType (kMaxIndexAsFloat: %.18e)",
-             kMaxIndexAsFloat);
+              "Too many cells for IntType (kMaxIndexAsFloat: %.18e)",
+              kMaxIndexAsFloat);
 }
 
 template <typename FloatType, typename IntType>

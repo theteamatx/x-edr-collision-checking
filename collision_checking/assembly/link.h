@@ -19,9 +19,9 @@
 #include <string>
 #include <vector>
 
+#include "absl/strings/string_view.h"
 #include "collision_checking/eigenmath.h"
 #include "genit/transform_iterator.h"
-#include "absl/strings/string_view.h"
 
 namespace collision_checking {
 
@@ -142,7 +142,6 @@ class Link {
 
   // Returns a const reference to the contact for this Link.
   const std::optional<Contact>& GetContact() const { return contact_; }
-
 
   // PARENT JOINTS.
 

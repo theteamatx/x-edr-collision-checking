@@ -17,13 +17,13 @@
 
 #include <string>
 
+#include "Eigen/Core"
 #include "absl/log/absl_check.h"
 #include "absl/status/status.h"
-#include "Eigen/Core"
+#include "eigenmath/matchers.h"
 #include "gmock/gmock.h"
 #include "google/protobuf/text_format.h"
 #include "google/protobuf/util/message_differencer.h"
-#include "eigenmath/matchers.h"
 
 namespace collision_checking {
 namespace testing {
@@ -52,9 +52,9 @@ bool MallocCounterIsAvailable();
 // Macros for status tests.201103L
 // #define EXPECT_OK(statement) EXPECT_EQ(absl::OkStatus(), (statement))
 
-#define CC_ASSERT_OK(expr)                                                   \
+#define CC_ASSERT_OK(expr)                                                    \
   CC_ASSERT_OK_IMPL(CC_STATUS_MACROS_CONCAT_NAME(_status_value, __COUNTER__), \
-                   expr)
+                    expr)
 
 #define CC_ASSERT_OK_IMPL(status, expr) \
   auto status = (expr);                 \

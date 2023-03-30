@@ -16,11 +16,11 @@
 
 #include <limits>
 
+#include "absl/flags/flag.h"
 #include "collision_checking/eigenmath.h"
 #include "collision_checking/geometry.h"
 #include "collision_checking/test_utils.h"
 #include "eigenmath/matchers.h"
-#include "absl/flags/flag.h"
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
@@ -31,8 +31,8 @@ ABSL_FLAG(bool, run_exhaustive_tests, false,
 namespace collision_checking {
 namespace {
 using IntType = std::uint8_t;
-using ::testing::ElementsAre;
 using ::eigenmath::testing::IsApprox;
+using ::testing::ElementsAre;
 
 typedef ::testing::Types<float, double> FPTypes;
 

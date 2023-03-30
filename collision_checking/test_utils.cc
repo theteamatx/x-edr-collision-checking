@@ -16,7 +16,7 @@
 
 #include <dlfcn.h>  // for dlsym()
 
-//#include "absl/log/absl_log.h"
+// #include "absl/log/absl_log.h"
 #include "collision_checking/logging.h"
 
 namespace {
@@ -41,8 +41,6 @@ bool MallocCounterIsAvailable() { return true; }
 }  // namespace testing
 }  // namespace collision_checking
 
-
-
 extern "C" {
 
 // Wrappers for malloc and friends.
@@ -61,8 +59,8 @@ namespace {
 // in case that changes.
 std::array<char, 64> calloc_dlsym_init_mem = {};
 void* dlsym_bootstrap_calloc(size_t nmemb, size_t size) {
-  CC_CHECK_LT(nmemb * size , calloc_dlsym_init_mem.size(),
-             "Increase calloc_dlsym_init_mem size.");
+  CC_CHECK_LT(nmemb * size, calloc_dlsym_init_mem.size(),
+              "Increase calloc_dlsym_init_mem size.");
   return static_cast<void*>(calloc_dlsym_init_mem.data());
 }
 }  // namespace
@@ -125,7 +123,7 @@ void* valloc(size_t size) {
   typedef void*(VallocFunction)(size_t);
   static VallocFunction* real_valloc =
       (VallocFunction*)::dlsym(RTLD_NEXT, "valloc");
-  CC_CHECK_NE(real_valloc , nullptr, "Could not find symbol for valloc.");
+  CC_CHECK_NE(real_valloc, nullptr, "Could not find symbol for valloc.");
   ++g_allocs;
   return real_valloc(size);
 }
@@ -134,8 +132,8 @@ void* aligned_alloc(size_t alignment, size_t size) {
   typedef void*(AlignedAllocFunction)(size_t, size_t);
   static AlignedAllocFunction* real_aligned_alloc =
       (AlignedAllocFunction*)::dlsym(RTLD_NEXT, "aligned_alloc");
-  CC_CHECK_NE(real_aligned_alloc , nullptr,
-             "Could not find symbol for aligned_alloc.");
+  CC_CHECK_NE(real_aligned_alloc, nullptr,
+              "Could not find symbol for aligned_alloc.");
   ++g_allocs;
   return real_aligned_alloc(alignment, size);
 }
@@ -144,7 +142,7 @@ void* pvalloc(size_t size) {
   typedef void*(PvallocFunction)(size_t);
   static PvallocFunction* real_pvalloc =
       (PvallocFunction*)::dlsym(RTLD_NEXT, "pvalloc");
-  CC_CHECK_NE(real_pvalloc , nullptr, "Could not find symbol for pvalloc.");
+  CC_CHECK_NE(real_pvalloc, nullptr, "Could not find symbol for pvalloc.");
   ++g_allocs;
   return real_pvalloc(size);
 }
@@ -153,8 +151,8 @@ int posix_memalign(void** memptr, size_t alignment, size_t size) {
   typedef int(PosixMemalignFunction)(void**, size_t, size_t);
   static PosixMemalignFunction* real_posix_memalign =
       (PosixMemalignFunction*)::dlsym(RTLD_NEXT, "posix_memalign");
-  CC_CHECK_NE(real_posix_memalign , nullptr,
-             "Could not find symbol for posix_memalign.");
+  CC_CHECK_NE(real_posix_memalign, nullptr,
+              "Could not find symbol for posix_memalign.");
   ++g_allocs;
   return real_posix_memalign(memptr, alignment, size);
 }
@@ -175,8 +173,8 @@ SolveQuadraticResult SolveBoxQPBruteForce(
   // Acceptable constraint violation. Chosen rather loosly.
   constexpr double kConstraintEpsilon = 1e-8;
   const auto satisfies_constraints = [&](const eigenmath::VectorXd& x) {
-    return (x.array() >= lower_bound.array()-kConstraintEpsilon).all() &&
-           (x.array() <= upper_bound.array()+kConstraintEpsilon).all();
+    return (x.array() >= lower_bound.array() - kConstraintEpsilon).all() &&
+           (x.array() <= upper_bound.array() + kConstraintEpsilon).all();
   };
   const auto cost = [&](const auto x) -> double {
     return (0.5 * cost_matrix * x + cost_vector).dot(x);
@@ -261,5 +259,5 @@ SolveQuadraticResult SolveBoxQPBruteForce(
   }
   return result;
 }
-} // namespace testing
-} // namespace collision_checking
+}  // namespace testing
+}  // namespace collision_checking
