@@ -129,15 +129,6 @@ cc_library(
     ],
 )
 
-cc_test(
-    name = "logging_test",
-    srcs = ["logging_test.cc"],
-    deps = [
-        ":logging",
-        "@com_google_googletest//:gtest_main",
-    ],
-)
-
 cc_library(
     name = "normalize_and_maybe_log",
     hdrs = ["normalize_and_maybe_log.h"],

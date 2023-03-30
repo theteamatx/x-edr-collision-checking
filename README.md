@@ -1,4 +1,8 @@
-# Collision Checking
+Collision Checking Library
 
-This directory contains code for performing collision checking and distance
-computation for motion planning and control (i.e., not for dynamics simulation).
+This repository contains a collection of structs, functions and classes to
+perform collision queries and minimum distance computations for simple
+geometric shapes.
+The code is intended and most suitable for motion planning and control
+applications (i.e,. not dynamics simulations).
+s

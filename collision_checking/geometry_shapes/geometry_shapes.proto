@@ -64,10 +64,3 @@ message CompositeMarker {
   repeated Marker markers = 4;
 }
 
-// message CompositeMarkerArray {
-//   option deprecated = true;
-
-//   repeated CompositeMarker composite_markers = 2;
-
-//   reserved 1;
-// }

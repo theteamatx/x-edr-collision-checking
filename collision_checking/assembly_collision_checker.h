@@ -16,7 +16,7 @@
 #define EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_ASSEMBLY_COLLISION_CHECKER_H_
 
 // Convenience functions and classes for collision checking with data from
-// a Assembly class.
+// an Assembly class.
 
 #include <string>
 #include <vector>
