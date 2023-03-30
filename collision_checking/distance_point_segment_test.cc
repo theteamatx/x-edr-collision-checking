@@ -27,7 +27,6 @@
 #include "benchmark/benchmark.h"
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
-#include "third_party/osqp_cpp/include/osqp++.h"
 
 ABSL_FLAG(bool, verbose, false, "Turn on verbose text logging.");
 
@@ -40,24 +39,23 @@ template <typename T>
 class DistancePointSegmentTest : public ::testing::Test {};
 TYPED_TEST_SUITE_P(DistancePointSegmentTest);
 
-TYPED_TEST_P(DistancePointSegmentTest, CompareAgainstQSQP) {
+TYPED_TEST_P(DistancePointSegmentTest, CompareAgainstQP) {
   // The squared distance between a point and a segment is the solution to the
   // following box constrained quadratic program:
   //   (segment_center + segment_direction*u-point)^2 -> min,
   //     s.t. |u| <= half_length.
   // This test compares the output of DistanceSquared with solutions
-  // computed numerically using the osqp solver.
+  // computed numerically using the QP solver.
 
   using Scalar = TypeParam;
   using Vector3 = Vector3<Scalar>;
-  constexpr Scalar kOSQPTolerance =
-      100 * std::numeric_limits<Scalar>::epsilon();
-  constexpr Scalar kDistanceSquaredTolerance = 10 * kOSQPTolerance;
+  constexpr Scalar kQPTolerance = 100 * std::numeric_limits<Scalar>::epsilon();
+  constexpr Scalar kDistanceSquaredTolerance = 10 * kQPTolerance;
   constexpr int kNumLoops = 100;
 
-  ::blue::eigenmath::TestGenerator gen(
-      ::blue::eigenmath::kGeneratorTestSeed);
-  ::blue::eigenmath::UniformDistributionVector<Scalar, 3> vector_dist;
+  eigenmath::TestGenerator gen(
+      eigenmath::kGeneratorTestSeed);
+  eigenmath::UniformDistributionVector<Scalar, 3> vector_dist;
   constexpr Scalar kMinHalfLength = 0.0;
   constexpr Scalar kMaxHalfLength = 0.5;
   std::uniform_real_distribution<Scalar> length_dist(kMinHalfLength,
@@ -65,38 +63,23 @@ TYPED_TEST_P(DistancePointSegmentTest, CompareAgainstQSQP) {
   const Vector3 kMinPointPos{-1.0, -1.0, -1.0};
   const Vector3 kMaxPointPos{1.0, 1.0, 1.0};
 
-  osqp::OsqpSolver solver;
-  osqp::OsqpInstance instance;
-  osqp::OsqpSettings settings;
-  settings.eps_abs = kOSQPTolerance;
-  settings.eps_rel = 0.0;
-  settings.warm_start = false;
-  settings.max_iter = 10000;
-  settings.verbose = absl::GetFlag(FLAGS_verbose);
-  // Turn of adaptive_rho, as it depends on run-time and makes the test
-  // non-deterministic!
-  settings.adaptive_rho = false;
-  // This determines "num_variables" (cols) and "num_constraints" (rows).
-  instance.constraint_matrix = Eigen::SparseMatrix<double>(1, 1);
-  instance.lower_bounds.resize(1);
-  instance.upper_bounds.resize(1);
-  Eigen::SparseMatrix<double> box_constraint_matrix(1, 1);
-  const Eigen::Triplet<double> kTripletsA[] = {{0, 0, 1.0}};
-  instance.constraint_matrix.setFromTriplets(std::begin(kTripletsA),
-                                             std::end(kTripletsA));
+  eigenmath::MatrixXd cost_matrix(1, 1);
+  eigenmath::VectorXd cost_vector(1);
+  eigenmath::VectorXd lower_bound(1);
+  eigenmath::VectorXd upper_bound(1);
 
   for (int loop = 0; loop < kNumLoops; loop++) {
     SCOPED_TRACE(::testing::Message() << "At loop " << loop);
-    VLOG(2) << "==== loop= " << loop;
+    ABSL_LOG(INFO) << "==== loop= " << loop;
 
     Segment<Scalar> segment = {
-        .center = ::blue::eigenmath::InterpolateLinearInBox(
+        .center = eigenmath::InterpolateLinearInBox(
             vector_dist(gen), kMinPointPos, kMaxPointPos),
-        .direction = ::blue::eigenmath::InterpolateLinearInBox(
+        .direction = eigenmath::InterpolateLinearInBox(
                          vector_dist(gen), kMinPointPos, kMaxPointPos)
                          .normalized(),
         .half_length = length_dist(gen)};
-    Point<Scalar> point = {::blue::eigenmath::InterpolateLinearInBox(
+    Point<Scalar> point = {eigenmath::InterpolateLinearInBox(
         vector_dist(gen), kMinPointPos, kMaxPointPos)};
 
     CC_MALLOC_COUNTER_INIT();
@@ -104,40 +87,29 @@ TYPED_TEST_P(DistancePointSegmentTest, CompareAgainstQSQP) {
         DistanceSquared(point, segment);
     CC_MALLOC_COUNTER_EXPECT_NO_ALLOCATIONS();
 
-    instance.lower_bounds << -segment.half_length;
-    instance.upper_bounds << segment.half_length;
+    lower_bound[0] = -segment.half_length;
+    upper_bound[0] = segment.half_length;
 
-    Eigen::SparseMatrix<double> objective_matrix(1, 1);
-    const Eigen::Triplet<double> kTripletsP[] = {{0, 0, 2.0}};
+    cost_matrix(0, 0) = 2.0;
+    cost_vector(0) =
+        2.0 * (segment.center - point.center).dot(segment.direction);
 
-    objective_matrix.setFromTriplets(std::begin(kTripletsP),
-                                     std::end(kTripletsP));
-
-    instance.objective_matrix = objective_matrix;
-    instance.objective_vector.resize(1);
-    instance.objective_vector
-        << 2.0 * (segment.center - point.center).dot(segment.direction);
-
-    CC_ASSERT_OK(solver.Init(instance, settings));
-    const osqp::OsqpExitCode exit_code = solver.Solve();
-
-    EXPECT_EQ(exit_code, osqp::OsqpExitCode::kOptimal);
-
-    const Scalar osqp_distance_squared =
-        static_cast<Scalar>(solver.objective_value()) +
+    const auto qp_sol = testing::SolveBoxQPBruteForce(cost_matrix, cost_vector,
+                                                lower_bound, upper_bound);
+    const Scalar qp_distance_squared =
+        static_cast<Scalar>(qp_sol.minimum) +
         (segment.center - point.center).squaredNorm();
 
-    VLOG(2) << "OSQP: solution: " << solver.primal_solution().transpose()
-            << "\n"
-            << "OSQP: minimum: " << solver.objective_value() << "\n"
-            << "OSQP: distance squared: " << osqp_distance_squared << "\n"
-            << "distance_squared: " << distance_squared;
-    ASSERT_NEAR(osqp_distance_squared, distance_squared,
+    ABSL_LOG(INFO) << "QP: solution: " << qp_sol.solution.transpose() << "\n"
+            << "QP: minimum: " << qp_sol.minimum << "\n"
+            << "QP: distance squared: " << qp_distance_squared << "\n"
+            << "distance_squared: " << distance_squared << "\n";
+    ASSERT_NEAR(qp_distance_squared, distance_squared,
                 kDistanceSquaredTolerance);
   }
 }
 
-REGISTER_TYPED_TEST_SUITE_P(DistancePointSegmentTest, CompareAgainstQSQP);
+REGISTER_TYPED_TEST_SUITE_P(DistancePointSegmentTest, CompareAgainstQP);
 
 typedef ::testing::Types<float, double> FPTypes;
 INSTANTIATE_TYPED_TEST_SUITE_P(DistancePointSegmentTestsuite,
@@ -185,4 +157,3 @@ INSTANTIATE_TYPED_TEST_SUITE_P(DistancePointSegmentDeathTestSuite,
 
 }  // namespace
 }  // namespace collision_checking
-

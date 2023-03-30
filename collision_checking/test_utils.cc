@@ -159,3 +159,107 @@ int posix_memalign(void** memptr, size_t alignment, size_t size) {
   return real_posix_memalign(memptr, alignment, size);
 }
 }  // extern "C"
+
+namespace collision_checking {
+namespace testing {
+SolveQuadraticResult SolveBoxQPBruteForce(
+    const eigenmath::MatrixXd& cost_matrix,
+    const eigenmath::VectorXd& cost_vector,
+    const eigenmath::VectorXd& lower_bound,
+    const eigenmath::VectorXd& upper_bound) {
+  ABSL_CHECK_EQ(cost_matrix.rows(), cost_matrix.cols());
+  ABSL_CHECK_EQ(cost_matrix.rows(), cost_vector.size());
+  ABSL_CHECK_EQ(cost_matrix.rows(), lower_bound.size());
+  ABSL_CHECK_EQ(cost_matrix.rows(), upper_bound.size());
+
+  // Acceptable constraint violation. Chosen rather loosly.
+  constexpr double kConstraintEpsilon = 1e-8;
+  const auto satisfies_constraints = [&](const eigenmath::VectorXd& x) {
+    return (x.array() >= lower_bound.array()-kConstraintEpsilon).all() &&
+           (x.array() <= upper_bound.array()+kConstraintEpsilon).all();
+  };
+  const auto cost = [&](const auto x) -> double {
+    return (0.5 * cost_matrix * x + cost_vector).dot(x);
+  };
+  const int size = lower_bound.size();
+  // Always use double precision in the solver.
+  // augmented_matrix = [cost_matrix const_matrix^t;const_matrix,0]
+  // augmented_matrix = [cost_vector, const_vector]
+  eigenmath::MatrixXd const_matrix(size, size);
+  eigenmath::VectorXd const_vector(size);
+  eigenmath::MatrixXd augmented_matrix(2 * size, 2 * size);
+  eigenmath::VectorXd augmented_vector(2 * size);
+  eigenmath::VectorXd augmented_solution(2 * size);
+  augmented_matrix.setZero();
+  augmented_matrix.block(0, 0, size, size) = cost_matrix;
+  augmented_vector.setZero();
+  augmented_vector.segment(0, size) = cost_vector;
+
+  enum ConstraintState {
+    kInactive = 0,
+    kLowerBound = 1,
+    kUpperBound = 2,
+    kNumStates = 3
+  };
+  std::vector<int> constraint_state(size, kInactive);
+  // The total number of constraint states.
+  const int kNumConstraintStates = std::pow<double>(kNumStates, size);
+  // Given an index that runs from zero to kNumConstraintStates, sets vec such
+  // that the vec[i] is the ConstraintState of the ith optimization variable.
+  const auto set_constraint_state = [&](const int loop, std::vector<int>& vec) {
+    int ii = loop;
+    static const int initial_pow = kNumConstraintStates / kNumStates;
+    int pow = initial_pow;
+    for (int k = 0; k < vec.size(); ++k) {
+      int e = ii / pow;
+      vec[k] = e;
+      ii -= e * pow;
+      pow /= kNumStates;
+    }
+  };
+
+  SolveQuadraticResult result{
+      .minimum = std::numeric_limits<double>::infinity(),
+      .solution = eigenmath::VectorXd::Constant(
+          size, std::numeric_limits<double>::quiet_NaN())};
+  // Loop over all constraint permutations and pick the minimum among the valid
+  // solutions.
+  for (int loop = 0; loop < kNumConstraintStates; ++loop) {
+    // Update constraints matrix.
+    // Inactive constraints simply get zero rows in the constraint matrix and
+    // vector, such that the solver will compute a multiplier == 0.
+    const_matrix.setZero();
+    const_vector.setZero();
+    set_constraint_state(loop, constraint_state);
+    for (int i = 0; i < constraint_state.size(); ++i) {
+      switch (constraint_state[i]) {
+        case kInactive:
+          break;
+        case kLowerBound:
+          const_matrix(i, i) = -1.0;
+          const_vector(i) = lower_bound[i];
+          break;
+        case kUpperBound:
+          const_matrix(i, i) = 1.0;
+          const_vector(i) = -upper_bound[i];
+          break;
+      }
+    }
+    // Update augmented system.
+    augmented_matrix.block(0, size, size, size) = const_matrix.transpose();
+    augmented_matrix.block(size, 0, size, size) = const_matrix;
+    augmented_vector.segment(size, size) = const_vector;
+    augmented_solution =
+        augmented_matrix.fullPivHouseholderQr().solve(-augmented_vector);
+    const double cost_value = cost(augmented_solution.head(size));
+    const bool solution_is_valid =
+        satisfies_constraints(augmented_solution.head(size));
+    if (solution_is_valid && cost_value < result.minimum) {
+      result.solution = augmented_solution.head(size);
+      result.minimum = cost_value;
+    }
+  }
+  return result;
+}
+} // namespace testing
+} // namespace collision_checking

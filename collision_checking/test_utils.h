@@ -154,6 +154,24 @@ Message ParseTextProtoOrDie(absl::string_view text) {
   return message;
 }
 
+// Solution data for the function below.
+struct SolveQuadraticResult {
+  double minimum = std::numeric_limits<double>::max();
+  eigenmath::VectorX<double> solution;
+};
+
+// Computes the solution of the box constrained quadratic program:
+//   min{1/2*x^T*cost_matrix*x+x^T*cost_vector}
+//   s.t. lower_bound <= x <= upper_bound.
+// The implementation is intentionally simple and very inefficient:
+// it computes the equality constrained solutions for all possible active
+// constraint puermutations and picks the minimum among the valid solutions that
+// satisfy all constraints.
+SolveQuadraticResult SolveBoxQPBruteForce(
+    const eigenmath::MatrixXd& cost_matrix,
+    const eigenmath::VectorXd& cost_vector,
+    const eigenmath::VectorXd& lower_bound,
+    const eigenmath::VectorXd& upper_bound);
 }  // namespace testing
 }  // namespace collision_checking
 #endif  // EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_TEST_UTILS_H_

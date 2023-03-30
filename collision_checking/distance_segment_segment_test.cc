@@ -28,7 +28,6 @@
 #include "collision_checking/eigenmath.h"
 #include "absl/flags/flag.h"
 #include "gtest/gtest.h"
-#include "third_party/osqp_cpp/include/osqp++.h"
 
 ABSL_FLAG(bool, verbose, false, "Turn on verbose text logging.");
 
@@ -41,7 +40,7 @@ template <typename T>
 class DistanceSegmentSegmentTest : public ::testing::Test {};
 TYPED_TEST_SUITE_P(DistanceSegmentSegmentTest);
 
-TYPED_TEST_P(DistanceSegmentSegmentTest, CompareAgainstQSQP) {
+TYPED_TEST_P(DistanceSegmentSegmentTest, CompareAgainstQP) {
   // The squared distance between two segments is the solution to the
   // following box constrained quadratic program:
   //   (segment_a.center + segment_a.direction*u -
@@ -49,13 +48,10 @@ TYPED_TEST_P(DistanceSegmentSegmentTest, CompareAgainstQSQP) {
   //   s.t. |u| <= segment_a.half_length, and
   //        |v| <= segment_b.half_length.
   // This test  compares the output of DistanceSquared with
-  // solutions computed numerically using the osqp solver.
+  // solutions computed numerically using the QP solver.
 
   using Scalar = TypeParam;
   using Vector3 = Vector3<Scalar>;
-  // OSQP seems to have trouble converging for lower values in singular cases
-  // (parallel line segments).
-  constexpr double kOSQPTolerance = 1e-6;
   // This is driven by the error of the determinant compuated in
   // SegmentSegmentDistanceSquared.
   const Scalar kDistanceSquaredTolerance = 5e-4;
@@ -68,9 +64,9 @@ TYPED_TEST_P(DistanceSegmentSegmentTest, CompareAgainstQSQP) {
   constexpr int kParallelLinesEvery = 30;
   // A constant controlling generation of not-quite parallel directions.
   constexpr Scalar kSmallDirectionComponent = 1e-4;
-  ::blue::eigenmath::TestGenerator gen(
-      ::blue::eigenmath::kGeneratorTestSeed);
-  ::blue::eigenmath::UniformDistributionVector<Scalar, 3> vector_dist;
+  eigenmath::TestGenerator gen(
+      eigenmath::kGeneratorTestSeed);
+  eigenmath::UniformDistributionVector<Scalar, 3> vector_dist;
   constexpr double kMinHalfLength = 0.0;
   constexpr double kMaxHalfLength = 0.5;
   std::uniform_real_distribution<Scalar> length_dist(kMinHalfLength,
@@ -78,75 +74,49 @@ TYPED_TEST_P(DistanceSegmentSegmentTest, CompareAgainstQSQP) {
   const Vector3 kMinPointPos{-1.0, -1.0, -1.0};
   const Vector3 kMaxPointPos{1.0, 1.0, 1.0};
 
-  osqp::OsqpSolver solver;
-  osqp::OsqpInstance instance;
-  osqp::OsqpSettings settings;
-  settings.eps_abs = kOSQPTolerance;
-  settings.eps_rel = 0.0;
-  settings.warm_start = false;
-  // Some configurations need a lot of iterations to converge ..
-  settings.max_iter = 100000;
-  settings.verbose = absl::GetFlag(FLAGS_verbose);
-  // Turn of adaptive_rho, as it depends on run-time and makes the test
-  // non-deterministic!
-  settings.adaptive_rho = false;
-  // This determines "num_variables" (cols) and "num_constraints" (rows).
-  instance.constraint_matrix = Eigen::SparseMatrix<double>(2, 2);
-  instance.lower_bounds.resize(2);
-  instance.upper_bounds.resize(2);
-  Eigen::SparseMatrix<double> box_constraint_matrix(2, 2);
-  const Eigen::Triplet<double> kTripletsA[] = {
-      {0, 0, 1.0}, {1, 0, 0.0}, {0, 1, 0.0}, {1, 1, 1.0}};
-  instance.constraint_matrix.setFromTriplets(std::begin(kTripletsA),
-                                             std::end(kTripletsA));
+  eigenmath::MatrixXd cost_matrix(2, 2);
+  eigenmath::VectorXd cost_vector(2);
+  eigenmath::VectorXd lower_bound(2);
+  eigenmath::VectorXd upper_bound(2);
 
   double max_diff = 0.0;
 
   for (int loop = 0; loop < kNumLoops; loop++) {
     SCOPED_TRACE(::testing::Message() << "At loop " << loop);
-    VLOG(2) << "==== loop= " << loop;
+    ABSL_LOG(INFO) << "==== loop= " << loop;
     const Segment<Scalar> segment_a{
-        .center = ::blue::eigenmath::InterpolateLinearInBox(
+        .center = eigenmath::InterpolateLinearInBox(
             vector_dist(gen), kMinPointPos, kMaxPointPos),
-        .direction = ::blue::eigenmath::InterpolateLinearInBox(
+        .direction = eigenmath::InterpolateLinearInBox(
                          vector_dist(gen), kMinPointPos, kMaxPointPos)
                          .normalized(),
         .half_length = length_dist(gen)};
 
     Segment<Scalar> segment_b;
     segment_b.half_length = length_dist(gen);
-    int type = 0;
     if (loop % kParallelLinesEvery == 0) {
-      type = 1;
       // Force exactly parallel lines.
       segment_b.direction = segment_a.direction;
     } else if (loop % kParallelLinesEvery == 1) {
-      type = 2;
       // Force exactly anti-parallel lines.
       segment_b.direction = -segment_a.direction;
     } else if (loop % kParallelLinesEvery == 2) {
-      type = 3;
-
       // Force nearly parallel lines.
       segment_b.direction =
           (segment_a.direction +
            vector_dist(gen).normalized() * kSmallDirectionComponent)
               .normalized();
     } else if (loop % kParallelLinesEvery == 3) {
-      type = 4;
-
       // Force nearly anti-parallel lines.
       segment_b.direction =
           (-segment_a.direction +
            vector_dist(gen).normalized() * kSmallDirectionComponent)
               .normalized();
     } else {
-      type = 5;
-
       // Regular case: pseudo-random direction.
       segment_b.direction = vector_dist(gen).normalized();
     }
-    segment_b.center = ::blue::eigenmath::InterpolateLinearInBox(
+    segment_b.center = eigenmath::InterpolateLinearInBox(
         vector_dist(gen), kMinPointPos, kMaxPointPos);
 
     CC_MALLOC_COUNTER_INIT();
@@ -154,49 +124,39 @@ TYPED_TEST_P(DistanceSegmentSegmentTest, CompareAgainstQSQP) {
         SegmentSegmentDistanceSquared(segment_a, segment_b);
     CC_MALLOC_COUNTER_EXPECT_NO_ALLOCATIONS();
 
-    instance.lower_bounds << -segment_a.half_length, -segment_b.half_length;
-    instance.upper_bounds << segment_a.half_length, segment_b.half_length;
+    lower_bound << -segment_a.half_length, -segment_b.half_length;
+    upper_bound << segment_a.half_length, segment_b.half_length;
 
-    const Scalar off_diag = -2.0 * segment_a.direction.dot(segment_b.direction);
-    Eigen::SparseMatrix<double> objective_matrix(2, 2);
-    const Eigen::Triplet<double> kTripletsP[] = {
-        {0, 0, 2.0}, {1, 0, off_diag}, {0, 1, off_diag}, {1, 1, 2.0}};
+    Vector3d dir_a = segment_a.direction.template cast<double>().normalized();
+    Vector3d cen_a = segment_a.center.template cast<double>();
+    Vector3d dir_b = segment_b.direction.template cast<double>().normalized();
+    Vector3d cen_b = segment_b.center.template cast<double>();
 
-    objective_matrix.setFromTriplets(std::begin(kTripletsP),
-                                     std::end(kTripletsP));
+    const double off_diag = -2.0 * dir_a.dot(dir_b);
+    cost_matrix << 2.0, off_diag, off_diag, 2.0;
+    cost_vector << 2.0 * (cen_a - cen_b).dot(dir_a),
+        -2.0 * (cen_a - cen_b).dot(dir_b);
 
-    instance.objective_matrix = objective_matrix;
-    instance.objective_vector.resize(2);
-    instance.objective_vector
-        << 2.0 * (segment_a.center - segment_b.center).dot(segment_a.direction),
-        -2.0 * (segment_a.center - segment_b.center).dot(segment_b.direction);
-
-    VLOG(2) << std::scientific << std::setprecision(18)
-            << "segment_a.center= " << segment_a.center.transpose() << "\n"
-            << "segment_a.direction= " << segment_a.direction.transpose()
-            << "\n"
-            << "segment_a.half_length= " << segment_a.half_length << "\n"
-            << "segment_b.center= " << segment_b.center.transpose() << "\n"
-            << "segment_b.direction= " << segment_b.direction.transpose()
-            << "\n"
-            << "segment_b.half_length= " << segment_b.half_length << "\n";
-
-    CC_ASSERT_OK(solver.Init(instance, settings));
-    const osqp::OsqpExitCode exit_code = solver.Solve();
-
-    ASSERT_EQ(exit_code, osqp::OsqpExitCode::kOptimal);
-
-    const double osqp_distance_squared =
-        solver.objective_value() +
-        (segment_a.center - segment_b.center).squaredNorm();
-    VLOG(2) << std::scientific << std::setprecision(18)
-            << "OSQP: solution: " << solver.primal_solution().transpose()
-            << "\n"
-            << "OSQP: minimum: " << solver.objective_value() << "\n"
-            << "OSQP: distance squared: " << osqp_distance_squared << "\n"
+    ABSL_LOG(INFO) << std::scientific << std::setprecision(18)
+              << "segment_a.center= " << segment_a.center.transpose() << "\n"
+              << "segment_a.direction= " << segment_a.direction.transpose()
+              << "\n"
+              << "segment_a.half_length= " << segment_a.half_length << "\n"
+              << "segment_b.center= " << segment_b.center.transpose() << "\n"
+              << "segment_b.direction= " << segment_b.direction.transpose()
+              << "\n"
+              << "segment_b.half_length= " << segment_b.half_length << "\n";
+    const auto qp_sol = testing::SolveBoxQPBruteForce(cost_matrix, cost_vector,
+                                                lower_bound, upper_bound);
+    const double qp_distance_squared =
+        qp_sol.minimum + (segment_a.center - segment_b.center).squaredNorm();
+    ABSL_LOG(INFO) << std::scientific << std::setprecision(18)
+            << "QP: solution: " << qp_sol.solution.transpose() << "\n"
+            << "QP: minimum: " << qp_sol.minimum << "\n"
+            << "QP: distance squared: " << qp_distance_squared << "\n"
             << "distance_squared: " << distance_squared << "\n";
 
-    EXPECT_NEAR(osqp_distance_squared, distance_squared,
+    EXPECT_NEAR(qp_distance_squared, distance_squared,
                 kDistanceSquaredTolerance)
         << std::scientific << std::setprecision(18)
         << "segment_a.center= " << segment_a.center.transpose() << "\n"
@@ -211,15 +171,15 @@ TYPED_TEST_P(DistanceSegmentSegmentTest, CompareAgainstQSQP) {
 
     ASSERT_GE(distance_squared, 0.0);
     max_diff = std::max(
-        std::abs(osqp_distance_squared - static_cast<double>(distance_squared)),
+        std::abs(qp_distance_squared - static_cast<double>(distance_squared)),
         max_diff);
   }
 
-  VLOG(2) << std::scientific << std::setprecision(18)
+  ABSL_LOG(INFO) << std::scientific << std::setprecision(18)
           << "max_diff= " << max_diff;
 }
 
-REGISTER_TYPED_TEST_SUITE_P(DistanceSegmentSegmentTest, CompareAgainstQSQP);
+REGISTER_TYPED_TEST_SUITE_P(DistanceSegmentSegmentTest, CompareAgainstQP);
 
 typedef ::testing::Types<float, double> FPTypes;
 INSTANTIATE_TYPED_TEST_SUITE_P(DistancePrimitiveTestSuite,
@@ -330,4 +290,3 @@ TEST(DistanceSegmentSegmentTest,
 
 }  // namespace
 }  // namespace collision_checking
-

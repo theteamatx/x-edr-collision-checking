@@ -125,9 +125,13 @@ CC_INLINE SegmentSegmentResult<Scalar> SegmentSegmentDistanceSquared(
     const Scalar w_max = segment_a.half_length + segment_b.half_length;
     const Scalar w = Saturate(-dir.dot(diff), w_max);
     const Scalar distance_squared = (diff + w * dir).squaredNorm();
-    const Scalar v =
-        Saturate(Scalar{0.5} * w, segment_a.half_length);
-    const Scalar u = w + v;
+    // Minimum norm solution, projected onto valid v-set.
+    const Scalar v_minnorm =
+        Saturate(Scalar{0.5} * w, segment_b.half_length);
+    // U might be violated for this solution, so project onto valid set and
+    // recompute v, which should yield a valid solution.
+    const Scalar u = Saturate(w + v_minnorm, segment_a.half_length);
+    const Scalar v = u-w;
     return {.distance_squared = distance_squared,
             .segment_a_parameter = u,
             .segment_b_parameter = v};
