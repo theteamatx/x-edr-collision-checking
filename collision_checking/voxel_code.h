@@ -21,8 +21,8 @@
 // If this changes, implement EncodeVoxel/DecodeVoxel functions for wider data
 // types.
 
-#ifndef EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_VOXEL_CODE_H_
-#define EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_VOXEL_CODE_H_
+#ifndef COLLISION_CHECKING_VOXEL_CODE_H_
+#define COLLISION_CHECKING_VOXEL_CODE_H_
 
 #include <cstdint>
 #include <limits>
@@ -80,4 +80,4 @@ inline Vector3<VoxelCodeTraits::IntCoordType> CodeToVoxelIndex(
 
 }  // namespace collision_checking
 
-#endif  // EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_VOXEL_CODE_H_
+#endif  // COLLISION_CHECKING_VOXEL_CODE_H_

@@ -43,7 +43,7 @@ message CollisionStateProto {
     AxisAlignedBoundingBox3dProto bounding_box = 4;
   }
 
-  // Environment (VoxelMap or HifiMap) info.
+  // Environment info.
   // NextId: 4
   message EnvironmentMapObjectInfo {
     ObjectIdInfo id_info = 1;

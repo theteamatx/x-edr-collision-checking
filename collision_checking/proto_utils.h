@@ -14,8 +14,8 @@
 
 // Utility functions for generating protobuf messages.
 
-#ifndef EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_PROTO_UTILS_H_
-#define EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_PROTO_UTILS_H_
+#ifndef COLLISION_CHECKING_PROTO_UTILS_H_
+#define COLLISION_CHECKING_PROTO_UTILS_H_
 
 #include <array>
 #include <string>
@@ -205,4 +205,4 @@ absl::StatusOr<CollisionStateProto> MakeCollisionStateProto(
 }
 }  // namespace collision_checking
 
-#endif  // EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_PROTO_UTILS_H_
+#endif  // COLLISION_CHECKING_PROTO_UTILS_H_

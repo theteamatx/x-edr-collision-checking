@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_ASSEMBLY_COORDINATE_VIEW_H_
-#define EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_ASSEMBLY_COORDINATE_VIEW_H_
+#ifndef COLLISION_CHECKING_ASSEMBLY_COORDINATE_VIEW_H_
+#define COLLISION_CHECKING_ASSEMBLY_COORDINATE_VIEW_H_
 #include <type_traits>
 
 #include "Eigen/Core"
@@ -68,4 +68,4 @@ CC_INLINE AssemblyCoordinateView<Scalar>::AssemblyCoordinateView(
       joint_positions(data + kScalarsPerPose, joint_count_) {}
 
 }  // namespace collision_checking
-#endif  // EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_ASSEMBLY_COORDINATE_VIEW_H_
+#endif  // COLLISION_CHECKING_ASSEMBLY_COORDINATE_VIEW_H_

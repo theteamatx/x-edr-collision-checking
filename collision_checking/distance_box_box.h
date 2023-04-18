@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_DISTANCE_BOX_BOX_H_
-#define EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_DISTANCE_BOX_BOX_H_
+#ifndef COLLISION_CHECKING_DISTANCE_BOX_BOX_H_
+#define COLLISION_CHECKING_DISTANCE_BOX_BOX_H_
 
 // Functions for computing the minimum squared distances between geometric
 // primitives.
@@ -92,7 +92,6 @@ CC_INLINE ObjectObjectResult<Scalar> BoxFaceBoxFaceDistanceSquared(
   // Edge face B in Box A frame.
   Scalar segment_parameter, distance_squared;
   CudaSafeTie tied_results(segment_parameter, distance_squared);
-  // NOLINTNEXTLINE(google3-custom-no-eigen-default-ctor): Initialized below.
   Vector3 point_box;
   // u+ offset, v-direction
   point_box[face_b_u] = box_b.half_lengths[face_b_u];
@@ -109,9 +108,9 @@ CC_INLINE ObjectObjectResult<Scalar> BoxFaceBoxFaceDistanceSquared(
     return internal::PointBoxDistanceSquared(segment_point, box_half_lengths)
         .distance_squared;
   };
+
   // TODO: Use successive quadratic interpolation here, as the
   // function is piece-wise quadratic.
-
   tied_results = GoldenSectionSearchMinimize(-seg_half_length, seg_half_length,
                                              distance_squared_func, kTolerance);
 
@@ -403,4 +402,4 @@ CC_INLINE ObjectObjectResult<Scalar> DistanceSquared(const Box<Scalar>& box_a,
 }
 
 }  // namespace collision_checking
-#endif  // EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_DISTANCE_BOX_BOX_H_
+#endif  // COLLISION_CHECKING_DISTANCE_BOX_BOX_H_

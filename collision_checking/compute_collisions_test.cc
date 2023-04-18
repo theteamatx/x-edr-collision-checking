@@ -29,8 +29,8 @@
 namespace collision_checking {
 namespace {
 
+using ::collision_checking::testing::MinimumGeometryInfoIs;
 using ::eigenmath::testing::IsApprox;
-using testing::MinimumGeometryInfoIs;
 
 template <typename T>
 class CollisionCheckerTest : public ::testing::Test {};

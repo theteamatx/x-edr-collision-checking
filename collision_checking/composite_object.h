@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_COMPOSITE_OBJECT_H_
-#define EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_COMPOSITE_OBJECT_H_
+#ifndef COLLISION_CHECKING_COMPOSITE_OBJECT_H_
+#define COLLISION_CHECKING_COMPOSITE_OBJECT_H_
 
 #include "collision_checking/distance_box_box.h"
 #include "collision_checking/distance_point_box.h"
@@ -578,4 +578,4 @@ CC_INLINE CompositObjectDistanceResult<Scalar> CompositeObjectDistance(
 
 }  // namespace collision_checking
 
-#endif  // EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_COMPOSITE_OBJECT_H_
+#endif  // COLLISION_CHECKING_COMPOSITE_OBJECT_H_

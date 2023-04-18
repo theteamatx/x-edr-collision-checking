@@ -35,13 +35,13 @@
 namespace collision_checking {
 
 namespace {
+using ::collision_checking::testing::ParseTextProtoOrDie;
+using ::collision_checking::testing::StatusCodeIs;
 using ::eigenmath::testing::IsApprox;
 using ::testing::Eq;
 using ::testing::ExplainMatchResult;
 using ::testing::HasSubstr;
-using testing::ParseTextProtoOrDie;
 using ::testing::Pointwise;
-using testing::StatusCodeIs;
 
 template <typename Scalar>
 void AddToResultListener(const CompositeObject<Scalar>& object,

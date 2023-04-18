@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_ASSEMBLY_COORDINATE_SAMPLES_VIEW_H_
-#define EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_ASSEMBLY_COORDINATE_SAMPLES_VIEW_H_
+#ifndef COLLISION_CHECKING_ASSEMBLY_COORDINATE_SAMPLES_VIEW_H_
+#define COLLISION_CHECKING_ASSEMBLY_COORDINATE_SAMPLES_VIEW_H_
 
 #include "absl/types/span.h"
 #include "collision_checking/assembly_kinematics.h"
@@ -65,4 +65,4 @@ class AssemblyCoordinateSamplesView {
   std::size_t sample_count_ = 0;
 };
 }  // namespace collision_checking
-#endif  // EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_ASSEMBLY_COORDINATE_SAMPLES_VIEW_H_
+#endif  // COLLISION_CHECKING_ASSEMBLY_COORDINATE_SAMPLES_VIEW_H_

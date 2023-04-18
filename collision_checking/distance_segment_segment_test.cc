@@ -33,8 +33,6 @@ ABSL_FLAG(bool, verbose, false, "Turn on verbose text logging.");
 
 namespace collision_checking {
 namespace {
-template <typename Scalar>
-using Vector3 = Vector3<Scalar>;
 
 template <typename T>
 class DistanceSegmentSegmentTest : public ::testing::Test {};

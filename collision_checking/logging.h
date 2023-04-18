@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_LOGGING_H_
-#define EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_LOGGING_H_
+#ifndef COLLISION_CHECKING_LOGGING_H_
+#define COLLISION_CHECKING_LOGGING_H_
 
 #include "absl/base/attributes.h"
 #include "absl/strings/str_format.h"
@@ -132,4 +132,4 @@ __device__ inline void Panic(const PanicParameters& params,
 
 }  // namespace collision_checking
 
-#endif  // EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_LOGGING_H_
+#endif  // COLLISION_CHECKING_LOGGING_H_

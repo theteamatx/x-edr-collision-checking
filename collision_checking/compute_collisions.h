@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_COMPUTE_COLLISIONS_H_
-#define EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_COMPUTE_COLLISIONS_H_
+#ifndef COLLISION_CHECKING_COMPUTE_COLLISIONS_H_
+#define COLLISION_CHECKING_COMPUTE_COLLISIONS_H_
 
 #include "collision_checking/collision_result.h"
 #include "collision_checking/composite_object.h"
@@ -265,4 +265,4 @@ Status ComputeCollisions(
 
 }  // namespace collision_checking
 
-#endif  // EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_COMPUTE_COLLISIONS_H_
+#endif  // COLLISION_CHECKING_COMPUTE_COLLISIONS_H_

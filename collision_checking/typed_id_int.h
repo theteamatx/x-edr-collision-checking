@@ -12,9 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_TYPED_ID_INT_H_
-#define EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_TYPED_ID_INT_H_
+#ifndef COLLISION_CHECKING_TYPED_ID_INT_H_
+#define COLLISION_CHECKING_TYPED_ID_INT_H_
 
+#include <limits>
 #include <type_traits>
 #include <utility>
 
@@ -103,4 +104,4 @@ class TypedIdInt {
 };
 }  // namespace collision_checking
 
-#endif  // EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_TYPED_ID_INT_H_
+#endif  // COLLISION_CHECKING_TYPED_ID_INT_H_

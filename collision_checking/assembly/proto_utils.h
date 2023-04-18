@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_ASSEMBLY_PROTO_UTILS_H_
-#define EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_ASSEMBLY_PROTO_UTILS_H_
+#ifndef COLLISION_CHECKING_ASSEMBLY_PROTO_UTILS_H_
+#define COLLISION_CHECKING_ASSEMBLY_PROTO_UTILS_H_
 
 #include <memory>
 
@@ -44,4 +44,4 @@ absl::Status ToProto(const geometry_shapes::ShapeBase& shape,
 
 }  // namespace collision_checking
 
-#endif  // EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_ASSEMBLY_PROTO_UTILS_H_
+#endif  // COLLISION_CHECKING_ASSEMBLY_PROTO_UTILS_H_

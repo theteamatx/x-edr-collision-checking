@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_OBJECT_ID_H_
-#define EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_OBJECT_ID_H_
+#ifndef COLLISION_CHECKING_OBJECT_ID_H_
+#define COLLISION_CHECKING_OBJECT_ID_H_
 
 #include <array>
 #include <bitset>
@@ -214,4 +214,4 @@ inline absl::StatusOr<ObjectId> GetObjectIdFromSet(const ObjectIdSet& id_set) {
 }
 
 }  // namespace collision_checking
-#endif  // EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_OBJECT_ID_H_
+#endif  // COLLISION_CHECKING_OBJECT_ID_H_

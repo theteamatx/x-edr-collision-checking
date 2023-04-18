@@ -15,8 +15,8 @@
 // Functions for converting from blue::geometry_shapes::XYZ to
 // structs from ./geometry.h.
 
-#ifndef EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_GEOMETRY_SHAPE_CONVERSION_H_
-#define EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_GEOMETRY_SHAPE_CONVERSION_H_
+#ifndef COLLISION_CHECKING_GEOMETRY_SHAPE_CONVERSION_H_
+#define COLLISION_CHECKING_GEOMETRY_SHAPE_CONVERSION_H_
 #include <type_traits>
 
 #include "absl/status/status.h"
@@ -123,8 +123,6 @@ Box<Scalar> GeometryShapesBoxToBox(const Pose3d& world_pose_shape,
       world_pose_local.rotationMatrix().transpose().template cast<Scalar>();
   // Padding just increases the box size, i.e., doesn't truly create a padded
   // box with rounded corners.
-  // This is for consistency with planning::world_state.cc, which does
-  // the same.
   box.half_lengths = derived_shape.GetSize().template cast<Scalar>() * 0.5 +
                      Vector3<Scalar>::Constant(padding);
   return box;
@@ -219,4 +217,4 @@ absl::Status AddSpheresToVoxelMapObject(const geometry_shapes::ShapeBase& shape,
 
 }  // namespace collision_checking
 
-#endif  // EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_GEOMETRY_SHAPE_CONVERSION_H_
+#endif  // COLLISION_CHECKING_GEOMETRY_SHAPE_CONVERSION_H_

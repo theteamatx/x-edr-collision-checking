@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_DISTANCE_POINT_BOX_H_
-#define EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_DISTANCE_POINT_BOX_H_
+#ifndef COLLISION_CHECKING_DISTANCE_POINT_BOX_H_
+#define COLLISION_CHECKING_DISTANCE_POINT_BOX_H_
 
 // Functions for computing the minimum squared distances between geometric
 // primitives.
@@ -90,4 +90,4 @@ CC_INLINE PointBoxResult<Scalar> DistanceSquared(const Point<Scalar>& point,
 
 }  // namespace collision_checking
 
-#endif  // EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_DISTANCE_POINT_BOX_H_
+#endif  // COLLISION_CHECKING_DISTANCE_POINT_BOX_H_

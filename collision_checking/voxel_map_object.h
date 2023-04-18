@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_VOXEL_MAP_OBJECT_H_
-#define EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_VOXEL_MAP_OBJECT_H_
+#ifndef COLLISION_CHECKING_VOXEL_MAP_OBJECT_H_
+#define COLLISION_CHECKING_VOXEL_MAP_OBJECT_H_
 
 #include <algorithm>
 #include <cstddef>
@@ -118,8 +118,6 @@ class InBoxVoxelRange {
 // differently in collision checks to improve efficiency, and provides some
 // additional methods.
 // It currently only supports sphere geometries.
-// TODO: Consider extending this to support all static geometry
-// efficiently.
 template <typename Scalar>
 class VoxelMapObject {
  public:
@@ -175,8 +173,6 @@ class VoxelMapObject {
 
   // Transforms all spheres accoring to:
   // new_center = translation + rotation * old_center.
-  // This is only an optimization to account for the existing APIs in
-  // 'WorldState' and 'CollisionWorld' and will be removed in the future.
   void TransformSpheres(const Vector3<Scalar>& translation,
                         const Matrix3<Scalar>& rotation);
 
@@ -509,4 +505,4 @@ Vector3<Scalar> VoxelMapObject<Scalar>::Decode(
 
 }  // namespace collision_checking
 
-#endif  // EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_VOXEL_MAP_OBJECT_H_
+#endif  // COLLISION_CHECKING_VOXEL_MAP_OBJECT_H_

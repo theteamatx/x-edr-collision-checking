@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_ASSEMBLY_LINK_H_
-#define EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_ASSEMBLY_LINK_H_
+#ifndef COLLISION_CHECKING_ASSEMBLY_LINK_H_
+#define COLLISION_CHECKING_ASSEMBLY_LINK_H_
 
 #include <optional>
 #include <string>
@@ -51,7 +51,6 @@ class Joint;
 //      reference frame. The origin of the inertial reference frame needs to be
 //      at the center of mass. The axes of the inertial reference frame do not
 //      need to be aligned with the principal axes of the inertia.
-//      See config_node_utils.h for how frames are read.
 //    <mass>
 //      The mass of the link.
 //      value : the scalar value for mass.
@@ -71,7 +70,6 @@ class Joint;
 //      Specifies a name for a part of a link's geometry. This is useful to be
 //      able to refer to specific bits of the geometry of a link.
 //    <origin> (optional: defaults to identity if not specified)
-//      See config_node_utils.h for how frames are read.
 //    <geometry> (required)
 //      See geometry.h for how geometry is read.
 //  <collision> (optional)
@@ -84,7 +82,6 @@ class Joint;
 //      Specifies a name for a part of a link's geometry. This is useful to be
 //      able to refer to specific bits of the geometry of a link.
 //    <origin> (optional: defaults to identity if not specified)
-//      See config_node_utils.h for how frames are read.
 //    <geometry> (required)
 //      See geometry.h for how geometry is read.
 class Link {
@@ -235,4 +232,4 @@ class Link {
 
 }  // namespace collision_checking
 
-#endif  // EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_ASSEMBLY_LINK_H_
+#endif  // COLLISION_CHECKING_ASSEMBLY_LINK_H_

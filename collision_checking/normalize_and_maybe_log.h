@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_NORMALIZE_AND_MAYBE_LOG_H_
-#define EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_NORMALIZE_AND_MAYBE_LOG_H_
+#ifndef COLLISION_CHECKING_NORMALIZE_AND_MAYBE_LOG_H_
+#define COLLISION_CHECKING_NORMALIZE_AND_MAYBE_LOG_H_
 
 #include "absl/log/absl_log.h"
 #include "collision_checking/eigenmath.h"
@@ -25,7 +25,8 @@ namespace collision_checking {
 // Not a public interface.
 namespace internal {
 
-// Return the normalized vector and LOGD if it is almost zero.
+// Return the normalized vector and log a warning if it is almost zero.
+// If compiled as CUDA device code, failure to normalize is silently ignored.
 template <typename Derived>
 CC_INLINE Vector3<typename Derived::Scalar> NormalizeAndMaybeLog(
     const Eigen::EigenBase<Derived>& input) {
@@ -44,4 +45,4 @@ CC_INLINE Vector3<typename Derived::Scalar> NormalizeAndMaybeLog(
 }  // namespace internal
 }  // namespace collision_checking
 
-#endif  // EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_NORMALIZE_AND_MAYBE_LOG_H_
+#endif  // COLLISION_CHECKING_NORMALIZE_AND_MAYBE_LOG_H_

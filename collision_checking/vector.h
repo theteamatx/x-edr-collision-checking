@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_VECTOR_H_
-#define EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_VECTOR_H_
+#ifndef COLLISION_CHECKING_VECTOR_H_
+#define COLLISION_CHECKING_VECTOR_H_
 
 #include <cstddef>
 #include <cstdlib>
@@ -112,4 +112,4 @@ class Vector : public ParametrizedNewDelete<AllocatorTraits> {
 };
 }  // namespace collision_checking
 
-#endif  // EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_VECTOR_H_
+#endif  // COLLISION_CHECKING_VECTOR_H_

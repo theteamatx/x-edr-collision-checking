@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_ASSEMBLY_COLLISION_CHECKER_H_
-#define EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_ASSEMBLY_COLLISION_CHECKER_H_
+#ifndef COLLISION_CHECKING_ASSEMBLY_COLLISION_CHECKER_H_
+#define COLLISION_CHECKING_ASSEMBLY_COLLISION_CHECKER_H_
 
 // Convenience functions and classes for collision checking with data from
 // an Assembly class.
@@ -84,7 +84,7 @@ class AssemblyCollisionChecker : virtual public ModelInterface<Scalar>,
   // Resizes `result` to match sizes of *this, if necessary.
   void ResizeCollisionResult(CollisionResult& result) const;
 
-  // TODO(b/208409848): Add support for multiple assemblies.
+  // TODO: Add support for multiple assemblies.
   absl::StatusOr<AssemblyId> AddAssembly(
       const Assembly& assembly, absl::Span<const std::string> joint_order,
       const Options& options) override;
@@ -1240,4 +1240,4 @@ AssemblyCollisionChecker<Scalar, AllocatorTraits>::GetCollisionStateProto(
 }
 
 }  // namespace collision_checking
-#endif  // EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_ASSEMBLY_COLLISION_CHECKER_H_
+#endif  // COLLISION_CHECKING_ASSEMBLY_COLLISION_CHECKER_H_

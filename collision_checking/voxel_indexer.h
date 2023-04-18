@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_VOXEL_INDEXER_H_
-#define EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_VOXEL_INDEXER_H_
+#ifndef COLLISION_CHECKING_VOXEL_INDEXER_H_
+#define COLLISION_CHECKING_VOXEL_INDEXER_H_
 
 #include <limits>
 
@@ -109,4 +109,4 @@ Vector3<FloatType> VoxelIndexer<FloatType, IntType>::ToPoint(
 
 }  // namespace collision_checking
 
-#endif  // EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_VOXEL_INDEXER_H_
+#endif  // COLLISION_CHECKING_VOXEL_INDEXER_H_

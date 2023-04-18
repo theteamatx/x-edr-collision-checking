@@ -12,15 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_MODEL_OPTIONS_H_
-#define EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_MODEL_OPTIONS_H_
+#ifndef COLLISION_CHECKING_MODEL_OPTIONS_H_
+#define COLLISION_CHECKING_MODEL_OPTIONS_H_
 
 #include "collision_checking/inlining.h"
 
 namespace collision_checking {
 
 // Policies for disabling certain collision pairs.
-// Keep in sync with //collisions_config.proto.
 enum class CollisionMaskingPolicy {
   // Invalid default value.
   kUnknown,
@@ -71,4 +70,4 @@ class ModelOptions {
 };
 
 }  // namespace collision_checking
-#endif  // EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_MODEL_OPTIONS_H_
+#endif  // COLLISION_CHECKING_MODEL_OPTIONS_H_

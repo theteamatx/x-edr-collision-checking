@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_GEOMETRY_SHAPES_EIGEN_PROTO_UTILS_H_
-#define EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_GEOMETRY_SHAPES_EIGEN_PROTO_UTILS_H_
+#ifndef COLLISION_CHECKING_GEOMETRY_SHAPES_EIGEN_PROTO_UTILS_H_
+#define COLLISION_CHECKING_GEOMETRY_SHAPES_EIGEN_PROTO_UTILS_H_
 
 #include "collision_checking/eigenmath.h"
 #include "collision_checking/geometry_shapes/eigen.pb.h"
@@ -99,4 +99,4 @@ inline Pose3d PoseFromProto(const proto::Pose3dProto& proto) {
 }
 }  // namespace collision_checking
 
-#endif  // EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_GEOMETRY_SHAPES_EIGEN_PROTO_UTILS_H_
+#endif  // COLLISION_CHECKING_GEOMETRY_SHAPES_EIGEN_PROTO_UTILS_H_

@@ -24,9 +24,9 @@
 
 namespace collision_checking {
 namespace {
+using ::collision_checking::testing::ParseTextProtoOrDie;
 using ::testing::ElementsAre;
 using ::testing::IsEmpty;
-using testing::ParseTextProtoOrDie;
 using ::testing::UnorderedElementsAre;
 using ::testing::UnorderedElementsAreArray;
 

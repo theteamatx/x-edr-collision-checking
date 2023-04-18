@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_DISTANCE_SEGMENT_BOX_H_
-#define EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_DISTANCE_SEGMENT_BOX_H_
+#ifndef COLLISION_CHECKING_DISTANCE_SEGMENT_BOX_H_
+#define COLLISION_CHECKING_DISTANCE_SEGMENT_BOX_H_
 
 // Functions for computing the minimum squared distances between a segment
 // and a box.
@@ -108,7 +108,7 @@ CC_INLINE SegmentBoxResult<Scalar> FaceParallelLineBoxDistanceSquared(
   Scalar line_parameter =
       direction[uindex] * (box_corner_u - segment_center[uindex]) +
       direction[vindex] * (box_corner_v - segment_center[vindex]);
-  // NOLINTNEXTLINE(google3-custom-no-eigen-default-ctor): Initialized below.
+
   Vector3 line_point;
   line_point[uindex] =
       segment_center[uindex] + line_parameter * direction[uindex];
@@ -173,7 +173,6 @@ CC_INLINE SegmentBoxResult<Scalar> LineFaceDistanceSquared(
       segment_center[vindex] + sintersect * direction[vindex];
   if ((std::abs(uintersect) < box_half_lengths[uindex]) &&
       (std::abs(vintersect) < box_half_lengths[vindex])) {
-    // NOLINTNEXTLINE(google3-custom-no-eigen-default-ctor): Initialized below.
     Vector3 intersect_point;
     intersect_point[windex] = box_half_lengths[windex];
     intersect_point[uindex] = uintersect;
@@ -197,7 +196,6 @@ CC_INLINE SegmentBoxResult<Scalar> LineFaceDistanceSquared(
       -box_half_lengths[vindex] - segment_center[vindex];
 
   // Distance to u=-box_half_lengths[uindex]:
-  // NOLINTNEXTLINE(google3-custom-no-eigen-default-ctor): Initialized below.
   Vector3 face_point_u;
   face_point_u[windex] = box_half_lengths[windex];
   face_point_u[uindex] = -box_half_lengths[uindex];
@@ -212,7 +210,6 @@ CC_INLINE SegmentBoxResult<Scalar> LineFaceDistanceSquared(
       (segment_center + smin_u * direction - face_point_u).squaredNorm();
 
   // Distance to v=-box_half_lengths[vindex]:
-  // NOLINTNEXTLINE(google3-custom-no-eigen-default-ctor): Initialized below.
   Vector3 face_point_v;
   face_point_v[windex] = box_half_lengths[windex];
   face_point_v[vindex] = -box_half_lengths[vindex];
@@ -368,4 +365,4 @@ CC_INLINE SegmentBoxResult<Scalar> DistanceSquared(
 }
 }  // namespace collision_checking
 
-#endif  // EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_DISTANCE_SEGMENT_BOX_H_
+#endif  // COLLISION_CHECKING_DISTANCE_SEGMENT_BOX_H_

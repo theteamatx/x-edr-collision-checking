@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_INLINING_H_
-#define EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_INLINING_H_
+#ifndef COLLISION_CHECKING_INLINING_H_
+#define COLLISION_CHECKING_INLINING_H_
 
 // Macros to help share code between regular C++ and CUDA.
 
@@ -31,4 +31,4 @@
 #define CC_DEVICE_INLINE CC_INTERNAL_INLINE
 #endif
 
-#endif  // EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_INLINING_H_
+#endif  // COLLISION_CHECKING_INLINING_H_

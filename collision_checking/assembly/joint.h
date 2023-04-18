@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_ASSEMBLY_JOINT_H_
-#define EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_ASSEMBLY_JOINT_H_
+#ifndef COLLISION_CHECKING_ASSEMBLY_JOINT_H_
+#define COLLISION_CHECKING_ASSEMBLY_JOINT_H_
 
 #include <limits>
 #include <string>
@@ -29,14 +29,13 @@ class Link;
 // The Joint class represents an articulated connection with a single
 // scalar degree of freedom that connects two rigid geometric objects, called
 // Links. The Joint has a single inboard (closer to base) Link, called its
-// parent Link, and a single outboard (farther from base), called its child Link.
-// Every Joint requires both parent and child Links.
-// Joints are specified (created) relative to the reference frame of their
-// parent Links.
-// The Joint has two coordinate frames, which are identical when the joint's q
-// value is zero. These frames are called "inboard" and "outboard". The joint
-// is specified (created) in its zero position by specifying the transform
-// of the inboard frame with respect to the parent joint's.
+// parent Link, and a single outboard (farther from base), called its child
+// Link. Every Joint requires both parent and child Links. Joints are specified
+// (created) relative to the reference frame of their parent Links. The Joint
+// has two coordinate frames, which are identical when the joint's q value is
+// zero. These frames are called "inboard" and "outboard". The joint is
+// specified (created) in its zero position by specifying the transform of the
+// inboard frame with respect to the parent joint's.
 //
 // Joint URDF/XML Specification:
 // PARAMETERS
@@ -61,7 +60,6 @@ class Link;
 // <child> (required)
 //  Use field "link" to specify the name of the child link.
 // <origin> (optional: defaults to identity if not specified)
-//  (See config_node_utils.hpp for how origin is specified)
 //  This is the transform from the joint's inboard frame to the parent joint's
 //  (or root link's) outboard frame. The joint is located at the origin of the
 //  inboard frame, and may operate around or along any axis.
@@ -219,4 +217,4 @@ class Joint {
 
 }  // namespace collision_checking
 
-#endif  // EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_ASSEMBLY_JOINT_H_
+#endif  // COLLISION_CHECKING_ASSEMBLY_JOINT_H_

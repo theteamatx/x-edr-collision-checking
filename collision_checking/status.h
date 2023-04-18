@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_STATUS_H_
-#define EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_STATUS_H_
+#ifndef COLLISION_CHECKING_STATUS_H_
+#define COLLISION_CHECKING_STATUS_H_
 #include "absl/status/status.h"
 #include "collision_checking/inlining.h"
 
@@ -85,4 +85,4 @@ CC_INLINE Status OkStatus() { return Status(); }
 
 }  // namespace collision_checking
 
-#endif  // EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_STATUS_H_
+#endif  // COLLISION_CHECKING_STATUS_H_

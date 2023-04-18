@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_MODEL_INTERFACE_H_
-#define EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_MODEL_INTERFACE_H_
+#ifndef COLLISION_CHECKING_MODEL_INTERFACE_H_
+#define COLLISION_CHECKING_MODEL_INTERFACE_H_
 #include <string>
 #include <vector>
 
@@ -60,7 +60,7 @@ class ModelInterface {
   // specified in assembly.
   // Returns the id for the assembly, or a Status if an error occurred.
   // Currently, only one assembly can be added.
-  // TODO(b/208409848): Add support for multiple assemblies.
+  // TODO: Add support for multiple assemblies.
   virtual absl::StatusOr<AssemblyId> AddAssembly(
       const Assembly& assembly, absl::Span<const std::string> joint_order,
       const Options& options) = 0;
@@ -210,4 +210,4 @@ class ModelInterface {
   virtual void RemoveAllStaticObjects() = 0;
 };
 }  // namespace collision_checking
-#endif  // EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_MODEL_INTERFACE_H_
+#endif  // COLLISION_CHECKING_MODEL_INTERFACE_H_

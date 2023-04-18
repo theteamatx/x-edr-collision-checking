@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_GEOMETRY_SHAPES_COMPOSITE_SHAPE_H_
-#define EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_GEOMETRY_SHAPES_COMPOSITE_SHAPE_H_
+#ifndef COLLISION_CHECKING_GEOMETRY_SHAPES_COMPOSITE_SHAPE_H_
+#define COLLISION_CHECKING_GEOMETRY_SHAPES_COMPOSITE_SHAPE_H_
 
 #include <memory>
 #include <utility>
@@ -73,4 +73,4 @@ class CompositeShape : public ShapeBase {
 }  // namespace geometry_shapes
 }  // namespace collision_checking
 
-#endif  // EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_GEOMETRY_SHAPES_COMPOSITE_SHAPE_H_
+#endif  // COLLISION_CHECKING_GEOMETRY_SHAPES_COMPOSITE_SHAPE_H_

@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_GEOMETRY_SHAPES_PROTO_UTILS_IMPL_H_
-#define EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_GEOMETRY_SHAPES_PROTO_UTILS_IMPL_H_
+#ifndef COLLISION_CHECKING_GEOMETRY_SHAPES_PROTO_UTILS_IMPL_H_
+#define COLLISION_CHECKING_GEOMETRY_SHAPES_PROTO_UTILS_IMPL_H_
 
 #include <memory>
 #include <vector>
@@ -176,4 +176,4 @@ absl::Status MakeMarker(const ShapeBase& shape, const Vector4d& rgba,
 }  // namespace geometry_shapes
 }  // namespace collision_checking
 
-#endif  // EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_GEOMETRY_SHAPES_PROTO_UTILS_IMPL_H_
+#endif  // COLLISION_CHECKING_GEOMETRY_SHAPES_PROTO_UTILS_IMPL_H_

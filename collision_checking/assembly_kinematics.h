@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_ASSEMBLY_KINEMATICS_H_
-#define EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_ASSEMBLY_KINEMATICS_H_
+#ifndef COLLISION_CHECKING_ASSEMBLY_KINEMATICS_H_
+#define COLLISION_CHECKING_ASSEMBLY_KINEMATICS_H_
 
 // A (forward) kinematics class for collision checking Assemblies.
 
@@ -124,7 +124,7 @@ template <typename Scalar, typename AllocatorTraits = DefaultAllocatorTraits>
 struct AssemblyPoses : public ParametrizedNewDelete<AllocatorTraits> {
   AssemblyPoses() = default;
   explicit AssemblyPoses(int pose_count) { Resize(pose_count); }
-  // Resizes the for `pose_count`.
+  // Resizes translation and rotation matrix containers for `pose_count`.
   void Resize(int pose_count) {
     odom_translation_link.resize(pose_count);
     odom_rotation_link.resize(pose_count);
@@ -318,4 +318,4 @@ CC_INLINE void ComputePoses(
 }
 
 }  // namespace collision_checking
-#endif  // EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_ASSEMBLY_KINEMATICS_H_
+#endif  // COLLISION_CHECKING_ASSEMBLY_KINEMATICS_H_

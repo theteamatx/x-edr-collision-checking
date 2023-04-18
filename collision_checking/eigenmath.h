@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_EIGENMATH_H_
-#define EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_EIGENMATH_H_
+#ifndef COLLISION_CHECKING_EIGENMATH_H_
+#define COLLISION_CHECKING_EIGENMATH_H_
 #include "collision_checking/inlining.h"
 #include "eigenmath/line_search.h"
 #include "eigenmath/pose3.h"
@@ -76,4 +76,4 @@ inline std::array<Vector3<Scalar>, 2> ExtendToOrthonormalBasis(
 
 }  // namespace collision_checking
 
-#endif  // EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_EIGENMATH_H_
+#endif  // COLLISION_CHECKING_EIGENMATH_H_

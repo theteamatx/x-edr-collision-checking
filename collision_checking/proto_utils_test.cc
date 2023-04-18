@@ -30,11 +30,12 @@
 
 namespace collision_checking {
 namespace {
+using ::collision_checking::testing::ParseTextProtoOrDie;
+using ::collision_checking::testing::ProtoIsEquivTo;
+using ::collision_checking::testing::
+    ProtoIsEquivToIgnoringRepeatedFieldOrdering;
+using ::collision_checking::testing::StatusCodeIs;
 using ::eigenmath::testing::IsApprox;
-using testing::ParseTextProtoOrDie;
-using testing::ProtoIsEquivTo;
-using testing::ProtoIsEquivToIgnoringRepeatedFieldOrdering;
-using testing::StatusCodeIs;
 
 TEST(ProtoUtils, SphereToMarkerProto) {
   // Only tests double precision version.

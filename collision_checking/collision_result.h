@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_COLLISION_RESULT_H_
-#define EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_COLLISION_RESULT_H_
+#ifndef COLLISION_CHECKING_COLLISION_RESULT_H_
+#define COLLISION_CHECKING_COLLISION_RESULT_H_
 
 #include <limits>
 
@@ -57,7 +57,7 @@ class CollisionResult : public ParametrizedNewDelete<AllocatorTraits> {
     // True if there is a minimum distance to an obstacle (i.e., `center` is
     // valid).
     bool has_minimum_distance = false;
-    // The id of the obstacle.
+    // The index of the voxel that has the minimum distance.
     int index = -1;
   };
 
@@ -209,4 +209,4 @@ class CollisionResult : public ParametrizedNewDelete<AllocatorTraits> {
 
 }  // namespace collision_checking
 
-#endif  // EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_COLLISION_RESULT_H_
+#endif  // COLLISION_CHECKING_COLLISION_RESULT_H_

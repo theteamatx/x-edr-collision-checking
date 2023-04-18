@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_GEOMETRY_H_
-#define EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_GEOMETRY_H_
+#ifndef COLLISION_CHECKING_GEOMETRY_H_
+#define COLLISION_CHECKING_GEOMETRY_H_
 
 // Structs and simple utility functions for geometric objects.
 // All geometry must be given in a common reference frame, referred to as
@@ -217,4 +217,4 @@ std::string ToString(const Box<Scalar>& box) {
 
 }  // namespace collision_checking
 
-#endif  // EXPERIMENTAL_USERS_BUSCHMANN_COLLISION_CHECKING_GEOMETRY_H_
+#endif  // COLLISION_CHECKING_GEOMETRY_H_
