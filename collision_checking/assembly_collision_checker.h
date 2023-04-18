@@ -286,7 +286,7 @@ class AssemblyCollisionChecker : virtual public ModelInterface<Scalar>,
   Vector<RelativeObjectPoseInfo, AllocatorTraits> relative_object_pose_info_;
   CollisionObjects<Scalar, AllocatorTraits> objects_zero_;
 
-  // TODO(b/208409848) Support multiple assemblies.
+  // TODO: Support multiple assemblies.
   AssemblyInfo assembly_info_;
   ObjectIdAssigner object_ids_assigner_;
   AssemblyIdAssigner assembly_id_assigner_;
@@ -331,7 +331,7 @@ absl::StatusOr<AssemblyId>
 AssemblyCollisionChecker<Scalar, AllocatorTraits>::AddAssembly(
     const Assembly& assembly, absl::Span<const std::string> joint_order,
     const Options& options) {
-  // TODO(b/208409848) Handle multiple assemblies.
+  // TODO: Handle multiple assemblies.
   if (assembly_info_.id != AssemblyIdAssigner::kInvalidId) {
     return absl::UnimplementedError(
         "Multiple assembly support not implemented.");
@@ -405,7 +405,7 @@ AssemblyCollisionChecker<Scalar, AllocatorTraits>::AddAssembly(
 
     PrimitivesCount primitives_indices;
     info.object.ResizeBuffers(info.primitive_counts);
-    // TODO(b/148435774): Apply parent_pose_joint to collision shapes.
+    // TODO: Apply parent_pose_joint to collision shapes.
     for (const auto& geo : link.GetCollisionGeometries()) {
       if (const auto status = AddGeometryShapesToCompositeObject(
               Pose3d::Identity(), geo.GetShape(), options.GetAssemblyPadding(),

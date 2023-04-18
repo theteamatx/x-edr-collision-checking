@@ -169,7 +169,7 @@ TYPED_TEST_P(AssemblyCollisionCheckerTest, AddAssemblyChecksErrors) {
   using Scalar = TypeParam;
   using AssemblyCollisionCheckerCpu = AssemblyCollisionChecker<Scalar>;
 
-  // Make a simple assembly from a protbuf, verify it loads correctly.
+  // Make a simple assembly from a protobuf, verify it loads correctly.
   const auto proto = ParseTextProtoOrDie<AssemblyProto>(
       R"pb(
         joints: {
@@ -257,7 +257,7 @@ TYPED_TEST_P(AssemblyCollisionCheckerTest, CreateOK) {
   constexpr Scalar kExpectedPrecision =
       AssemblyCollisionCheckerTest<Scalar>::kExpectedPrecision;
 
-  // Make a simple assembly from a protbuf, verify it loads correctly.
+  // Make a simple assembly from a protobuf, verify it loads correctly.
   const auto proto = ParseTextProtoOrDie<AssemblyProto>(
       R"pb(
         joints: {
@@ -691,7 +691,7 @@ TYPED_TEST_P(AssemblyCollisionCheckerTest, AssemblyPadding) {
   constexpr Scalar kExpectedPrecision =
       AssemblyCollisionCheckerTest<Scalar>::kExpectedPrecision;
 
-  // Make a simple assembly from a protbuf, verify it loads correctly.
+  // Make a simple assembly from a protobuf, verify it loads correctly.
   const auto proto = ParseTextProtoOrDie<AssemblyProto>(
       R"pb(
         joints: {
@@ -917,7 +917,7 @@ TYPED_TEST_P(AssemblyCollisionCheckerTest, ComputeCollisionsSphereSphere) {
   // O
   // |\
   // O O
-  // At -pi the two lower spheres overlap.
+  // At -pi/2 the two lower spheres overlap.
   const auto proto = ParseTextProtoOrDie<AssemblyProto>(
       R"pb(
         joints: {
@@ -2093,7 +2093,7 @@ TYPED_TEST_P(AssemblyCollisionCheckerTest, StaticObjectWorks) {
   EXPECT_TRUE(result.GetObjectHits(lower_box_index).Empty());
   EXPECT_GT(result.GetMinimumDistance(), Scalar{0});
   // Box height is 0.1, offset is 0.1, padding 0.01, so distance to z=0 plane is
-  // 0.1-0.05-0.01.
+  // (0.1, -0.05, -0.01).
   EXPECT_NEAR(result.GetMinimumDistance(lower_box_index), 0.04,
               std::numeric_limits<Scalar>::epsilon() * 10);
 

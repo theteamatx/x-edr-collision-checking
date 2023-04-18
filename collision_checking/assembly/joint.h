@@ -29,7 +29,7 @@ class Link;
 // The Joint class represents an articulated connection with a single
 // scalar degree of freedom that connects two rigid geometric objects, called
 // Links. The Joint has a single inboard (closer to base) Link, called its
-// parent Link, and a single outboard (father from base), called its child Link.
+// parent Link, and a single outboard (farther from base), called its child Link.
 // Every Joint requires both parent and child Links.
 // Joints are specified (created) relative to the reference frame of their
 // parent Links.

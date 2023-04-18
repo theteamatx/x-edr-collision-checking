@@ -57,7 +57,7 @@ class CollisionResult : public ParametrizedNewDelete<AllocatorTraits> {
     // True if there is a minimum distance to an obstacle (i.e., `center` is
     // valid).
     bool has_minimum_distance = false;
-    // The id of the
+    // The id of the obstacle.
     int index = -1;
   };
 

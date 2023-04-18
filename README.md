@@ -5,4 +5,3 @@ perform collision queries and minimum distance computations for simple
 geometric shapes.
 The code is intended and most suitable for motion planning and control
 applications (i.e,. not dynamics simulations).
-s

@@ -85,7 +85,7 @@ class VoxelRange {
 // in a range of VoxelMapNode objects that overlap or are contained within a
 // given axis aligned bounding box. See VoxelMapObject::GetInBoxVoxelRange() for
 // a usage example.
-// TODO(b/148372213): Further optimize bounding box range query.
+// TODO: Further optimize bounding box range query.
 template <typename Scalar>
 class InBoxVoxelRange {
  public:
@@ -118,10 +118,8 @@ class InBoxVoxelRange {
 // differently in collision checks to improve efficiency, and provides some
 // additional methods.
 // It currently only supports sphere geometries.
-// TODO(b/228780376): Consider extending this to support all static geometry
+// TODO: Consider extending this to support all static geometry
 // efficiently.
-// TODO(b/227566147): Choose a more generic name once HifiMapProto is supported
-// as input.
 template <typename Scalar>
 class VoxelMapObject {
  public:
@@ -370,7 +368,7 @@ void VoxelMapObject<Scalar>::UpdateQueryStructures(Options options) {
 
     // Update z-curve values & sort spheres.
     for (auto& n : nodes_) {
-      // TODO(b/228780376): Account for geometry extent, update bvh.
+      // TODO: Account for geometry extent, update bvh.
       n.code = Encode(n.sphere.center);
     }
     absl::c_stable_sort(nodes_);
@@ -466,7 +464,7 @@ InBoxVoxelRange<Scalar> VoxelMapObject<Scalar>::GetInBoxVoxelRange(
   // the lower and upper corners of the bounding box.
   // Nodes with codes higher than code_high or lower than code_low are all
   // outside the bounding box.
-  // TODO(b/148372213): In general, most cells with codes in [code_low,
+  // TODO: In general, most cells with codes in [code_low,
   // code_high] are also outside the bounding box. Consider finding the valid
   // subranges in the space of voxel codes instead of performing a bounding box
   // check for all nodes in [code_low, code_high].

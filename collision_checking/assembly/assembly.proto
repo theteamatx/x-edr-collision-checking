@@ -13,7 +13,7 @@
 // limitations under the License.
 
 // Messages for specifying a kinematic assembly (see
-// google3/collision_checking/assembly/assembly.h).
+// `collision_checking/assembly/assembly.h`).
 // The structure roughly follows the URDF format
 // (https://wiki.ros.org/urdf/XML/).
 

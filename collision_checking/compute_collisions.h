@@ -59,7 +59,7 @@ Status ComputeCollisions(
 
   result.Reset();
 
-  // Loop every every possible object / object collision pair and perform
+  // Loop every possible object / object collision pair and perform
   // collision checking on the ones that are not disabled and whose bounding
   // boxes overlap.
   for (int first = 0; first < num_moving; first++) {

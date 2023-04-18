@@ -24,6 +24,6 @@ import "collision_checking/geometry_shapes/eigen.proto";
 // z in [min_corner.z, max_corner.z]
 // Next ID: 3
 message AxisAlignedBoundingBox3dProto {
-  collision_checking.proto.Vector3dProto min_corner = 1;
+  proto.Vector3dProto min_corner = 1;
   proto.Vector3dProto max_corner = 2;
 }

@@ -50,14 +50,13 @@ template <typename Scalar>
 CC_INLINE ObjectObjectResult<Scalar> BoxFaceBoxFaceDistanceSquared(
     const Box<Scalar>& box_a, const Box<Scalar>& box_b, int face_a,
     Scalar offset_a, int face_b, Scalar offset_b) {
-  // TODO(b/151805354) Implement analytical solution.
+  // TODO: Implement analytical solution.
   using Vector3 = Vector3<Scalar>;
   using Matrix3 = Matrix3<Scalar>;
 
   // std::tie cannot be used in CUDA device code, because it isn't marked with
   // __device__ and isn't constexpr.
-  // This struct can be used instead. doesn't work with std::tie, this class can
-  // be used instead."
+  // This struct can be used instead.
   struct CudaSafeTie {
     CC_INLINE CudaSafeTie(Scalar& f, Scalar& s) : first(f), second(s) {}
     CC_INLINE CudaSafeTie& operator=(const std::pair<Scalar, Scalar>& rhs) {
@@ -110,7 +109,7 @@ CC_INLINE ObjectObjectResult<Scalar> BoxFaceBoxFaceDistanceSquared(
     return internal::PointBoxDistanceSquared(segment_point, box_half_lengths)
         .distance_squared;
   };
-  // TODO(b/150601233) Use successive quadratic interpolation here, as the
+  // TODO: Use successive quadratic interpolation here, as the
   // function is piece-wise quadratic.
 
   tied_results = GoldenSectionSearchMinimize(-seg_half_length, seg_half_length,
@@ -137,7 +136,7 @@ CC_INLINE ObjectObjectResult<Scalar> BoxFaceBoxFaceDistanceSquared(
   seg_dir = a_rotation_b.col(face_b_v);
   seg_half_length = box_b.half_lengths[face_b_v];
 
-  // TODO(b/150601233) Use successive quadratic interpolation here, as the
+  // TODO: Use successive quadratic interpolation here, as the
   // function is piece-wise quadratic.
   tied_results = GoldenSectionSearchMinimize(-seg_half_length, seg_half_length,
                                              distance_squared_func, kTolerance);
@@ -162,7 +161,7 @@ CC_INLINE ObjectObjectResult<Scalar> BoxFaceBoxFaceDistanceSquared(
   seg_center = a_translation_b + a_rotation_b * point_box;
   seg_dir = a_rotation_b.col(face_b_u);
   seg_half_length = box_b.half_lengths[face_b_u];
-  // TODO(b/150601233) Use successive quadratic interpolation here, as the
+  // TODO: Use successive quadratic interpolation here, as the
   // function is piece-wise quadratic.
   tied_results = GoldenSectionSearchMinimize(-seg_half_length, seg_half_length,
                                              distance_squared_func, kTolerance);
@@ -187,7 +186,7 @@ CC_INLINE ObjectObjectResult<Scalar> BoxFaceBoxFaceDistanceSquared(
   seg_center = a_translation_b + a_rotation_b * point_box;
   seg_dir = a_rotation_b.col(face_b_u);
   seg_half_length = box_b.half_lengths[face_b_u];
-  // TODO(b/150601233) Use successive quadratic interpolation here, as the
+  // TODO: Use successive quadratic interpolation here, as the
   // function is piece-wise quadratic.
   tied_results = GoldenSectionSearchMinimize(-seg_half_length, seg_half_length,
                                              distance_squared_func, kTolerance);
@@ -215,7 +214,7 @@ CC_INLINE ObjectObjectResult<Scalar> BoxFaceBoxFaceDistanceSquared(
   seg_center = b_translation_a + a_rotation_b.transpose() * point_box;
   seg_dir = a_rotation_b.row(face_a_v).transpose();
   seg_half_length = box_a.half_lengths[face_a_v];
-  // TODO(b/150601233) Use successive quadratic interpolation here, as the
+  // TODO: Use successive quadratic interpolation here, as the
   // function is piece-wise quadratic.
   tied_results = GoldenSectionSearchMinimize(-seg_half_length, seg_half_length,
                                              distance_squared_func, kTolerance);
@@ -240,7 +239,7 @@ CC_INLINE ObjectObjectResult<Scalar> BoxFaceBoxFaceDistanceSquared(
   seg_center = b_translation_a + a_rotation_b.transpose() * point_box;
   seg_dir = a_rotation_b.row(face_a_v).transpose();
   seg_half_length = box_a.half_lengths[face_a_v];
-  // TODO(b/150601233) Use successive quadratic interpolation here, as the
+  // TODO: Use successive quadratic interpolation here, as the
   // function is piece-wise quadratic.
   tied_results = GoldenSectionSearchMinimize(-seg_half_length, seg_half_length,
                                              distance_squared_func, kTolerance);
@@ -265,7 +264,7 @@ CC_INLINE ObjectObjectResult<Scalar> BoxFaceBoxFaceDistanceSquared(
   seg_center = b_translation_a + a_rotation_b.transpose() * point_box;
   seg_dir = a_rotation_b.row(face_a_u).transpose();
   seg_half_length = box_a.half_lengths[face_a_u];
-  // TODO(b/150601233) Use successive quadratic interpolation here, as the
+  // TODO: Use successive quadratic interpolation here, as the
   // function is piece-wise quadratic.
   tied_results = GoldenSectionSearchMinimize(-seg_half_length, seg_half_length,
                                              distance_squared_func, kTolerance);
@@ -290,7 +289,7 @@ CC_INLINE ObjectObjectResult<Scalar> BoxFaceBoxFaceDistanceSquared(
   seg_center = b_translation_a + a_rotation_b.transpose() * point_box;
   seg_dir = a_rotation_b.row(face_a_u).transpose();
   seg_half_length = box_a.half_lengths[face_a_u];
-  // TODO(b/150601233) Use successive quadratic interpolation here, as the
+  // TODO: Use successive quadratic interpolation here, as the
   // function is piece-wise quadratic.
   tied_results = GoldenSectionSearchMinimize(-seg_half_length, seg_half_length,
                                              distance_squared_func, kTolerance);
@@ -344,7 +343,7 @@ CC_INLINE ObjectObjectResult<Scalar> DistanceSquared(const Box<Scalar>& box_a,
   //       |v_i| <= box_b.half_lengths[i],
   // This is an expensive semi-numerical implementation based on the point-box
   // distance.
-  // TODO(b/150602575) Implement analytical solution.
+  // TODO: Implement analytical solution.
   using Vector3 = Vector3<Scalar>;
 
   // Check for overlap.

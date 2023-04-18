@@ -138,8 +138,6 @@ absl::StatusOr<Assembly> ParseProto(const AssemblyProto& assembly_proto,
   Assembly assembly(assembly_proto.name());
 
   // Read and create all the links.
-  // Don't use range-based for, as RepeatedPtrField doesn't work in blueproto
-  // version (see b/111822760).
   for (size_t idx = 0; idx < assembly_proto.links_size(); idx++) {
     const auto status =
         details::CreateLink(&assembly, assembly_proto.links(idx));
@@ -149,8 +147,6 @@ absl::StatusOr<Assembly> ParseProto(const AssemblyProto& assembly_proto,
   }
 
   // Read all the joints.
-  // Don't use range-based for, as RepeatedPtrField doesn't work in blueproto
-  // version.
   for (size_t idx = 0; idx < assembly_proto.joints_size(); idx++) {
     const auto status =
         details::CreateJoint(&assembly, assembly_proto.joints(idx));

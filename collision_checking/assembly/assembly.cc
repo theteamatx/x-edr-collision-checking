@@ -58,7 +58,7 @@ Assembly::Assembly(absl::string_view name) : name_(name), finalized_(false) {}
 // LINKS
 Link& Assembly::CreateLink(absl::string_view name,
                            const Link::Parameters& params) {
-  // TODO(b/214347493) Return a status instead of asserting.
+  // TODO: Return an absl::Status instead of asserting.
   // Can't create links in a finalized assembly.
   CC_CHECK(!finalized_, "The assembly is already finalized.");
   CC_CHECK(!link_map_.contains(name), "Link name '%s' is not unique.", name);
@@ -107,7 +107,7 @@ Joint& Assembly::CreateJoint(absl::string_view name,
                              const Joint::Parameters& params,
                              absl::string_view parent_link_name,
                              absl::string_view child_link_name) {
-  // TODO(b/214347493) Return a status instead of asserting.
+  // TODO: Return an absl::Status instead of asserting.
   // Can't create joints in a finalized assembly.
   CC_CHECK(!finalized_, "The assembly is already finalized.");
   CC_CHECK(!joint_map_.contains(name), "Joint name '%s' is not unique.", name);
@@ -164,7 +164,7 @@ const Joint* Assembly::FindJoint(absl::string_view name) const {
 Geometry& Assembly::CreateGeometry(absl::string_view name, Geometry::Type type,
                                    const geometry_shapes::ShapeBase& shape,
                                    Link* link) {
-  // TODO(b/214347493) Return a status instead of asserting.
+  // TODO: Return an absl::Status instead of asserting.
   // Can't create geometries in a finalized assembly.
   CC_CHECK_NE(link, nullptr);
   CC_CHECK(!finalized_, "The assembly is already finalized.");
@@ -355,7 +355,7 @@ absl::Status Assembly::TopologicallySortLinks() {
     return absl::InternalError("No links in Assembly");
   }
 
-  // Sort the links lexigraphically
+  // Sort the links lexicographically
   std::sort(links_.begin(), links_.end(),
             [](const std::unique_ptr<Link>& link_a,
                const std::unique_ptr<Link>& link_b) {

@@ -40,7 +40,7 @@ class AssemblyConnectivity {
 
   // Returns the indices of the link group connected to `link_index` according
   // to the construction parameter `max_movable_joints`. If the link index is
-  // invalid, and empty span is returned.
+  // invalid, an empty span is returned.
   absl::Span<const int> GetConnectedLinkIndices(int link_index) const;
 
  private:

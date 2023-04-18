@@ -49,7 +49,7 @@ class AssemblyCoordinates {
   int JointCount() const;
 
   // Returns a flattened array of all coordinate values.
-  // Use this as an argument to ComputPoses.
+  // Use this as an argument to ComputePoses.
   // Coordinate layout: [odom_pose_robot[0].quat(w,x,y,z),
   // odom_pose_robot[0].trans,joint_positions[0];..]
   CC_INLINE

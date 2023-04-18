@@ -24,7 +24,7 @@
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
-// Set to true to run exhaustive tests, which are not run by default on TAP.
+// Set to true to run exhaustive tests.
 ABSL_FLAG(bool, run_exhaustive_tests, false,
           "If true, exhaustive tests are run that are disabled by default.");
 

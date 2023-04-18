@@ -156,7 +156,7 @@ struct AssemblyPoses : public ParametrizedNewDelete<AllocatorTraits> {
 };
 
 // Computes the `poses` for the given `links` data.
-// The layout for `coordinates` matches matches AssemblyState::coordinates().
+// The layout for `coordinates` matches `AssemblyState::coordinates()`.
 template <typename Scalar, typename AllocatorTraits = DefaultAllocatorTraits>
 CC_INLINE void ComputePoses(
     const AssemblyKinematics<Scalar, AllocatorTraits>& assembly_kinematics,
@@ -265,7 +265,7 @@ CC_INLINE void ComputePoses(
   // NOLINT(custom-no-auto-with-eigen) auto is safe here.
   auto& joint_positions = coordinates.joint_positions;
 
-  // TODO(b/148435774): Apply parent_pose_joint to collision shapes at
+  // TODO: Apply parent_pose_joint to collision shapes at
   // construction and omit it here.
   // construction and avoid one transform here.
   for (int k = 1; k < links.size(); ++k) {
