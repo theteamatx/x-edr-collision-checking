@@ -19,8 +19,7 @@
 
 namespace collision_checking {
 namespace {
-
-using ::testing::StatusCodeIs;
+using testing::StatusCodeIs;
 
 TEST(ObjectIdSet, Contains) {
   ObjectIdSet set;
