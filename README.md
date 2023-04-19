@@ -21,11 +21,11 @@ collection of composite objects that are themselves composed of supported
 primitive shapes. Each composite object will typically be a single robot link,
 an object grasped by a robot or a static environment object with simple
 geometry. The `VoxelMapObject` is a 'sphere world' intended to represent an
-environment map that may a large number of elements and is generated from sensor
-data via a voxel map, surfel map or similar representation. There is some basic
-AABB-based pre-filtering of collision pairs to accelerate distance queries.
-Which object pairs are considered can be configured via the `ObjectFlags`
-variables, see `object_id.h`.
+environment map that may contain a large number of elements and is generated
+from sensor data via a voxel map, surfel map or similar representation. There
+is some basic AABB-based pre-filtering of collision pairs to accelerate distance
+queries. Which object pairs are considered can be configured via the
+`ObjectFlags` variables, see `object_id.h`.
 
 **Collision queries for articulated systems** The `AssemblyCollisionChecker`
 template provides a higher-level interface for performing collision queries for
