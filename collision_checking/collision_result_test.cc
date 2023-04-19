@@ -21,7 +21,7 @@
 namespace collision_checking {
 namespace {
 
-using testing::MinimumGeometryInfoIs;
+using ::testing::MinimumGeometryInfoIs;
 
 template <typename T>
 class CollisionResultTest : public ::testing::Test {};
