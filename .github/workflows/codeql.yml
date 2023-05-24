@@ -27,6 +27,9 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3
+      with:
+        token: ${{secrets.X_EDR_REPO_PAK}}
+        submodules: 'true'
 
     # Initializes the CodeQL tools for scanning.
     - name: Initialize CodeQL
@@ -41,20 +44,12 @@ jobs:
         # queries: security-extended,security-and-quality
 
 
-    # Autobuild attempts to build any compiled languages  (C/C++, C#, Go, or Java).
-    # If this step fails, then you should remove it and run the build manually (see below)
-    - name: Autobuild
-      uses: github/codeql-action/autobuild@v2
-
     # ℹ️ Command-line programs to run using the OS shell.
     # 📚 See https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsrun
-
-    #   If the Autobuild fails above, remove it and uncomment the following three lines.
-    #   modify them (or add more) to build your code if your project, please refer to the EXAMPLE below for guidance.
-
-    # - run: |
-    #   echo "Run, Build Application using script"
-    #   ./location_of_script_within_repo/buildscript.sh
+    - name: Build and Test
+      run: |
+        bazel build -c opt --config=libc++ collision_checking:all
+        bazel test -c opt --config=libc++ collision_checking:all
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v2
