@@ -166,7 +166,7 @@ cc_library(
     ],
     deps = [
         ":inlining",
-        "@eigenmath//eigenmath",
+        "@x_edr_eigenmath//eigenmath",
     ],
 )
 
@@ -214,7 +214,7 @@ cc_test(
         ":object_id",
         ":test_utils",
         "@com_google_googletest//:gtest_main",
-        "@eigenmath//eigenmath",
+        "@x_edr_eigenmath//eigenmath",
     ],
 )
 
@@ -232,8 +232,8 @@ cc_library(
         "@com_google_googletest//:gtest",
         "@com_google_protobuf//:protobuf",
         "@eigen",
-        "@eigenmath//eigenmath",
-        "@eigenmath//eigenmath:matchers",
+        "@x_edr_eigenmath//eigenmath",
+        "@x_edr_eigenmath//eigenmath:matchers",
     ],
 )
 
@@ -269,8 +269,8 @@ cc_test(
         "@com_google_absl//absl/flags:flag",
         "@com_google_benchmark//:benchmark",
         "@com_google_googletest//:gtest_main",
-        "@eigenmath//eigenmath",
-        "@eigenmath//eigenmath:sampling",
+        "@x_edr_eigenmath//eigenmath",
+        "@x_edr_eigenmath//eigenmath:sampling",
     ],
 )
 
@@ -284,8 +284,8 @@ cc_test(
         "@com_google_absl//absl/flags:flag",
         "@com_google_benchmark//:benchmark",
         "@com_google_googletest//:gtest_main",
-        "@eigenmath//eigenmath",
-        "@eigenmath//eigenmath:sampling",
+        "@x_edr_eigenmath//eigenmath",
+        "@x_edr_eigenmath//eigenmath:sampling",
     ],
 )
 
@@ -298,8 +298,8 @@ cc_test(
         ":test_utils",
         "@com_google_absl//absl/flags:flag",
         "@com_google_googletest//:gtest_main",
-        "@eigenmath//eigenmath",
-        "@eigenmath//eigenmath:sampling",
+        "@x_edr_eigenmath//eigenmath",
+        "@x_edr_eigenmath//eigenmath:sampling",
     ],
 )
 
@@ -309,7 +309,7 @@ cc_test(
     deps = [
         ":collision_checking_core",
         "@com_google_benchmark//:benchmark",
-        "@eigenmath//eigenmath",
+        "@x_edr_eigenmath//eigenmath",
     ],
 )
 
@@ -323,8 +323,8 @@ cc_test(
         "@com_google_absl//absl/flags:flag",
         "@com_google_absl//absl/strings:str_format",
         "@com_google_googletest//:gtest_main",
-        "@eigenmath//eigenmath",
-        "@eigenmath//eigenmath:sampling",
+        "@x_edr_eigenmath//eigenmath",
+        "@x_edr_eigenmath//eigenmath:sampling",
     ],
 )
 
@@ -334,7 +334,7 @@ cc_binary(
     deps = [
         ":collision_checking_core",
         "@com_google_benchmark//:benchmark",
-        "@eigenmath//eigenmath",
+        "@x_edr_eigenmath//eigenmath",
     ],
 )
 
@@ -347,8 +347,8 @@ cc_test(
         ":test_utils",
         "@com_google_absl//absl/flags:flag",
         "@com_google_googletest//:gtest_main",
-        "@eigenmath//eigenmath",
-        "@eigenmath//eigenmath:sampling",
+        "@x_edr_eigenmath//eigenmath",
+        "@x_edr_eigenmath//eigenmath:sampling",
     ],
 )
 
@@ -358,7 +358,7 @@ cc_binary(
     deps = [
         ":collision_checking_core",
         "@com_google_benchmark//:benchmark",
-        "@eigenmath//eigenmath",
+        "@x_edr_eigenmath//eigenmath",
     ],
 )
 
@@ -456,8 +456,8 @@ cc_binary(
     deps = [
         ":voxel_map_object",
         "@com_google_benchmark//:benchmark",
-        "@eigenmath//eigenmath",
-        "@eigenmath//eigenmath:sampling",
+        "@x_edr_eigenmath//eigenmath",
+        "@x_edr_eigenmath//eigenmath:sampling",
     ],
 )
 

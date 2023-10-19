@@ -79,7 +79,7 @@ cc_library(
         "@com_google_absl//absl/status:statusor",
         "@com_google_absl//absl/strings",
         "@com_google_absl//absl/strings:str_format",
-        "@genit//genit:iterators",
+        "@x_edr_genit//genit:iterators",
     ],
 )
 
@@ -96,7 +96,7 @@ cc_test(
         "//collision_checking/geometry_shapes",
         "@com_google_absl//absl/status",
         "@com_google_googletest//:gtest_main",
-        "@eigenmath//eigenmath:matchers",
+        "@x_edr_eigenmath//eigenmath:matchers",
     ],
 )
 
@@ -133,6 +133,6 @@ cc_test(
         ":proto_utils",
         "//collision_checking:test_utils",
         "@com_google_googletest//:gtest_main",
-        "@eigenmath//eigenmath:matchers",
+        "@x_edr_eigenmath//eigenmath:matchers",
     ],
 )
