@@ -18,6 +18,7 @@
 #include <limits>
 
 #include "absl/flags/flag.h"
+#include "absl/log/absl_log.h"
 #include "absl/strings/str_format.h"
 #include "collision_checking/eigenmath.h"
 #include "collision_checking/test_utils.h"

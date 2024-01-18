@@ -12,7 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_library", "cc_proto_library")
+load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_library", "cc_test", "cc_proto_library")
+load("@rules_proto//proto:defs.bzl", "proto_library")
 
 licenses(["notice"])
 
@@ -267,6 +268,7 @@ cc_test(
         ":eigenmath",
         ":test_utils",
         "@com_google_absl//absl/flags:flag",
+	"@com_google_absl//absl/log:absl_log",
         "@com_google_benchmark//:benchmark",
         "@com_google_googletest//:gtest_main",
         "@x_edr_eigenmath//eigenmath",

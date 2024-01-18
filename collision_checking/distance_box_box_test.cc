@@ -17,6 +17,7 @@
 #include <iterator>
 
 #include "absl/flags/flag.h"
+#include "absl/log/absl_log.h"
 #include "collision_checking/debug_options.h"
 #include "collision_checking/eigenmath.h"
 #include "collision_checking/test_utils.h"
